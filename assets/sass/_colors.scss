@@ -1,0 +1,126 @@
+/*
+  【色の定義方法】
+  ・https://codepen.io/meodai/full/mEvZRx このサイトでカラー名を調べる
+  ・(カラーの系統)-(カラー名) に統一する
+  ex) #bf13cd
+  → $purple-awkward-purple: #bf13cd;
+*/
+
+// 黒系
+$black: #000;
+$black-dreamless: #111;
+$black-dark-grey: #363636;
+$black: #15202b;
+
+// MATRIX
+$matrix1: #0D0208;
+$matrix2: #003B00;
+$matrix3: #008F11;
+$matrix4: #00FF41;
+
+// グレー系
+
+// 白系
+$white: #fff;
+
+// 青系
+$blue-bolt: #00b3ff;
+$blue-sparky: #21ebff;
+
+// 緑系
+$green-poison: #41f321;
+
+// 赤系
+
+// シャドー用カラー
+
+// 緑色系
+$greenLikeColor1: rgba(100, 255, 255, 0.5);
+$greenLikeColor2: rgba(0, 150, 150, 0.33);
+$greenLikeColor3: rgba(50, 150, 150, 0.6);
+$greenLikeColor4: #14e6fa;
+
+// 青色系
+$blueLikeColor1: rgba(0, 255, 255, 1);
+$blueLikeColor2: rgba(0, 112, 202, 1);
+$blueLikeColor3: rgba(0, 112, 202, 0.3);
+$blueLikeColor4: #0188ca;
+$blueLikeColor5: rgb(0, 202, 202);
+$blueLikeColor6: #42cbf8;
+$blueLikeColor7: rgba(1, 136, 202, 0.2);
+$blueLikeColor8: #14ccfa;
+$blueLikeColor9: #0a5688;
+
+// 黒色系
+$blackLikeColor1: rgba(0, 20, 20, 0.8);
+$blackLikeColor2: rgba(0, 50, 90, 0.66);
+$blackLikeColor3: rgba(0, 45, 80, 0.8);
+$blackLikeColor4: rgba(0, 110, 150, 0.33);
+$blackLikeColor5: rgba(0, 10, 10, 0.5);
+$blackLikeColor6: rgba(0, 112, 202, 0.3);
+$blackLikeColor7: #001c26;
+$blackLikeColor8: rgb(0, 0, 0);
+$blackLikeColor9: rgba(0, 0, 0, 0.7);
+
+// 灰色系
+$grayLikeColor1: gray;
+$grayLikeColor2: rgb(110, 143, 172);
+$grayLikeColor3: rgb(110, 163, 180);
+
+// 白色系
+$whiteLikeColor1: rgba(255, 255, 255, 0.3);
+
+$answer-light-color: $blueLikeColor4;
+$answer-dark-color: $blueLikeColor4;
+
+// input[type="text"], textarea
+$text-shadow: 0 0 3px blue;
+$neutral-transition: all 0.3s ease-out;
+$focused-transition: all 0.1s ease-out;
+
+// InputTextの名残り
+$def-wrap-c1: rgb(44, 68, 76);
+$def-wrap-c2: rgb(110, 163, 180);
+$def-wrap-c3: linear-gradient(
+  to right,
+  $def-wrap-c1,
+  $def-wrap-c2,
+  $def-wrap-c1
+);
+$def-wrap-c4: #626567b3;
+$def-bar-c1: rgb(72, 113, 131);
+$def-bar-c2: rgba(81, 89, 117, 0.65);
+$def-input-c: rgba(0, 90, 255, 0.33);
+
+$act-wrap-c1: rgb(14, 74, 86);
+$act-wrap-c2: rgb(34, 188, 203);
+$act-wrap-c3: linear-gradient(
+  to right,
+  $act-wrap-c1,
+  $act-wrap-c2,
+  $act-wrap-c1
+);
+$act-wrap-c4: rgba(0, 112, 202, 0.7);
+$act-bar-c1: rgb(64, 204, 225);
+$act-bar-c2: rgba(0, 112, 202, 0.7);
+$act-input-c1: rgb(1, 195, 237);
+$act-input-c2: rgba(0, 10, 10, 0.5);
+$act-input-c3: rgba(0, 90, 255, 0.33);
+$act-input-c4: rgba(0, 112, 202, 0.1);
+
+// ライトモード
+$windowLightTextColor: $blueLikeColor6;
+$windowLightBackground: $blackLikeColor3;
+$windowLightBackgroundEditor: $blueLikeColor7;
+
+// ダークモード
+$windowDarkTextColor: $blueLikeColor6;
+$windowDarkBackground: $blackLikeColor1;
+$windowDarkBackgroundEditor: $blueLikeColor7;
+
+$textColor1: rgba(255,255,255,0.75);
+$textColor2: rgb(34, 188, 203);
+$textColor3: rgb(1, 234, 208);
+$textColor4: #42edf8;
+$textColor5: #42cbf8;
+$textColor6: rgb(3, 81, 111);

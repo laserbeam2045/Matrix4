@@ -1,0 +1,61 @@
+GET http://localhost:1234/api/sets/tree?id=3 HTTP/1.1
+
+####################################
+
+POST http://localhost:1234/api/sets/create/node HTTP/1.1
+content-type: application/json
+
+{
+  "id": 1,
+  "name": "bar"
+}
+
+####################################
+
+POST http://localhost:1234/api/sets/update/node HTTP/1.1
+content-type: application/json
+
+{
+  "id": 390,
+  "name": "ロシア連邦"
+}
+
+####################################
+
+POST http://localhost:1234/api/sets/delete/node HTTP/1.1
+content-type: application/json
+
+{
+  "id": 62
+}
+
+####################################
+
+POST http://localhost:1234/api/sets/delete/tree HTTP/1.1
+content-type: application/json
+
+{
+  "id": 59
+}
+
+####################################
+
+POST http://localhost:1234/api/sets/move/tree HTTP/1.1
+content-type: application/json
+
+{
+  "cID": 61,
+  "pID": 42,
+  "idx": 0
+}
+
+####################################
+
+POST http://localhost:1234/api/sets/move/node HTTP/1.1
+content-type: application/json
+
+{
+  "cID": 12,
+  "pID": 7,
+  "idx": 0
+}

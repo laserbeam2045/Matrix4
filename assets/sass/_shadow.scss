@@ -1,0 +1,19 @@
+/* 
+  シャドーは全てこのファイルに変数を定義する
+  定義する内容は影の長さのみ
+  例）$shadow: 0 3px 6px;
+*/
+
+$outColor: $whiteLikeColor1;
+$out-H-Offset: 35px;
+$out-V-Offset: 35px;
+$outBlur: 50px;
+$outSpread: -50px;
+
+$inColorH: rgba(1, 136, 202, 0.2);
+$inColorH: rgba(0, 112, 202, 0.3);
+$inColorV: #0188ca;
+$in-H-Offset: 40px;
+$in-V-Offset: 40px;
+$inBlur: 50px;
+$inSpread: -50px;

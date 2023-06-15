@@ -1,0 +1,269 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1">
+		<title>誰もがわかる囲碁入門　はじめに</title>
+		<link rel="stylesheet" href="css/contents.css">
+		<link rel="stylesheet" href="css/introduction.css">
+		<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+		<!--[if lt IE 9]>
+		<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+		<![endif]-->
+
+		<script>
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		  ga('create', 'UA-69756713-2', 'auto');
+		  ga('send', 'pageview');
+		</script>
+	</head>
+
+	<body>
+		<header>
+			<div class="container">
+				<a href="index" id="top-link">誰もがわかる囲碁入門</a>
+				<div id="font-size">
+					<p>文字サイズ</p>
+					<div id="buttons">
+						<div id="left"  >小</div>
+						<div id="center">標準</div>
+						<div id="right" >大</div>
+					</div>
+				</div>
+				<ul>
+					<li class="selected">はじめに</li>
+					<li><a href="rule">ルール</a></li>
+					<li><a href="knowledge">慣習</a></li>
+					<li><a href="life-and-death">死活</a></li>
+				</ul>
+			</div>
+		</header>
+
+		<div id="contents" class="container">
+			<div class="margin">
+				<noscript>
+					<p style="color:gray;">※お使いの環境は、JavaScriptが無効です。
+コンテンツを正しく表示するには、JavaScriptが有効な環境でご覧ください。</p>
+				</noscript>
+
+				<ul id="menu-list">
+					<li><a href="#one">囲碁ってどんなゲーム？</a></li>
+					<li><a href="#two">囲碁の魅力</a></li>
+					<!--<li><a href="#three">知っておきたいマナー</a></li>-->
+				</ul>
+			</div>
+
+			<article id="one" class="margin">
+				<h1>囲碁ってどんなゲーム？</h1>
+				<p style="font-size: 16px;">皆さんは囲碁といえば、どんなことを思い浮かべますか？<br>たまにテレビや新聞で見たりして、なんとなく存在は知っているけど、
+実際にどんなゲームなのかは知らない、という方が多いのではないでしょうか。<br><br>囲碁はとても奥が深く、知れば知るほど面白いゲームです。
+そしてその入り口は易しく、どなたでもすぐに始めることができます。<br><br>囲碁は古代中国で誕生し、飛鳥時代以前に日本へ伝わったとされる、非常に長い歴史を持つゲームです。<br>黒石を使う人と白石を使う人に分かれて、石を交互に配置し、自分の石で囲った領域の広さを競います。</p>
+
+				<div id="kigu">
+					<h2 style="font-size:1.2em;">棋具</h2>
+					<p style="margin-top: 0;">囲碁では「碁盤」と「碁石」という道具を使います。
+碁石には黒石と白石があり、碁石の入れ物を「碁笥（ごけ）」といいます。</p>
+
+					<div>
+						<img src="img/goban.png" alt="碁盤"><img src="img/goisi.jpg" alt="碁石">
+					</div>
+					<p>本格的な碁盤はこのように、縦横それぞれ１９本ずつ線が引かれていて、「１９路盤」といいます。<br>大きくて難しそうですが、９路盤や１３路盤といった、初心者向けの碁盤も使われています。</p>
+				</div>
+
+				<div id="game" style="display:flex; margin-top:70px;">
+					<div>
+						<h2 style="font-size:1.2em; margin:0;">地を囲う</h2>
+						<p style="margin-top: 0;">囲碁の目的は、相手よりも多くの空間を囲うことです。</p>
+						<p>こちらは７路盤での対局の一例です。
+ボタンを押して、手順を再生してみましょう。<br><br>同じ色の石で囲まれた空間を「地（じ）」といいます。<br>この対局では、最終的に■が白の地、▲が黒の地となっています。
+そして黒の方が多く地を囲えたので、黒の勝ちとなりました。</p>
+					</div>
+
+					<div id="game-img">
+						<img src="img/beginning2/game1.png" id="gameImg" width="215" alt="対局例">
+						<div id="button-box">
+							<div class="button"><i class="fa fa-backward" aria-hidden="true"></i></div>
+							<div class="button"><i class="fa fa-play"     aria-hidden="true"></i></div>
+							<div class="button"><i class="fa fa-forward"  aria-hidden="true"></i></div>
+						</div>
+					</div>
+				</div>
+
+
+				<div id="pon" style="display:flex; flex-direction:row-reverse; justify-content:flex-end; margin-top:70px;">
+					<div>
+						<h2 style="font-size:1.2em; margin:0;">石を取る</h2>
+						<p style="margin-top: 0;">相手の石は、周りを囲めば取ることができます。
+石を取る、取られるということも、戦いを有利に進める上で重要な要素です。</p>
+						<p>石を取られると、基本的には不利になります。
+つまり囲碁というのは、石を取られないように注意しつつ、
+いかに自分の地を広げていけるか、というゲームなのです。</p>
+					</div>
+
+					<div id="pon-img">
+						<div>
+							<img src="img/beginning2/ponnuki1.png"><span>⇒</span><img src="img/beginning2/ponnuki2.png">
+						</div>
+					</div>
+				</div>
+			</article>
+
+
+
+			<article id="two" class="margin">
+				<h1 style="margin-top:70px;">囲碁の魅力</h1>
+
+				<div>
+					<h2>シンプルで奥が深い</h2>
+					<p>囲碁は一般的なイメージと違い、実はルール自体はとてもシンプルです。<br>しかしながら、そこから生まれるゲーム性は、非常に奥が深く、多彩です。
+数手打つだけで、一度も前例のない碁になり、我々に全く違う景色を見せてくれます。</p>
+				</div>
+
+				<div>
+					<h2>自由度の高さ</h2>
+					<p>囲碁は選択できる手が多く、人それぞれの考え方を反映することができます。<br>部分的なセオリーはありますが、決まった戦略というものはないため、
+目的を決めて構想を練ったり、自分の頭で考えることが大切なゲームです。</p>
+				</div>
+
+				<div>
+					<h2>誰とでも楽しめる</h2>
+					<p>囲碁は老若男女、誰もが楽しめるゲームです。
+強さが違っても、ハンデを設けることで、対等に遊ぶことができます。
+また現在では、世界へも普及し、７０カ国に、約４２００万人以上の愛好家がいるといわれます。</p>
+				</div>
+
+				<div id="rule-link">
+					<p>囲碁にはまだまだ、魅力がいっぱいあります。
+ここでは簡単に、どのようなゲームなのかをご紹介しました。
+次のページでは、ルールについて、詳しく見ていきましょう。</p>
+					<a href="rule"><i class="fa fa-long-arrow-right" aria-hidden="true"></i>ルールのページへ</a>
+				</div>
+			</article>
+		</div>
+
+		<footer>
+			<ul>
+				<li><a href="about-this-site">このサイトについて</a></li>
+				<li><a href="feedback">ご意見・ご質問</a></li>
+			</ul>
+			<p>© 2016 have a go</p>
+		</footer>
+
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="jsLibrary/jquery.inview.js"></script>
+		<script src="jsLibrary/jQuery.fastClick.js"></script>
+		<script src="jsBoard/fontSize.js"></script>
+		<script>
+			var gameNum = 1;
+			var autoplay_id = null;
+			var gameImg = document.getElementById("gameImg");
+			var tmrExecte = null;
+			var intTmrInterval = 500;
+			var start_event	= (window.ontouchstart === undefined)?	"mousedown" : "touchstart";
+			var end_event	= (window.ontouchend === undefined)?	"mouseup"	: "touchend";
+
+			changeImg(0);
+
+			$(".button").eq(0).on(start_event, function(){start(-1, this);});
+			$(".button").eq(0).on(end_event, function(){stop();});
+
+			$(".button").eq(1).on(kindOfEvent, function(){
+				if ($(this).is(".freeze")) return;
+
+				var $icon = $(this).find("i");
+
+				if ($icon.is(".fa-play")) {
+					changeImg(+1, this);
+					autoplay_id = window.setInterval(function(that){
+						if (gameNum < 23)	changeImg(+1, that);
+						else				window.clearInterval(autoplay_id);
+					}, 1000, this);
+					$icon.removeClass("fa-play").addClass("fa-pause");
+
+				} else if ($icon.is(".fa-pause")) {
+					window.clearInterval(autoplay_id);
+					$icon.removeClass("fa-pause").addClass("fa-play");
+				}
+			});
+
+			$(".button").eq(2).on(start_event, function(){start(+1, this);});
+			$(".button").eq(2).on(end_event, function(){stop();});
+
+			function start(plus, tar) {
+				if ($(tar).hasClass("freeze")) return;
+
+				changeImg(plus, tar);
+
+				tmrExecte = setTimeout(function(){
+					if ((intTmrInterval -= 120) < 30) intTmrInterval = 30;
+					start(plus, tar);
+				}, intTmrInterval, plus, tar);
+			}
+
+			function stop() {
+				intTmrInterval = 500;
+				clearInterval(tmrExecte);
+			}
+
+			// 実戦例画像を変更する関数
+			function changeImg( plus, tar ) {
+				gameNum += plus;
+
+				if (gameNum === 1)	$(".button:eq(0)").css("cursor", "default").addClass("freeze");
+				else				$(".button:eq(0)").css("cursor", "pointer").removeClass("freeze");
+
+				if (gameNum === 23)	$(".button:gt(0)").css("cursor", "default").addClass("freeze");
+				else				$(".button:gt(0)").css("cursor", "pointer").removeClass("freeze");
+
+				if ($(tar).index() !== 1) {
+					window.clearInterval(autoplay_id);
+					$(".button").eq(1).find("i").removeClass("fa-pause").addClass("fa-play");
+				}
+
+				gameImg.src = "img/beginning2/game" + gameNum + ".png";
+			}
+
+			var prImg = [];
+			for(var i=1; i<24; i++) {
+				prImg[i] = new Image();
+				prImg[i].src = "img/beginning2/game" + i + ".png";
+			}
+
+			var obj = {
+				"棋具"	: "きぐ",
+				"碁盤"	: "ごばん",
+				"碁石"	: "ごいし",
+				"路盤"	: "ろばん",
+				"対局"	: "たいきょく"
+			};
+
+			for (var key in obj) {
+				if (obj.hasOwnProperty(key)) {
+					var value = obj[key];
+
+					$("h2, p:contains('" + key + "')").text(function(){
+						var regexp = new RegExp(key, "g");
+						var replacement = "<span class='text'>" + key + "<span class='fukidashi'>" + value + "</span></span>";
+						var text = $(this).html().replace(regexp, replacement);
+
+						$(this).html(text);
+					});
+				}
+			}
+
+			$("#kigu, #game, #pon, #two div").on("inview", function(event, isInView, visiblePartX, visiblePartY){
+				if (isInView) {
+					//if ($(this).is("#game, #pon") && visiblePartY != "both") return;
+
+					$(this).addClass("mv").off("inview");
+				} else {
+					//$(this).stop().removeClass("mv");
+				}
+			});
+		</script>
+	</body>
+</html>

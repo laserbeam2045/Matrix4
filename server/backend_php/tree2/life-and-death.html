@@ -1,0 +1,349 @@
+﻿<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1">
+		<title>誰もがわかる囲碁入門　死活</title>
+		<link rel="stylesheet" href="css/contents.css">
+		<link rel="stylesheet" href="css/life-and-death.css">
+		<!--[if lt IE 9]>
+		<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+		<![endif]-->
+
+		<script>
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		  ga('create', 'UA-69756713-2', 'auto');
+		  ga('send', 'pageview');
+		</script>
+	</head>
+
+	<body>
+		<header>
+			<div class="container">
+				<a href="index" id="top-link">誰もがわかる囲碁入門</a>
+				<div id="font-size">
+					<p>文字サイズ</p>
+					<div id="buttons">
+						<div id="left"  >小</div>
+						<div id="center">標準</div>
+						<div id="right" >大</div>
+					</div>
+				</div>
+				<ul>
+					<li><a href="introduction">はじめに</a></li>
+					<li><a href="rule">ルール</a></li>
+					<li><a href="knowledge">慣習</a></li>
+					<li class="selected">死活</li>
+				</ul>
+			</div>
+		</header>
+
+		<div id="contents" class="container">
+			<div class="margin">
+				<noscript>
+					<p style="color:gray;">※お使いの環境は、JavaScriptが無効です。
+コンテンツを正しく表示するには、JavaScriptが有効な環境でご覧ください。</p>
+				</noscript>
+
+				<p style="margin:50px 0;">石の生き死には「死活（しかつ）」とも呼ばれる、囲碁において重要な概念です。<br><br>ここでは、死活の見分け方について、技術的な観点から解説します。難しい内容を扱っているので、
+ある程度経験があり、もっと囲碁のことを深く知りたい、という方に見て欲しい内容です。</p>
+
+				<ul id="menu-list">
+					<li><a href="#one">二眼とは</a></li>
+				<!--<li><a href="#two">中手</a></li>
+					<li><a href="#three">欠け眼</a></li>	-->
+				</ul>
+			</div>
+
+			<article id="one" class="margin">
+				<h1>二眼とは</h1>
+				<p>まずは石の生き死にについて、簡単に確認しておきましょう。<br><br>相手に打たれても、取られない石のことを「生きている」と表現し、
+反対に、やがて取られてしまう石のことを「死んでいる」と表現します。<br><br>そしてこれらを判断する上で、カギとなるのが、これからご紹介する「二眼（にがん）」です。</p>
+
+				<div class="group" style="margin-top: 35px">
+					<div class="canvas-box">
+						<canvas id="world0"></canvas>
+						<div class="palette">
+							<div class="reset">リセット</div>
+							<div class="turn-info"></div>
+							<div class="rule-info"></div>
+						</div>
+					</div>
+					<div class="paragraphs static-info">
+						<p>この白石は、黒に囲まれていますが、二つの地点があいています。そしてそのどちらも、黒からは着手禁止点なので、打つことができません。<br><br>このような、相手が打てなくなる場所を「眼（め）」といい、一眼（いちがん）二眼（にがん）と数えます。<br><br>二眼がある石は、絶対に取られることがありません。つまり二眼を作れば、生きることができます。</p>
+					</div>
+				</div>
+
+				<div class="group">
+					<div class="canvas-box">
+						<canvas id="world1"></canvas>
+						<div class="palette">
+							<div class="reset">リセット</div>
+							<div class="turn-info"></div>
+							<div class="rule-info"></div>
+						</div>
+					</div>
+					<div class="paragraphs static-info">
+						<p>一方で、このように一眼しかない石は、周りを囲まれると、取られてしまいます。</p>
+					</div>
+				</div>
+
+				<div class="group">
+					<div class="canvas-box">
+						<canvas id="world2"></canvas>
+						<div class="palette">
+							<div class="reset">リセット</div>
+							<div class="turn-info"></div>
+							<div class="rule-info"></div>
+						</div>
+					</div>
+					<div class="dynamic-info">
+						<div id="information2" class="information"></div>
+						<div class="button-box">
+							<div class="button-group">
+								<div class="button leftArrow" id="leftArrow2">←</div>
+								<div class="infoNum" id="infoNum2"></div>
+								<div class="button rightArrow" id="rightArrow2">→</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="group">
+					<div class="canvas-box">
+						<canvas id="world3"></canvas>
+						<div class="palette">
+							<div class="reset">リセット</div>
+							<div class="turn-info"></div>
+							<div class="rule-info"></div>
+						</div>
+					</div>
+					<div class="paragraphs static-info">
+						<p>この形は、黒から右に打つことはできますが、それ以上手を出すことができません。よって生きています。<br><br>このように、眼を考える際には、大きさではなく、離れた場所に二つあるかどうかが、問題になります。</p>
+					</div>
+				</div>
+
+				<div class="group" style="margin-bottom: 35px">
+					<div class="canvas-box">
+						<canvas id="world4"></canvas>
+						<div class="palette">
+							<div class="reset">リセット</div>
+							<div class="turn-info"></div>
+							<div class="rule-info"></div>
+						</div>
+					</div>
+					<div class="dynamic-info">
+						<div id="information4" class="information"></div>
+						<div class="button-box">
+							<div class="button-group">
+								<div class="button leftArrow" id="leftArrow4">←</div>
+								<div class="infoNum" id="infoNum4"></div>
+								<div class="button rightArrow" id="rightArrow4">→</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<p>多くの場合、二眼があるかどうかによって、その石が生きているか、死んでいるかを判断することができます。<br><br></p>
+					<!--二眼を作らせないようにし、取れたも同然の状態にすることを「殺す」といいます。
+					次項以降では、石を殺すテクニックについて、ご紹介します。-->
+			</article>
+
+<!--
+			<article style="display: none;">
+				<h1 id="two" class="title">中手</h1>
+
+				<div class="group" class="group" style="margin-top: 40px">
+					<div class="canvas-box">
+						<canvas id="world5"></canvas>
+						<div class="palette">
+							<div class="reset">リセット</div>
+							<div class="turn-info"></div>
+							<div class="rule-info"></div>
+						</div>
+					</div>
+					<div class="dynamic-info">
+						<div id="information5" class="information"></div>
+						<div class="button-box">
+							<div class="button-group">
+								<div class="button leftArrow" id="leftArrow5">←</div>
+								<div class="infoNum" id="infoNum5"></div>
+								<div class="button rightArrow" id="rightArrow5">→</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="group">
+					<div class="canvas-box">
+						<canvas id="world6"></canvas>
+						<div class="palette">
+							<div class="reset">リセット</div>
+							<div class="turn-info"></div>
+							<div class="rule-info"></div>
+						</div>
+					</div>
+					<div class="dynamic-info">
+						<div id="information6" class="information"></div>
+						<div class="button-box">
+							<div class="button-group">
+								<div class="button leftArrow" id="leftArrow6">←</div>
+								<div class="infoNum" id="infoNum6"></div>
+								<div class="button rightArrow" id="rightArrow6">→</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</article>
+
+			<article style="display: none;">
+				<h1 id="three" class="title">欠け眼</h1>
+
+				<div class="group">
+					<div class="canvas-box">
+						<canvas id="world7"></canvas>
+						<div class="palette">
+							<div class="reset">リセット</div>
+							<div class="turn-info"></div>
+							<div class="rule-info"></div>
+						</div>
+					</div>
+					<div class="dynamic-info">
+						<div id="information7" class="information"></div>
+						<div class="button-box">
+							<div class="button-group">
+								<div class="button leftArrow" id="leftArrow7">←</div>
+								<div class="infoNum" id="infoNum7"></div>
+								<div class="button rightArrow" id="rightArrow7">→</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="group">
+					<div class="canvas-box">
+						<canvas id="world8"></canvas>
+						<div class="palette">
+							<div class="reset">リセット</div>
+							<div class="turn-info"></div>
+							<div class="rule-info"></div>
+						</div>
+					</div>
+					<div class="dynamic-info">
+						<div id="information8" class="information"></div>
+						<div class="button-box">
+							<div class="button-group">
+								<div class="button leftArrow" id="leftArrow8">←</div>
+								<div class="infoNum" id="infoNum8"></div>
+								<div class="button rightArrow" id="rightArrow8">→</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</article>
+-->
+		</div>
+
+		<div style="display: none;">
+			<p id="info2-1">この白石も、二つあいてますが、実は一眼です。真ん中のどちらかに打ってみてください。</p>
+			<p id="info2-1-2">すると、白に残された場所はあと一つしかないので、黒がもう一手打てば、取ることができます。</p>
+			<p id="info2-2">また黒が打った時に、白はその石を取ることもできますが、やはりその形も、取ることができます。</p>
+			<p id="info2-3">そしてこの形は、白から打っても、眼を二つに分けることができません。よってこの状態で、死んでいることになります。</p>
+
+			<p id="info4-1">そしてもう一つ大切なことがあります。それは、空間が沢山あいていても、二眼がない石は、最終的に取られてしまうということです。</p>
+			<p id="info4-2">黒の立場で、この白石を取るにはどうすればよいでしょうか。お考えください。</p>
+			<p id="info4-2-2">その通り！外から打つのが正解です。</p>
+			<p id="info4-3">ではこの場合はどうでしょうか。場所が隅に移りましたが、同じように考えてみましょう。</p>
+			<p id="info4-3-2">さすがですね。慣れてきましたか？</p>
+			<p id="info4-4">またこの白石は、どこへ打っても、二眼にすることができません。つまり取られるのを防ぐことができないので、死んでいることになります。</p>
+			<p id="info4-5">このように、二眼がない石は、逃げ道がなくなると、最終的には必ず取られてしまいます。</p>
+
+			<p id="info5-1">この形は、白が次にＡと打てば、二眼を作ることができます。しかし、黒から同じ場所に打つと、この白石を殺すことができるのです。</p>
+			<p id="info5-2">あなたの黒番で、実際に石を置いてみてください。</p>
+			<p id="info5-2-2">そこがいい手なのです。ではなぜその手で、この白石が死んだといえるのか、確認していきましょう。</p>
+			<p id="info5-2-3">そこに打つと、白にここへ打たれてしまいます。</p>
+			<p id="info5-3">まず、白からここへ打つのは、自分がアタリになるので、取られてしまいます。（アタリとは、あと一手で石を取れる状態のこと）</p>
+			<p id="info5-4">反対側に打つのも同じことですね。</p>
+			<p id="info5-5">また仮に、中央の石を取れたとしても、一眼しかないので、白が取られてしまいます。</p>
+			<p id="info5-6">では次に、黒からこの白石を取りに行けるかどうか、試してみましょう。（白が応手します）</p>
+			<p id="info5-6-2">お見事！白は石を取るたびに空間が狭まり、最終的には取られてしまいました。</p>
+			<p id="info5-7">つまり黒が取りに行けるのに対し、白はそれを防ぐことができないので、この状態でこの白石は死んでいる扱いになるのです。</p>
+			<p id="info5-8">このように、相手の石の中心に打ち、二眼を作らせないようにする手のことを「中手（なかで）」といいます。特にこの形は、三目中手と呼ばれます。</p>
+
+			<p id="info6-1">三目中手にはこのような形もあります。あなたの黒番で、形の急所はどこだと思いますか？</p>
+			<p id="info6-2">では白が応手するので、黒から取りにいけることを確認してみましょう。</p>
+			<p id="info6-3">というわけで、この形も、この状態で死んでいることになります。</p>
+		</div>
+
+		<footer>
+			<ul>
+				<li><a href="about-this-site">このサイトについて</a></li>
+				<li><a href="feedback">ご意見・ご質問</a></li>
+			</ul>
+			<p>© 2016 have a go</p>
+		</footer>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="jsLibrary/tmlib.js"></script>
+		<script src="jsLibrary/jQuery.fastClick.js"></script>
+		<script src="jsBoard/fontSize.js"></script>
+		<script src="jsBoard/boardSystem.js"></script>
+		<script src="jsBoard/boardCanvas.js"></script>
+		<script src="jsControl/sikatu-brain.js"></script>
+		<script src="jsControl/sikatu-control.js"></script>
+		<script>
+			var turn_info		= document.getElementsByClassName("turn-info");
+			var rule_info		= document.getElementsByClassName("rule-info");
+			var reset			= document.getElementsByClassName("reset");
+
+			var domLeft			= document.getElementsByClassName("leftArrow");
+			var domRight		= document.getElementsByClassName("rightArrow");
+			var left_button		= [ 0, 0, domLeft[0], 0, domLeft[1], domLeft[2], domLeft[3] ];
+			var right_button	= [ 0, 0, domRight[0], 0, domRight[1], domRight[2], domRight[3] ];
+
+			var infoNum		= [0, 0, 1, 0, 1, 1, 1, 1, 1];
+			var maxInfoNum	= [0, 0, 3, 0, 5, 8, 3, 3, 3];
+
+			for(var i=0; i<5; i++) {				// イベントの設定
+				(function(){
+					var alone = !(i == 2 || i == 4 || i == 5 || i == 6);
+					var f = (function() {
+								var ii = i;
+								return function( add, tar ){
+									if( $(tar).hasClass("freeze") )	return;
+									if( alone ) settingBoard( ii, add );
+									else		changeInfoNum( ii, add );
+								}
+							})();
+
+					reset[i].addEventListener( kindOfEvent, function(){ f(0, this) }, false );
+
+					if( alone ) return;
+
+					left_button[i].addEventListener( kindOfEvent, function(){ f(-1, this) }, false );
+					right_button[i].addEventListener( kindOfEvent, function(){ f(1, this) }, false );
+				})();
+			}
+
+			function initialize( num ) { 	// 初期設定
+
+				if( appArr[ num ].MainScene ) {
+					if( num == 2 || num == 4 || num == 5 || num == 6 )
+						changeInfoNum( num, 0 );
+					else
+						settingBoard( num, 0 );
+				}else{
+					setTimeout( function(){initialize(num)}, 200 );
+				}
+			}
+
+			window.onload = function() {
+				for(var i=0; i<appArr.length; i++) initialize( i );
+			};
+		</script>
+	</body>
+</html>

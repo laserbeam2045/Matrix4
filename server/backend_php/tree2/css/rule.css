@@ -1,0 +1,60 @@
+
+
+	.canvas-group {
+		position		: relative;
+		margin			: 10px 0;
+		max-width		: 375px;
+		text-align		: justify;
+		line-height		: 0;
+	}
+
+	.palette {
+		width			: 80px;
+		display			: inline-block;
+		vertical-align	: bottom;
+	}
+
+	.space {
+		content	: "";
+		display	: inline-block;
+		width	: 0;
+		height	: 0;
+	}
+/*
+	.canvas-group:after {
+		content	: "";
+		display	: inline-block;
+		width	: 100%;
+		height	: 0;
+	}
+*/
+
+	canvas {
+		display		: inline-block;
+		box-shadow	: 2px 3px 4px gray;
+	}
+
+
+
+	#five .canvas-group .palette {
+		display	: none;
+	}
+
+	#five .canvas-group canvas {
+		display	: block;
+		margin	: 0 auto;
+	}
+
+
+
+	.button {
+		width		: 80px;
+		height		: 35px;
+		line-height	: 35px;
+		font-size	: 20px;
+		font-weight	: bold;
+		color		: white;
+		background	: #248;
+		text-shadow	: 1px 1px 2px #000;
+		box-shadow	: 2px 2px 0px 0px gray;
+	}

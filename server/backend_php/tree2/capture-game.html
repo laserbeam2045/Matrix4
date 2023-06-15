@@ -1,0 +1,710 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1">
+		<title>誰もがわかる囲碁入門　石取りゲーム</title>
+		<link rel="stylesheet" href="css/contents.css">
+		<link rel="stylesheet" href="css/rule.css">
+		<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+		<!--[if lt IE 9]>
+		<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+		<![endif]-->
+
+		<script>
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		  ga('create', 'UA-69756713-2', 'auto');
+		  ga('send', 'pageview');
+		</script>
+		<style>
+			article {
+				padding-bottom	: 100px;
+			}
+
+			h1 {
+				color			: #333;
+				font-size		: 24px;
+				border-bottom	: 1px solid;
+				padding			: 15px 0 0;
+			}
+
+			article {
+				display			: flex;
+				flex-wrap		: wrap;
+				align-items		: flex-end;
+				justify-content	: left;
+			}
+
+			article:nth-of-type(1) {
+				align-items		: center;
+			}
+
+			article {
+				width	: 90%;
+				margin	: auto;
+			}
+
+			h1 {
+				width	: 100%;
+			}
+
+			article:nth-of-type(5) .palette {
+				visibility	: hidden;
+			}
+
+			@media screen and (max-width:1005px) {
+				article:nth-of-type(5) .canvas-group {
+					max-width	: 295px;
+				}
+				article:nth-of-type(5) .palette {
+					display		: none;
+				}
+
+				article {
+					width			: 100%;
+					justify-content	: center;
+				}
+
+				article:nth-of-type(1) > p {
+					margin	: 15px 3%;
+				}
+
+				#contents h1 {
+					width	: 94%;
+					margin	: auto;
+				}
+			}
+
+			.canvas-group {
+			    width			: 100%;
+			    max-width		: 375px;
+			    display			: flex;
+			    flex-wrap		: nowrap;
+			    align-items		: flex-end;
+			    justify-content	: space-between;
+			}
+
+			.canvas-group:before,
+			.canvas-group:after {
+				content	: "";
+			}
+
+			article {
+				opacity				: 0.1;
+				transform			: translate(0px, 0); 
+				-webkit-transform	: translate(0px, 0);
+				transition			: .8s;
+			}
+
+			article.mv {
+				opacity				: 1.0;
+				transform			: translate(0,0); 
+				-webkit-transform	: translate(0,0);
+			}
+
+			.palette i {
+				position	: absolute;
+				top			: 10px;
+				color		: #aaa;
+				font-size	: 20px;
+				cursor		: pointer;
+			}
+
+			article canvas#board {
+				position: relative !important;
+			}
+		</style>
+		<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+	</head>
+
+	<body>
+		<header>
+			<div class="container">
+				<a href="index" id="top-link">誰もがわかる囲碁入門</a>
+				<div id="font-size">
+					<p>文字サイズ</p>
+					<div id="buttons">
+						<div id="left"  >小</div>
+						<div id="center">標準</div>
+						<div id="right" >大</div>
+					</div>
+				</div>
+				<ul>
+					<li><a href="introduction">はじめに</a></li>
+					<li><a href="rule">ルール</a></li>
+					<li><a href="knowledge">慣習</a></li>
+					<li><a href="life-and-death">死活</a></li>
+				</ul>
+			</div>
+		</header>
+
+		<div id="contents" class="container">
+			<div class="margin" style="text-align:center; text-align:left; margin:50px auto; padding:0;">
+				<noscript>
+					<p style="color:gray;">※お使いの環境は、JavaScriptが無効です。
+コンテンツを正しく表示するには、JavaScriptが有効な環境でご覧ください。</p>
+				</noscript>
+
+				<ul id="menu-list">
+					<li><a href="#one">石取りゲーム</a></li>
+				</ul>
+			</div>
+
+			<article id="one">
+				<h1>石取りゲーム</h1>
+				<p>ルールを覚えたら、まずは石取りゲームをやってみましょう。</p>
+				<div style="position: relative; text-align: center; width: 100%; min-height: 420px;">
+					<div v-if="userName" style="height: 88px;">
+						<p v-if="userName" style="float: left; margin-left: 35px; text-align: left;">
+							<span>{{ userName }}</span><br>
+							<span>{{ win }}勝</span>
+							<span>{{ lose }}負</span>
+						</p>
+						<p v-if="playerName" style="float: right; margin-right: 35px; text-align: right;">
+							<span>{{ playerName }}</span><br>
+							<span>{{ playerWin }}勝</span>
+							<span>{{ playerLose }}負</span>
+						</p>
+						<p v-if="playerName" style="font-weight: bold; position: absolute; top: 14px; left: 0; right: 0;">
+							<span>{{ message }}</span><br>
+							<span>{{ agehama }}</span> - <span>{{ playerAgehama }}</span>
+						</p>
+					</div>
+					<div style="position: relative;">
+						<canvas id="board"></canvas>
+						<div id="join-form" v-if="isStateFoo">
+							<div v-if="isStateNone">
+								<label for="name">オンライン対戦で使用する<br>お名前を入力してください</label>
+								<div>
+									<input type="text" id="name"><button @click="createUser" @touchstart="createUser">OK</button>
+								</div>
+							</div>
+							<div v-else-if="isStateWelcome" @click="changeStateToWaitingRoom" @touchstart="changeStateToWaitingRoom">
+								<p>ようこそ、{{ userName }}さん！</p>
+							</div>
+							<div v-else-if="isStateNewGame" class="settings">
+								<p>ゲーム設定</p>
+								<label style="line-height: 39px;">勝利条件：<input type="number" step="1" min="1" max="10" v-model.number="winningPoint">&nbsp;子先取</label><br>
+								盤面：<label style="line-height: 39px;">横&nbsp;<input type="number" step="1" min="1" max="19" v-model.number="boardWidth"></label>&nbsp;x&nbsp;<label style="line-height: 39px;">縦&nbsp;<input type="number" step="1" min="1" max="19" v-model.number="boardHeight"></label><br>
+								<button @click="createNewGame" @touchstart="createNewGame">ゲーム作成</button>
+							</div>
+							<div v-else-if="isStateWaiting">
+								<p>ユーザーの参加を待っています...</p>
+							</div>
+							<div v-else-if="isStateJoin" class="settings">
+								<p>ゲーム設定</p>
+								<label style="line-height: 39px;">勝利条件：<input type="number" disabled v-model.number="winningPoint">&nbsp;子先取</label><br>
+								<label style="line-height: 39px;">盤面：横&nbsp;<input type="number" disabled v-model.number="boardWidth">&nbsp;x&nbsp;縦&nbsp;<input type="number" disabled v-model.number="boardHeight"></label><br>
+								<button @click="joinGame" @touchstart="joinGame">参加</button>
+							</div>
+						</div>
+					</div>
+					<div id="buttons">
+						<button v-if="isMyTurn && isStateGame" @click="pass" @touchstart="pass">PASS</button>
+						<button v-if="isStateWaitingRoom" @click="openSettings" @touchstart="openSettings">NEW GAME</button>
+					</div>
+				</div>
+			</article>
+		</div>
+
+		<footer>
+			<ul>
+				<li><a href="about-this-site">このサイトについて</a></li>
+				<li><a href="feedback">ご意見・ご質問</a></li>
+			</ul>
+			<p>© 2016 have a go</p>
+		</footer>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="jsLibrary/jquery.inview.js"></script>
+		<script src="jsLibrary/jQuery.fastClick.js"></script>
+		<script src="jsBoard/fontSize.js"></script>
+
+		<script src="https://cdn.rawgit.com/phinajs/phina.js/develop/build/phina.js"></script>
+		<script src="GoBoard/src/GoBoard.js?version=3"></script>
+		<script>
+			const margin = Math.round(window.innerWidth * 0.03)
+			const W = 9
+			const H = 9
+			let board = new Board('#board').setSize(W, H).setMargin(margin).start().lock()
+
+			const STATE_NONE = 0
+			const STATE_WELCOME = 1
+			const STATE_GAME = 2
+			const STATE_NEW_GAME = 3
+			const STATE_WAITING = 4
+			const STATE_JOIN = 5
+			const STATE_WAITING_ROOM = 6
+			const STATE_GAME_SET = 7
+
+			const vm = new Vue({
+				el: '#one',
+				data: {
+					state: STATE_NONE,
+					userId: 0,
+					userName: '',
+					win: 0,
+					lose: 0,
+					agehama: 0,
+					kifu: [],
+					moveCount: 0,
+					currentTurn: 1,
+					winningPoint: 1,
+					boardWidth: W,
+					boardHeight: H,
+					waitingID: 0,
+					getRoomsID: 0,
+					getMovesID: 0,
+					updateID: 0,
+					playerId: 0,
+					playerName: '',
+					playerWin: 0,
+					playerLose: 0,
+					playerAgehama: 0,
+					roomId: 0,
+					//hostFlag: false,
+					message: "",
+				},
+				computed: {
+					isStateNone () {
+						return (this.state === STATE_NONE)
+					},
+					isStateWelcome () {
+						return (this.state === STATE_WELCOME)
+					},
+					isStateFoo () {
+						return (this.isStateNone || this.isStateWelcome || this.isStateNewGame || this.isStateWaiting || this.isStateJoin)
+					},
+					isStateGame () {
+						return (this.state === STATE_GAME)
+					},
+					isStateNewGame () {
+						return (this.state === STATE_NEW_GAME)
+					},
+					isStateWaiting () {
+						return (this.state === STATE_WAITING)
+					},
+					isStateJoin () {
+						return (this.state === STATE_JOIN)
+					},
+					isStateWaitingRoom () {
+						return (this.state === STATE_WAITING_ROOM)
+					},
+					myTurn () {
+						return (this.userName === "りお" || this.userName === "きりまる" || this.userName === "井山") ? WHITE : BLACK
+					},
+					isMyTurn () {
+						return (this.currentTurn === this.myTurn)
+					},
+					hostFlag () {
+						return (this.myTurn === WHITE)
+					},
+				},
+				created () {
+					const userId = localStorage.haveAGoUserId
+					if (userId !== undefined) {
+						this.getUserData(userId).then(data => {
+							this.userId = Number(data.id)
+							this.userName = data.name
+							this.win = Number(data.win)
+							this.lose = Number(data.lose)
+						})
+						this.state = STATE_WELCOME
+					}
+				},
+				methods: {
+					joinGame () {
+						$.post('./capture_game/join.php', {
+							room_id: this.roomId,
+							player_id: this.userId,
+							end_flag: 0,
+						})
+						.then(data => {
+							//this.hostFlag = false
+							this.changeStateToGame()
+						})
+					},
+					createNewGame () {
+						const vm = this
+						clearInterval(this.getRoomsID)
+						$.post('./capture_game/reset.php')
+						.done(data => {
+						})
+						$.post('./capture_game/post_game.php', {
+							host_user_id: this.userId,
+							winning_point: this.winningPoint,
+							board_width: this.boardWidth,
+							board_height: this.boardHeight,
+						})
+						.done(data => {
+							vm.changeStateToWaiting()
+						})
+					},
+					// プレイヤーの参加待機状態にするメソッド
+					changeStateToWaiting () {
+						this.state = STATE_WAITING	
+						$.post('./capture_game/reset.php')
+						this.waitingID = setInterval(() => {
+							this.getGame().then(data => {
+								if (data['player_id'] !== null) {
+									this.roomId = Number(data['id'])
+									this.playerId = Number(data['player_id'])
+									//this.hostFlag = true
+									this.changeStateToGame()
+								}
+							})
+						}, 500)
+					},
+					// ルーム作成待ち状態にするメソッド
+					changeStateToWaitingRoom () {
+						this.state = STATE_WAITING_ROOM
+						this.getRoomsID = setInterval(() => {
+							this.getGame().then(data => {
+								if (data !== null) {
+									clearInterval(this.getRoomsID)
+									this.roomId = Number(data['id'])
+									this.playerId = Number(data['host_user_id'])
+									this.winningPoint = Number(data['winning_point'])
+									this.boardWidth = Number(data['board_width'])
+									this.boardHeight = Number(data['board_height'])
+									this.state = STATE_JOIN
+								}
+							})
+						}, 500)
+					},
+
+					// ゲーム進行状態にするメソッド
+					changeStateToGame () {
+						const vm = this
+						this.state = STATE_GAME
+
+						clearInterval(this.waitingID)
+						clearInterval(this.getRoomsID)
+
+						this.getUserData(this.playerId).then(player => {
+							this.playerName = player.name
+							this.playerWin = Number(player.win)
+							this.playerLose = Number(player.lose)
+
+							this.kifu = []
+							this.moveCount = 0
+							this.currentTurn = BLACK
+							this.agehama = 0
+							this.playerAgehama = 0
+
+							board.setSize(this.boardWidth, this.boardHeight).reset()
+							if (vm.currentTurn === vm.myTurn) {
+								board.unLock()
+							} else {
+								board.lock()
+							}
+
+							this.getMovesID = setInterval(vm.getMoves.bind(vm), 700)
+							this.updateID = setInterval(vm.upDateBoard2.bind(vm), 700)
+						})
+					},
+					getGame () {
+						return new Promise((resolve, reject) => {
+							$.post('./capture_game/get_game.php')
+							.done(data => resolve(JSON.parse(data)))
+						})
+					},
+					pass () {
+						board.pass()
+					},
+					openSettings () {
+						this.state = STATE_NEW_GAME
+					},
+					reset () {
+						$.post('./capture_game/reset.php')
+						.done(data => {
+							this.moveCount = 0
+							this.currentTurn = 1
+							board.reset().unLock()
+						})
+					},
+					// ユーザーを作成するメソッド
+					createUser: function(event) {
+						const userName = document.querySelector("#name").value
+						if (userName) {
+							const vm = this
+							$.post('./capture_game/post_user.php', { userName })
+							.done(userId => {
+								vm.state = STATE_WELCOME
+								vm.userId = userId
+								vm.userName = userName
+								localStorage.haveAGoUserId = userId
+							})
+						}
+					},
+					// ユーザー情報を取得するメソッド
+					getUserData (userId) {
+						return new Promise((resolve, reject) => {
+							$.get('./capture_game/get_user.php', { userId })
+							.done(data => resolve(JSON.parse(data)))
+						})
+					},
+					// 棋譜を取得するメソッド
+					getMoves () {
+						const vm = this
+						$.get('./capture_game/get_move.php', { moveCount: this.moveCount })
+						.done(data => {
+							moves = JSON.parse(data)
+							vm.updateBoard(moves)
+						})
+					},
+					// 棋譜を最新の状態に更新するメソッド
+					updateBoard (moves) {
+						for (let i = 0; i < moves.length; i++) {
+							const moveCount = Number(moves[i]['move_count'])
+							const turn = Number(moves[i]['turn'])
+							const Z = Number(moves[i]['place'])
+
+							this.kifu[moveCount - 1] = { turn, Z }
+						}
+					},
+					upDateBoard2 () {
+						while (this.moveCount < this.kifu.length) {
+							const { turn, Z } = this.kifu[this.moveCount++]
+							const isLast = (this.moveCount === this.kifu.length)
+
+							this.updateFlag = true
+							if (Z) {
+								const X = Z % (W + 2)
+								const Y = Math.floor(Z / (W + 2))
+								board.move(X, Y, false)
+								this.message = ""
+							} else {
+								board.pass(false)
+								if (turn !== this.myTurn && isLast) {
+									this.message = "相手がパスをしました"
+								}
+							}
+							if (isLast) {
+								this.currentTurn = 3 - turn
+							}
+						}
+						if (this.updateFlag) {
+							this.updateFlag = false
+							this.updateAgehama()
+							this.hantei()
+						}
+					},
+					updateAgehama () {
+						if (this.myTurn === BLACK) {
+							this.agehama = board.captured.white
+							this.playerAgehama = board.captured.black
+						} else {
+							this.agehama = board.captured.black
+							this.playerAgehama = board.captured.white
+						}
+					},
+					finish () {
+						$.post('./capture_game/join.php', {
+							room_id: this.roomId,
+							player_id: this.playerId,
+							end_flag: 1,
+						})
+					},
+					hantei () {
+						if (this.agehama >= this.winningPoint) {
+							if (this.hostFlag) {
+								this.finish()
+								$.post('./capture_game/update_user.php', {
+									winner_id: this.userId,
+									loser_id: this.playerId,
+								})
+							}
+							setTimeout (() => {
+								this.win++
+								this.playerLose++
+								this.gameSet()
+								alert(`${this.userName}さんの勝ち！`)
+							}, 500)
+						}
+						else if (this.playerAgehama >= this.winningPoint) {
+							if (this.hostFlag) {
+								this.finish()
+								$.post('./capture_game/update_user.php', {
+									winner_id: this.playerId,
+									loser_id: this.userId,
+								})
+							}
+							setTimeout (() => {
+								this.lose++
+								this.playerWin++
+								this.gameSet()
+								alert(`${this.playerName}さんの勝ち！`)
+							}, 500)
+						}
+						else if (
+							this.kifu[this.moveCount-1].Z === SPACE &&
+							this.kifu[this.moveCount-2].Z === SPACE
+						) {
+							const count = [0, 0, 0, 0]
+							board.board.forEach(c => {
+								count[c]++
+							})
+							let result = ''
+							let winnerId, loserId
+							if (count[BLACK] < count[WHITE]) {
+								if (this.myTurn === WHITE) {
+									result = `${count[WHITE]} 対 ${count[BLACK]} で${this.userName}さんの勝ち！`
+									winnerId = this.userId
+									loserId = this.playerId
+								} else {
+									result = `${count[BLACK]} 対 ${count[WHITE]} で${this.playerName}さんの勝ち！`
+									winnerId = this.playerId
+									loserId = this.userId
+								}
+								if (this.hostFlag) {
+									this.finish()
+									$.post('./capture_game/update_user.php', {
+										winner_id: winnerId,
+										loser_id: loserId,
+									})
+								}
+								setTimeout (() => {
+									this.win++
+									this.playerLose++
+									this.gameSet()
+									alert(result)
+								}, 500)
+							}
+							else if (count[BLACK] > count[WHITE]) {
+								if (this.myTurn === WHITE) {
+									result = `${count[WHITE]} 対 ${count[BLACK]} で${this.playerName}さんの勝ち！`
+									winnerId = this.playerId
+									loserId = this.userId
+								} else {
+									result = `${count[BLACK]} 対 ${count[WHITE]} で${this.userName}さんの勝ち！`
+									winnerId = this.userId
+									loserId = this.playerId
+								}
+								if (this.hostFlag) {
+									this.finish()
+									$.post('./capture_game/update_user.php', {
+										winner_id: winnerId,
+										loser_id: loserId,
+									})
+								}
+								setTimeout (() => {
+									this.win++
+									this.playerLose++
+									this.gameSet()
+									alert(result)
+								}, 500)
+							}
+							else if (count[BLACK] === count[WHITE]) {
+								result = `${count[WHITE]} 対 ${count[BLACK]} で持碁となりました！`
+								setTimeout (() => {
+									this.gameSet()
+									alert(result)
+								}, 500)
+							}
+						}
+						else if (this.isMyTurn) {
+							board.unLock()
+						}
+					},
+					gameSet () {
+						board.lock()
+						clearInterval(this.getMovesID)
+						clearInterval(this.updateID)
+						this.changeStateToWaitingRoom()
+					},
+				},
+			})
+
+			// 着手時のイベントハンドラ
+			board.addMoveEvent((place, moveFlag, turn) => {
+				// 着手に成功した場合
+				if (0 <= moveFlag) {
+					//board.lock()
+					vm.kifu[vm.moveCount] = { turn, Z: place }
+					vm.moveCount++
+					vm.currentTurn = 3 - turn
+					vm.updateFlag = true
+					vm.message = ""
+					$.post('/capture_game/post_move.php', { turn, place })
+				} else if (moveFlag === -2) {
+					alert("コウなので取り返せません")
+				} else if (moveFlag === -3) {
+					alert("そこへは打てません")
+				}
+			})
+
+			$("article").on("inview", function(event, isInView, visiblePartX, visiblePartY){
+				if (isInView) {
+					$(this).stop().addClass("mv");
+				} else {
+					//$(this).stop().removeClass("mv");
+				}
+			});
+		</script>
+
+		<style>
+			#join-form {
+				width: 70%;
+				height: auto;
+				min-height: 200px;
+				display: flex;
+				justify-content: center;
+			    position: absolute;
+			    flex-direction: column;
+			    top: 21%;
+			    left: 0;
+			    right: 0;
+			    margin: auto;
+			    padding: 0;
+			    color: #42cbf8;
+			    color: #01c3ed;
+			    background: rgba(0,10,10,.65);
+			    border: 1px solid #42cbf8;
+			    border-radius: 8px;
+			    text-align: center;
+			    font: 15px/25px Roboto Mono,Inconsolata,monospace,sans-serif;
+			    -webkit-font-smoothing: antialiased;
+			    -moz-osx-font-smoothing: grayscale;
+			    -webkit-box-shadow: rgba(0,112,202,.3) 2px 2px 10px, rgba(0,112,202,.3) -2px -2px 10px, rgba(0,112,202,.3) 40px 0 50px -50px inset, rgba(0,112,202,.3) -40px 0 50px -50px inset, #0188ca 0 -40px 50px -50px inset, #0188ca 0 40px 50px -50px inset;
+			    box-shadow: 2px 2px 10px rgba(0,112,202,.3), -2px -2px 10px rgba(0,112,202,.3), inset 40px 0 50px -50px rgba(0,112,202,.3), inset -40px 0 50px -50px rgba(0,112,202,.3), inset 0 -40px 50px -50px #0188ca, inset 0 40px 50px -50px #0188ca;
+			    overflow: hidden;
+			}
+
+			#join-form input,
+			#join-form button {
+				margin-top: 5px;
+				padding: 3px 8px;
+				color: #42cbf8;
+			    background: transparent;
+				border: 1px solid #42cbf8;
+				height: 35px;
+				box-sizing: border-box;
+			    vertical-align: top;
+			    border-radius: 5px;
+			}
+
+			.settings input {
+				height: 30px;
+				width: 33px;
+			    text-align: center;
+			}
+
+			#join-form input[type="text"] {
+				margin-right: 3px;
+			}
+
+			#buttons {
+				text-align: center;
+				margin-top: 5px;
+			}
+
+			#buttons button {
+				padding: 3px 8px;
+			}
+		</style>
+	</body>
+</html>

@@ -1,0 +1,155 @@
+/* アニメーションやプリプロセッサ用のmixinやfunctionをこのレイヤーで管理 */
+
+// Loading用のアニメーション
+@keyframes loading {
+  0%,
+  100% {
+    color: $white;
+    text-shadow: 0 0 10px $blue-bolt, 0 0 20px $blue-bolt, 0 0 40px $blue-bolt,
+      0 0 80px $blue-bolt;
+    filter: blur(2px);
+  }
+  25%,
+  75% {
+    color: $black-dark-grey;
+    text-shadow: none;
+    filter: blur(0);
+  }
+}
+
+@mixin textStyleA {
+  color: white;
+  text-shadow: $blueLikeColor1 0 0 3px;
+}
+
+@mixin textStyleB {
+  font: 16px/23px $fontFamily1;
+}
+
+@mixin textStyleC {
+  color: #fff;
+  // font-weight: 100;
+  text-shadow:
+    0 0 4px #00b3ff,
+    0 0 8px #00b3ff,
+    0 0 16px #00b3ff;
+}
+
+@mixin boxStyleC {
+  color: #fff;
+  box-shadow:
+    0 0 4px #00b3ff,
+    0 0 8px #00b3ff;
+}
+
+@mixin absoluteBox {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+// タップ時のスタイルの変化を抑制する
+@mixin unSelectable {
+  &,
+  &::selection,
+  *::selection {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    // text-shadow: none;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+// 上下左右中央配置にする
+@mixin center($useViewport: false) {
+  @if ($useViewport) {
+    margin-top: 50vh;
+    margin-left: 50vw;
+  } @else {
+    margin-top: 50%;
+    margin-left: 50%;
+  }
+
+  display: inline-block;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+// 水平方向について中央配置にする
+@mixin horizontalCenter($useViewport: false) {
+  @if ($useViewport) {
+    margin-left: 50vw;
+  } @else {
+    margin-left: 50%;
+  }
+
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+
+// 垂直方向について中央配置にする
+@mixin verticalCenter($useViewport: false) {
+  @if ($useViewport) {
+    margin-top: 50vh;
+  } @else {
+    margin-top: 50%;
+  }
+
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+// コンテンツをスクロールさせたいコンテナ要素に指定する
+// 参考：https://shanabrian.com/web/css3/overflow-scrolling.php
+@mixin overflowScrolling {
+  overflow-x: scroll;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  & > * {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+}
+
+@mixin overflowScrollingX {
+  overflow-x: scroll;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  & > * {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+}
+
+@mixin overflowScrollingY {
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  & > * {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+}
+
+/* @extend %size100p; */
+%size100p {
+  width: 100%;
+  height: 100%;
+}

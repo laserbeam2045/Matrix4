@@ -1,0 +1,44 @@
+:root,
+body,
+#__nuxt {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+body {
+  // color: #17d2cf;
+  // background: #070b17;
+  transition: all 1s ease-out;
+  -webkit-font-smoothing: antialiased;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+input[type=text] {
+  font-size: 16px !important;
+  // transform: scale(0.8);
+}
+
+// textarea::selection,
+// input::selection,
+// span::selection,
+// h6::selection,
+// h5::selection,
+// h4::selection,
+// h3::selection,
+// h2::selection,
+// h1::selection,
+// p::selection,
+// td::selection,
+// pre::selection {
+//   // background: rgb(0 112 202 / 50%);
+//   background: rgb(0 255 150 / 50%);
+//   color: #fff;
+//   text-shadow: 0 0 4px #00b3ff, 0 0 8px #00b3ff, 0 0 16px #00b3ff,
+//     -32px 0 32px #00b3ff, +32px 0 32px #00b3ff;
+// }

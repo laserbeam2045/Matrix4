@@ -1,0 +1,283 @@
+
+
+	img {
+		-ms-interpolation-mode	: bicubic;
+	}
+
+	#one h2 {
+		margin-top	: 60px;
+	}
+
+	#two p, #three p {
+		margin-top	: 0;
+	}
+
+
+
+	/* 読み仮名の吹き出し */
+	.text {
+		position	: relative;
+	}
+	.fukidashi {
+		display			: none;
+		position		: absolute;
+		top				: -40px;
+		left			: 0;
+		padding			: 3px 10px;
+		border-radius	: 5px;
+		background		: #33cc99;
+		background		: gray;
+		color			: #fff;
+		font-weight		: normal;
+	}
+	.fukidashi:after {
+		position		: absolute;
+		left			: 0;
+		bottom			: -19px;
+		width			: 0;
+		height			: 0;
+		margin-left		: 10px;
+		border			: 10px solid transparent;
+		border-color	: rgba(51, 204, 153, 0);
+		border-top-color: gray;
+		pointer-events	: none;
+		content			: " ";
+	}
+	.text {
+		cursor	: default;
+	}
+	.text:hover > .fukidashi {
+		display	: inline-table;
+	}
+
+
+
+	/* 棋具 */
+	#kigu > div {
+		min-width	: 320px;
+		margin		: 0 auto;
+		text-align	: center;
+		line-height	: 10px;
+	}
+
+	#kigu img {
+		width		: 100%;
+		box-shadow	: 0 2px 3px gray;
+	}
+
+	#kigu img:first-child {
+		margin-bottom	: 10px;
+	}
+
+	@media screen and (min-width: 640px) {
+		#kigu img {
+			width		: 49%;
+		}
+
+		#kigu img:first-child {
+			margin-right	: 2%;
+			margin-bottom	: 0;
+		}
+	}
+
+	/* 棋具のエフェクト */
+	#kigu {
+		transition			: .8s;
+		opacity				: 0;
+		transform			: translate(0,50px); 
+		-webkit-transform	: translate(0,50px);
+	}
+
+	#kigu.mv {
+		opacity				: 1;
+		transform			: translate(0,0); 
+		-webkit-transform	: translate(0,0);
+	}
+
+
+
+	/* 地を囲う */
+	#game-img {
+		width		: 100%;
+		max-width	: 320px;
+	}
+
+	#gameImg {
+		display	: block;
+		margin	: 0 auto;
+	}
+
+	#game-img #button-box {
+		width			: 100%;
+		margin			: 10px auto 0;
+		font-size		: 0;
+	}
+
+	div.button {
+		width			: 30%;
+		height			: 40px;
+		line-height		: 40px;
+		margin-right	: 5%;
+		font-size		: 16px;
+		color			: gray;
+		border			: 1px solid gray;
+		border-radius	: 5px;
+		cursor			: pointer;
+		box-sizing		: border-box;
+		display			: inline-block;
+		vertical-align	: bottom;
+		float			: none;
+	}
+
+	div.button:nth-child(2) {
+		height		: 45px;
+		line-height	: 45px;
+	}
+
+	div.button:last-child {
+		margin-right	: 0;
+	}
+
+	.freeze i {
+		display	: none;
+	}
+
+	/* 地を囲うのエフェクト */
+	#game > div:first-child {
+		opacity				: 0;
+		transform			: translate(-50px, 0); 
+		-webkit-transform	: translate(-50px, 0);
+		transition			: .8s;				
+	}
+
+	#game.mv > div:first-child {
+		opacity				: 1.0;
+		transform			: translate(0,0); 
+		-webkit-transform	: translate(0,0);				
+	}
+
+
+
+	/* 石を取る */
+	#pon-img {
+		width		: 320px;
+		min-width	: 320px;
+		text-align	: center;
+	}
+
+	#pon-img div {
+		font-size	: 0;
+		margin		: 0;
+	}
+
+	#pon-img img, #pon-img span {
+		vertical-align	: middle;
+	}
+
+	#pon-img span {
+		display		: inline-block;
+		width		: 30px;
+		font-size	: 20px;
+		text-align	: center;
+	}
+
+	/* 石を取るのエフェクト */
+	#pon > div:first-child {
+		opacity				: 0;
+		transform			: translate(50px, 0); 
+		-webkit-transform	: translate(50px, 0);
+		transition			: .8s;				
+	}
+
+	#pon.mv > div:first-child {
+		opacity				: 1.0;
+		transform			: translate(0,0); 
+		-webkit-transform	: translate(0,0);				
+	}
+
+
+
+	/* 囲碁の魅力のエフェクト */
+	#two div {
+		opacity				: 0;
+		transform			: translate(50px, 0); 
+		-webkit-transform	: translate(50px, 0);
+		transition			: .8s;
+	}
+
+	#two div#rule-link {
+		transform			: translate(0px, 0); 
+		-webkit-transform	: translate(0px, 0);
+	}
+
+	#two div.mv {
+		opacity				: 1.0;
+		transform			: translate(0,0); 
+		-webkit-transform	: translate(0,0);
+	}
+
+
+
+	/* ルールのページへ */
+	#rule-link {
+		display		: flex;
+		flex-wrap	: wrap;
+	    align-items	: flex-end;
+	    margin		: 80px 0 0;
+	    max-width	: 42em;
+	}
+
+	#rule-link p {
+		margin	: 0;
+	}
+
+	#rule-link a {
+		display				: table;
+		margin				: 15px auto 0;
+		padding				: 10px 20px;
+		color				: #2A5CAA;
+		border				: 1px solid #2A5CAA;
+		-webkit-transition	: all 0.2s;
+		-moz-transition		: all 0.2s;
+		transition			: all 0.2s;
+	}
+
+	#rule-link a:hover {
+		color		: white;
+		background	: #2A5CAA;
+	}
+
+	#rule-link i {
+		margin-right	: 5px;
+	}
+
+
+
+	@media screen and (max-width:800px) {
+		#game-img {
+			margin		: 0 auto;
+		}
+
+		#game, #pon {
+			flex-flow	: wrap;
+		}
+
+		#pon-img {
+			width	: 100%;
+		}
+
+		#kigu {
+			transform			: translate(0, 0); 
+			-webkit-transform	: translate(0, 0);
+		}
+
+		#game > div:first-child {
+			transform			: translate(0, 0); 
+			-webkit-transform	: translate(0, 0);
+		}
+
+		#pon > div:first-child {
+			transform			: translate(0, 0);
+			-webkit-transform	: translate(0, 0);
+		}
+	}

@@ -1,0 +1,77 @@
+# For have-a-go
+
+RewriteEngine on
+RewriteCond %{REQUEST_URI} ^/$
+RewriteRule ^.*$ /go/ [R=301,L]
+
+#RewriteEngine on
+#RewriteCond %{REQUEST_URI} ^/$ [OR]
+#RewriteCond %{REQUEST_URI} ^/about-this-site [OR]
+#RewriteCond %{REQUEST_URI} ^/life-and-death [OR]
+#RewriteCond %{REQUEST_URI} ^/introduction [OR]
+#RewriteCond %{REQUEST_URI} ^/capture-game [OR]
+#RewriteCond %{REQUEST_URI} ^/knowledge [OR]
+#RewriteCond %{REQUEST_URI} ^/practice [OR]
+#RewriteCond %{REQUEST_URI} ^/feedback [OR]
+#RewriteCond %{REQUEST_URI} ^/rule
+
+#RewriteRule ^(.*)$ /go/$1 [R=301,L]
+#RewriteEngine on
+#RewriteCond %{HTTP_HOST} ^have-a-go.moo.jp
+#RewriteRule (.*) http://www.have-a-go.moo.jp/$1 [R=301,L]
+
+# For matrix
+
+#RewriteEngine on
+#RewriteCond %{REQUEST_URI} !/matrix
+#RewriteRule ^(.*) /matrix/$1 [L]
+
+#RewriteEngine on
+#RewriteCond %{REQUEST_URI} ^/js/(app|chunk-vendors).*\.(js|js\.map)$
+#RewriteRule ^js/(.*\.(js|js\.map))$ /matrix/js/$1 [L]
+
+#RewriteEngine on
+#RewriteCond %{REQUEST_URI} ^/css/app.*\.css$
+#RewriteRule ^css/(.*)$ /matrix/css/$1 [L]
+
+#RewriteEngine on
+#RewriteCond %{REQUEST_URI} ^/media/.*\.(mp3|wav)$
+#RewriteRule ^media/(.*)$ /matrix/media/$1 [L]
+
+#RewriteEngine on
+#RewriteCond %{REQUEST_URI} ^/img/.*\.(png|jpg)$
+#RewriteRule ^img/(.*)$ /matrix/img/$1 [L]
+
+#RewriteEngine on
+#RewriteCond %{REQUEST_URI} ^/favicon\.ico$
+#RewriteRule ^(.*)$ /matrix/$1 [L]
+
+
+# For tree
+
+#RewriteEngine on
+#RewriteCond %{REQUEST_URI} !/tree
+#RewriteRule ^(.*) /tree2/$1 [L]
+
+#RewriteEngine on
+#RewriteCond %{REQUEST_URI} ^/src/assets/audios/.*\.(mp3|wav)$
+#RewriteRule ^audios/(.*)$ /tree/assets/audios/$1 [L]
+
+#RewriteEngine on
+#RewriteCond %{REQUEST_URI} ^/favicon\.ico$
+#RewriteRule ^(.*)$ /tree/$1 [L]
+
+#RewriteEngine on
+#RewriteCond %{REQUEST_URI} ^/assets/vendor\..*\.(js|css)$
+#RewriteRule ^(.*)$ /tree/assets/$1 [L]
+
+#RewriteEngine on
+#RewriteCond %{REQUEST_URI} ^/assets/vendor\..*\.(js)$
+#RewriteRule ^js/(.*\.(js|js\.map))$ /matrix/js/$1 [L]
+
+
+# For saorio
+
+#RewriteEngine on
+#RewriteCond %{REQUEST_URI} !/
+#RewriteRule ^(.*) /saorio/$1 [L]

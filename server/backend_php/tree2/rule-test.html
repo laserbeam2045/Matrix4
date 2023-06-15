@@ -1,0 +1,311 @@
+﻿<!doctype html>
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>誰もがわかる囲碁入門　ルール</title>
+		<meta name="viewport" content="initial-scale=1">
+		<link rel="stylesheet" href="css/contents.css">
+		<link rel="stylesheet" href="css/rule.css">
+		<!--[if lt IE 9]>
+		<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+		<![endif]-->
+
+		<script>
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		  ga('create', 'UA-69756713-2', 'auto');
+		  ga('send', 'pageview');
+		</script>
+	</head>
+
+	<body>
+	<div id="body">
+		<header>
+			<a href="index"><h1>誰もがわかる囲碁入門</h1></a>
+			<div id="setting-area">
+				<h6>文字サイズ</h6>
+				<div id="fontSizeButtons">
+					<div class="fontSizeButton" id="left"  >小</div>
+					<div class="fontSizeButton" id="center">標準</div>
+					<div class="fontSizeButton" id="right" >大</div>
+				</div>
+			</div>
+		</header>
+
+		<ul id="menu">
+			<li><a href="introduction">はじめに</a></li>
+			<li class="selected">ルール</li>
+			<li><a href="knowledge">雑学</a></li>
+			<li><a href="life-and-death">死活</a></li>
+		</ul>
+		<noscript>
+			<div class="paragraphs">
+				<p>（お使いの環境は、javascriptが無効です。コンテンツを正しく表示するには、javascriptが有効な環境でご覧ください。）</p>
+			</div>
+		</noscript>
+		<ul id="menu-list">
+			<li><a href="#one">１、黒と白が順番に打つ</a></li>
+			<li><a href="#two">２、相手の石は囲めば取れる</a></li>
+			<li><a href="#three">３、打てない場所がある</a></li>
+			<li><a href="#four">４、石には生き死にがある</a></li>
+			<li><a href="#five">５、地が多いほうの勝ち</a></li>
+		</ul>
+
+		<div id="contents">
+			<article>
+				<h1 id="one" class="title">１、黒と白が順番に打つ</h1>
+				<div class="canvas-group">
+					<div class="space"></div>
+					<div class="palette">
+						<div class="rule-info"></div>
+						<div class="turn-info"></div>
+						<div class="reset">リセット</div>
+					</div>
+					<canvas id="world0"></canvas>
+					<div class="space"></div>
+				</div>
+
+				<div class="information-box">
+					<div class="information"></div>
+				</div>
+
+				<div class="button-box">
+					<div class="button-group">
+						<div class="button leftArrow">←</div>
+						<div class="infoNum"></div>
+						<div class="button rightArrow">→</div>
+					</div>
+				</div>
+			</article>
+
+			<article>
+				<h1 id="two" class="title">２、相手の石は囲めば取れる</h1>
+				<div class="canvas-group">
+					<div class="space"></div>
+					<div class="palette">
+						<div class="rule-info" style="color: blue"></div>
+						<div class="turn-info"></div>
+						<div class="reset">リセット</div>
+					</div>
+					<canvas id="world1"></canvas>
+					<div class="space"></div>
+				</div>
+
+				<div class="information-box">
+					<div class="information"></div>
+				</div>
+
+				<div class="button-box">
+					<div class="button-group">
+						<div class="button leftArrow">←</div>
+						<div class="infoNum"></div>
+						<div class="button rightArrow">→</div>
+					</div>
+				</div>
+			</article>
+
+			<article>
+				<h1 id="three" class="title">３、打てない場所がある</h1>
+				<div class="canvas-group">
+					<div class="space"></div>
+					<div class="palette">
+						<div class="rule-info"></div>
+						<div class="turn-info"></div>
+						<div class="reset">リセット</div>
+					</div>
+					<canvas id="world2"></canvas>
+					<div class="space"></div>
+				</div>
+
+				<div class="information-box">
+					<div class="information"></div>
+				</div>
+
+				<div class="button-box">
+					<div class="button-group">
+						<div class="button leftArrow">←</div>
+						<div class="infoNum"></div>
+						<div class="button rightArrow">→</div>
+					</div>
+				</div>
+			</article>
+
+			<article>
+				<h1 id="four" class="title">４、石には生き死にがある</h1>
+				<div class="canvas-group">
+					<div class="space"></div>
+					<div class="palette">
+						<div class="rule-info"></div>
+						<div class="turn-info"></div>
+						<div class="reset">リセット</div>
+					</div>
+					<canvas id="world3"></canvas>
+					<div class="space"></div>
+				</div>
+
+				<div class="information-box">
+					<div class="information"></div>
+				</div>
+
+				<div class="button-box">
+					<div class="button-group">
+						<div class="button leftArrow">←</div>
+						<div class="infoNum"></div>
+						<div class="button rightArrow">→</div>
+					</div>
+				</div>
+			</article>
+
+			<article id="five">
+				<h1 class="title">５、地が多いほうの勝ち</h1>
+				<div class="canvas-group">
+					<div class="palette">
+						<div class="rule-info"></div>
+						<div class="turn-info"></div>
+						<div class="reset">リセット</div>
+					</div>
+					<canvas id="world4"></canvas>
+				</div>
+
+				<div class="information-box">
+					<div class="information"></div>
+				</div>
+
+				<div class="button-box">
+					<div class="button-group">
+						<div class="button leftArrow">←</div>
+						<div class="infoNum"></div>
+						<div class="button rightArrow">→</div>
+					</div>
+				</div>
+			</article>
+		</div>
+
+		<div style="display: none;">
+			<p id="info0-1">下のボタンを押すと、ここの説明文が変わります。</p>
+			<p id="info0-2">この碁盤は実際に石を置くことができます。試しに、碁盤のどこかを<span id="touch">タッチ</span>してみてください。</p>
+			<p id="info0-2-2">すると碁石が現れましたね。左の赤く囲った部分があるときは、その手番で着手することができます。色々試しながら読み進めてみましょう。</p>
+			<p id="info0-3">囲碁では、石を置くことを「打つ」といいます。石を打つのは、線と線が交わる地点で、黒から先に、一手ずつ順番に打っていきます。</p>
+			<p id="info0-4">どこから打つかはその人の自由で、碁盤の端に打つこともできます。ただし、前に打った石を、別の地点へ移動させることはできません。</p>
+
+			<p id="info1-1">相手の石は、周りを囲めば、取ることができます。白い点のところに、石を置いてみてください。</p>
+			<p id="info1-1-2">すると黒石が消えましたね。このように、石から出ている線を、隙間なく塞ぐと、その石を取ることができます。</p>
+			<p id="info1-2">碁盤の端にある石でも、取ることができます。これらの黒石を取るには、どこへ打てばよいでしょうか。</p>
+			<p id="info1-2-2">うまく取れましたね！このように端にある石は、逃げ道が少ないので、少ない石数で取ることができます。</p>
+			<p id="info1-3">縦や横に隣接した同じ色の石は、一つの塊として考えます。沢山繋がった石でも、取ることができます。</p>
+			<p id="info1-4">石は斜めでは繋がっていないので、この場合は、別々の石として取ることができます。石を取る際には、縦と横が重要で、斜めを塞ぐ必要はありません。</p>
+			<p id="info1-5">取った石は碁笥の蓋に入れておき、これを「アゲハマ」と呼びます。アゲハマは対局の最後に、相手の地を埋めて減らすのに使います。</p>
+
+			<p id="info2-1">囲碁は、基本的にどこへ打ってもいいゲームですが、たまに打てない場所が生じることがあります。</p>
+			<p id="info2-2">例えばこの形で、白石の中央に、黒から打つことはできません。なぜならそこに打つと、自分の石の上下左右が塞がってしまうからです。</p>
+			<p id="info2-3">白から打つのは構いません。試してみましょう。</p>
+			<p id="info2-3-2">この場合、全ての白石が繋がり、一つの石になります。そして外側の点があいているので、打つことができるのです。</p>
+			<p id="info2-4">またこの形なら、黒が打ってもまだ隙間が残るので、打つことができます。やってみましょう。</p>
+			<p id="info2-4-2">ただしその状態から、更に黒が隣へ打つことはできません。自分の石の周囲が塞がってしまうからです。</p>
+			<p id="info2-5">しかし着手禁止点には例外があり、相手の石を取れる場合は打つことができます。試しに、この白石２つを、外側から囲んでみましょう。</p>
+			<p id="info2-5-2">すると今度は、先ほどの場所が着手禁止点ではなくなりましたね。このように石を取れる場合なら、それによって空間ができるので、打ってもよいのです。</p>
+
+			<p id="info2-6">最後に「劫（コウ）」という、特殊な形についてご紹介します。この形は、黒が次にＡに打てば、白石を取ることができます。やってみましょう。</p>
+			<p id="info2-6-2">すると今度は、白がＢに打つと、黒石を取り返せるように思えるのですが・・・。</p>
+			<p id="info2-6-3">そうすると、最初の形に戻ってしまいます。このような形をコウというのですが、同じことの繰り返しでは、対局が進まなくなってしまいますね。</p>
+			<p id="info2-7">そこで、一方がコウを取ったときに、その相手は直後の手番で、コウを取り返してはならないことになっています。</p>
+			<p id="info2-8">例えばここで、黒がコウを取ったときに、白はすぐにはコウを取り返すことができません。</p>
+			<p id="info2-9">白Ｃなど、どこか別の所へ打ち、一手以上間をあければ、コウを取り返すことが可能になります。</p>
+
+			<p id="info3-1">ここからは、勝敗に関するルールです。</p>
+			<p id="info3-2">この黒石は、白が隣に打てば、取ることができます。</p>
+			<p id="info3-3">しかし実はこの黒石は、黒から打っても助けることができません。例えばこのように、逃げようとしても、やはり取ることができます。</p>
+			<p id="info3-4">つまりこの状態で、白が何も打たなくても、この黒石は取られているに等しいのです。このような、いずれ取られてしまう石のことを、「死んでいる」と表現します。</p>
+			<p id="info3-5">反対に、相手に打たれても取られない石のことを、「生きている」と表現します。この場合、前述の黒石以外は、全ての石が生きています。</p>
+			<p id="info3-6">例えば白が、黒石を取ろうと、ここへ打ってきたとします。これに対して黒は、どこへ打つのがよいでしょうか？</p>
+			<p id="info3-6-2">それがいい手ですね！味方の石と繋がります。</p>
+			<p id="info3-6-3">そこに打つのは、白にここに打たれて、取られてしまいます。リセットして、もう一度考えてみましょう。</p>
+			<p id="info3-7">ではこちらへ打ってきたら、黒はどう打ちますか？</p>
+			<p id="info3-7-2">それがいい手ですね！白石を取ることができます。</p>
+			<p id="info3-8">というわけで、上の黒石達は生きています。</p>
+			<p id="info3-9">このように、石には生き死にというものがあり、一局を通じて、石は生きたり死んだりしますが、最終的には、全ての石が、そのどちらかに分かれます。</p>
+			<p id="info3-10">難しい例を挙げましたが、技術的なことは重要ではないので、ここでは、そういうものがあるということだけ、知っておいてください。</p>
+
+			<p id="info4-1">生きている石で囲った空間を「地（じ）」といい、囲碁は最終的に、この数で勝敗が決まります。</p>
+			<p id="info4-2">この場合、上半分が黒地（くろじ）、下半分が白地（しろじ）となっています。このように地の境界線が決まり、<span style="color:blue">自分の打ちたい手</span>がなくなったらパスします。</p>
+			<p id="info4-3">そして両者のパスが連続すると、対局が終わります。これを「終局（しゅうきょく）」といいます。</p>
+			<p id="info4-4">終局したらまず、自分の地の中にある、相手の死に石を取り上げます。このとき、上下左右を囲む必要はありません。</p>
+			<p id="info4-5">実は死んでいる石は、終局したときに、そのまま取り上げることができるのです。そして対局中に取ったアゲハマと共に、それらを相手の地に埋めます。</p>
+			<p id="info4-6">それが終わったら、相手の地を数えます。地の単位を「目（もく）」といい、地を数える際には、石を打つのと同じ場所、かつ、石のない場所を数えます。</p>
+			<p id="info4-7">そのためこの場合、黒地は１４目、白地は１５目となり、その差により結果は白の１目勝ちとなります。</p>
+			<p id="info4-8">なおこのように、石を動かして数えやすくすることもできます。これを「整地（せいち）」といいます。</p>
+			<p id="info4-9">囲碁はこうして、最後に残った地が、相手より１目でも多ければ、勝ちとなります。細かい決まりは他にもありますが、ここまでわかれば、もう囲碁を打つことができます。</p>
+			<p id="info4-10">しかし初めて間もない方は、どこでパスをすればよいかで戸惑うことが多いようです。そこでもう少しだけ、判断の基準となる考え方をお話しします。</p>
+			<p id="info4-11">先ほどはこの局面で、両者がパスをした前提で話を進めましたが、もちろんこのように、相手の側へ打っても構いません。</p>
+			<p id="info4-12">ただし、その石が取られたり、死んだ場合は、終局後に自分の地に埋められるので、得にはなりません。（相手が受けてくれれば損でもありません）</p>
+			<p id="info4-13">また反対に、自分の地に打つのも、その分だけ地が減ってしまうので、損になります。</p>
+			<p id="info4-14">これらのことから、地の境界線が決まり、互いに相手の側へ打っても生きられなくなると、最終的には、得な手がなくなることになります。</p>
+			<p id="info4-15">技術的には、それが囲碁の終わりともいえますが、それをどの時点で判断できるかは、人それぞれ違うため、終局のタイミングも、打つ人によって様々です。</p>
+			<p id="info4-16">ですから、自分が分かるところまで打つことが肝心です。分からないことや、気になることがあれば、積極的に試してみましょう。</p>
+			<p id="info4-17">強い人同士の対局では、「終わりですね」など、確認し合って終局することが多いですが、あくまでも、自分で考えて、判断することが大切です。</p>
+			<p id="info4-18">ここまでご覧いただき、ありがとうございました。皆さんも、ぜひ自由な発想で、囲碁を楽しんでみてください。</p>
+		</div>
+
+		<footer>
+			<ul>
+				<li><a href="about-this-site">このサイトについて</a></li>
+				<li><a href="feedback">ご意見・ご感想</a></li>
+			</ul>
+			<p>Copyright (c) 2016</p>
+		</footer>
+		<div id="goToTop">↑</div>
+		<script src="jsLibrary/tmlib.js"></script>
+		<script src="jsLibrary/jQuery.js"></script>
+		<script src="jsLibrary/jQuery.fastClick.js"></script>
+		<script src="jsBoard/fontSize.js"></script>
+		<script src="jsBoard/boardSystem-test.js"></script>
+		<script src="jsBoard/boardCanvas-test.js"></script>
+		<script src="jsControl/rule-brain-test.js"></script>
+		<script src="jsControl/rule-control.js"></script>
+		<script>
+			var palette			= document.getElementsByClassName("palette");
+			var rule_info		= document.getElementsByClassName("rule-info");
+			var turn_info		= document.getElementsByClassName("turn-info");
+			var reset			= document.getElementsByClassName("reset");
+
+			var info			= document.getElementsByClassName("information");
+			var bBox			= document.getElementsByClassName("button-box");
+
+			var left_button		= document.getElementsByClassName("leftArrow");
+			var infoNumElm		= document.getElementsByClassName("infoNum");
+			var right_button	= document.getElementsByClassName("rightArrow");
+
+			var infoNum			= [ 1, 1, 1, 1, 1 ];
+			var maxInfoNum		= [ 4, 5, 9, 10, 18 ];
+
+			for(var i=0; i<5; i++) {	// イベントの設定
+				(function(){
+					var f = (function() {
+								var ii = i;
+								return function( add, tar ){ if(!$(tar).hasClass("freeze")) changeInfoNum( ii, add ); }
+							})();
+
+					reset[i].addEventListener(			kindOfEvent, function(){ f(0,  this) }, false );
+					left_button[i].addEventListener(	kindOfEvent, function(){ f(-1, this) }, false );
+					right_button[i].addEventListener(	kindOfEvent, function(){ f(+1, this) }, false );
+				})();
+			}
+
+			window.onload = function() {
+				for(var i=0; i<appArr.length; i++) initialize( i );
+			};
+
+			function initialize( num ) { 			// 初期設定
+				if( appArr[ num ]._scenes[0].Stones )	changeInfoNum( num, 0 );
+				else									setTimeout( function(){ initialize(num) }, 200 );
+			}
+
+			if( device == "other" ) $("#touch").html("クリック");
+		</script>
+	</div>
+	</body>
+</html>

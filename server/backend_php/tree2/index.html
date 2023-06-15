@@ -1,0 +1,131 @@
+<!doctype html>
+<html>
+	<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/website#">
+		<meta charset="UTF-8">
+		<meta name="viewport"    content="initial-scale=1">
+		<meta name="description" content="遊びながら、囲碁のルールを覚えよう！">
+		<title>誰もがわかる囲碁入門</title>
+		<link rel="stylesheet" href="css/contents.css">
+		<!--[if lt IE 9]>
+		<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+		<![endif]-->
+
+		<meta property="fb:admins"       content="100012419583210" >
+		<meta property="og:url"          content="http://www.have-a-go.net/" />
+		<meta property="og:type"         content="website" />
+		<meta property="og:title"        content="誰もがわかる囲碁入門" />
+		<meta property="og:description"  content="遊びながら、囲碁のルールを覚えよう！" />
+		<meta property="og:image"        content="http://www.have-a-go.net/img/site.jpg" />
+		<meta property="og:site_name"    content="サイト名" />
+
+		<style>
+			#noticeTop {
+				display			: block;
+				width			: 150px;
+				height			: 30px;
+				line-height		: 30px;
+				text-align		: center;
+				color			: white;
+				background		: rgb(121, 200, 177);
+				border			: 1px solid #ccc;
+				border-radius	: 3px 3px 0 0;
+			}
+
+			#scrollArea {
+				max-width		: 375px;
+				width			: 100%;
+				height			: 100px;
+				border			: 1px solid #ccc;
+				border-radius	: 0 3px 3px 5px;
+				overflow-y		: scroll;
+				box-sizing		: border-box;
+				padding			: 10px;
+				display			: inline-block;
+			}
+
+			dl {
+				margin		: 0;
+				line-height	: 2;
+			}
+
+			dt {
+				float			: left;
+				margin-right	: 20px;
+			}
+
+			.twitter-share-button, .fb-like, iframe {
+				display			: inline-block;
+				vertical-align	: bottom;
+			}
+
+			#contents {
+				display			: -webkit-flex;
+				display			: flex;
+				flex-direction	: column;
+				padding			: 0 5%;
+				box-sizing		: border-box;
+			}
+		</style>
+
+		<script>
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		  ga('create', 'UA-69756713-2', 'auto');
+		  ga('send', 'pageview');
+		</script>
+	</head>
+
+	<body>
+		<header>
+			<div class="container">
+				<a href="index" id="top-link" style="width:50%;">誰もがわかる囲碁入門</a>
+				<div id="font-size">
+					<p>文字サイズ</p>
+					<div id="buttons">
+						<div id="left"  >小</div>
+						<div id="center">標準</div>
+						<div id="right" >大</div>
+					</div>
+				</div>
+				<ul>
+					<li><a href="introduction">はじめに</a></li>
+					<li><a href="rule">ルール</a></li>
+					<li><a href="knowledge">慣習</a></li>
+					<li><a href="life-and-death">死活</a></li>
+				</ul>
+			</div>
+		</header>
+
+		<div id="contents" class="container">
+			<noscript>
+				<p style="color:gray;">※お使いの環境は、JavaScriptが無効です。
+コンテンツを正しく表示するには、JavaScriptが有効な環境でご覧ください。</p>
+			</noscript>
+
+			<p style="margin-top: 40px; flex-grow:10;">ようこそ！このサイトでは、囲碁のルールをわかりやすく説明します。<br><br>囲碁は簡単に遊べて、とても面白いゲームです。私と一緒に始めてみませんか？<br><br>初めての方は、「はじめに」をご覧ください。</p>
+
+			<div>
+				<div id="noticeTop">お知らせ</div>
+				<div id="scrollArea">
+					<dl>
+						<dt>2016/3/29</dt><dd>サイトを開設しました。</dd>
+					</dl>
+				</div>
+			</div>
+		</div>
+
+		<footer>
+			<ul>
+				<li><a href="about-this-site">このサイトについて</a></li>
+				<li><a href="feedback">ご意見・ご質問</a></li>
+			</ul>
+			<p>© 2016 have a go</p>
+		</footer>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="jsLibrary/jQuery.fastClick.js"></script>
+		<script src="jsBoard/fontSize.js"></script>
+	</body>
+</html>

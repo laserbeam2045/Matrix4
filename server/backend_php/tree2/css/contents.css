@@ -1,0 +1,498 @@
+
+
+
+	html, body {
+		margin		: 0;
+		padding		: 0;
+		position	: relative;
+	}
+
+	html {
+		height		: 100%;
+	}
+
+	body {
+		min-width				: 320px;
+		min-height				: 100%;
+		display					: -webkit-flex;
+		display					: flex;
+		-webkit-flex-direction	: column;
+		flex-direction			: column;
+		-webkit-tap-highlight-color	: rgba(0,0,0,0);
+	}
+
+	ul {
+		margin		: 0;
+		padding		: 0;
+		list-style	: none;
+	}
+
+	a {
+		display			: block;
+		height			: 100%;
+		text-decoration	: none;
+		color			: #333;
+	}
+
+	.container {
+		width		: 100%;
+		max-width	: 1000px;
+		margin		: 0 auto;
+	}
+
+	#contents {
+		-webkit-flex	: 1;
+		flex			: 1;
+		overflow		: hidden;
+	}
+
+	.margin {
+		width	: 90%;
+		margin	: auto;
+	}
+
+	.reset, .button, #setting-area, canvas {
+		-ms-user-select		: none;
+		-moz-user-select	: none;
+		-khtml-user-select	: none;
+		-webkit-user-select	: none;
+		-ms-touch-action	: manipulation;
+	}
+
+
+
+	/* ヘッダー */
+	header {
+		-webkit-user-select	: none;
+		-ms-touch-action	: manipulation;
+		border-bottom		: 1px solid rgb(220,220,220);
+	}
+
+	@media screen and (max-width:768px) {
+		header {
+			border-top	: 1px solid rgb(220,220,220);
+		}
+	}
+
+	header > div.container {
+		display					: -webkit-flex;		/* フレックスボックス化 */
+		display					: flex;
+		-webkit-flex-wrap		: wrap;				/* 幅が足りなくなったら折り返す */
+		flex-wrap				: wrap;
+		-webkit-justify-content	: space-between;	/* 水平位置を両端揃えに */
+		justify-content			: space-between;
+	}
+
+	/* トップページリンク */
+	#top-link {
+		width				: 50%;
+		max-width			: 300px;
+		line-height			: 80px;
+		font-size			: 24px;
+		text-align			: center;
+		cursor				: pointer;
+		box-sizing			: border-box;
+		-webkit-transition	: all 0.1s;
+		-moz-transition		: all 0.1s;
+		transition			: all 0.1s;
+		text-shadow			: 1px 1px 1px #eee;
+		border-left			: 1px solid transparent;
+		border-right		: 1px solid transparent;
+	}
+
+	#top-link:hover {
+		color			: #ffffff;
+		background		: #40bfb0;
+		text-shadow		: none;
+		border-left		: 1px solid rgb(220,220,220);
+		border-right	: 1px solid rgb(220,220,220);
+	}
+
+	@media screen and (min-width:1050px) and (max-width:1100px)	{#top-link {font-size: 23px;}}
+	@media screen and (min-width:1000px) and (max-width:1050px)	{#top-link {font-size: 22px;}}
+	@media screen and (min-width:950px) and (max-width:1000px)	{#top-link {font-size: 21px;}}
+	@media screen and (min-width:900px) and (max-width:950px)	{#top-link {font-size: 20px;}}
+	@media screen and (min-width:600px) and (max-width:900px)	{#top-link {font-size: 19px;}}
+	@media screen and (min-width:550px) and (max-width:600px)	{#top-link {font-size: 18px;}}
+	@media screen and (min-width:500px) and (max-width:550px)	{#top-link {font-size: 17px;}}
+	@media screen and (min-width:450px) and (max-width:500px)	{#top-link {font-size: 16px;}}
+	@media screen and (max-width:450px) {#top-link {font-size: 15px;}}
+
+	/* 文字サイズ調整エリア */
+	#font-size {
+		position			: relative;
+		text-align			: center;
+		-webkit-order		: 2;	/* 900px以上のときは右端に配置 */
+		order				: 2;
+		-webkit-flex-grow	: 0.6;	/*フリーのスペースがあれば大きくする*/
+		flex-grow			: 0.6;
+	}
+
+	#font-size > p {
+		margin		: 10px 0 3px;
+		font-size	: 16px;
+	}
+
+	#font-size #buttons {
+		min-width	: 112px;
+		max-width	: 200px;
+		width		: 90%;
+		margin		: 0 auto;
+		position	: absolute;
+		left		: 0;
+		right		: 0;
+		bottom		: 10px;
+	}
+
+	#font-size > #buttons > div {
+		float			: left;
+		width			: 32%;
+		height			: 32px;
+		line-height		: 32px;
+		color			: skyblue;
+		cursor			: pointer;
+		border-top		: solid 1px skyblue;
+		border-bottom	: solid 1px skyblue;
+	}
+	#left {
+		font-size		: 14px;
+	    border-left		: solid 1px skyblue;
+	    border-radius	: 2px 0 0 2px / 2px 0 0 2px;
+	}
+	#center {
+		font-size		: 16px;
+		border-left		: solid 1px skyblue;
+		border-right	: solid 1px skyblue;
+	}
+	#right {
+		font-size		: 18px;
+		border-right	: solid 1px skyblue;
+		border-radius	: 0 2px 2px 0 / 0 2px 2px 0;
+	}
+
+	/* グローバルリンクメニュー */
+	header ul {
+		min-width			: 320px;
+		margin				: 0;
+		padding				: 0;
+		-webkit-order		: 1;
+		order				: 1;
+		display				: -webkit-flex;
+		display				: flex;
+		-webkit-flex-wrap	: nowrap;
+		flex-wrap			: nowrap;
+	}
+
+	header li {
+		position	: relative;
+		display		: inline-block;
+		flex-grow	: 1;
+		height		: 80px;
+		text-align	: center;
+		cursor		: pointer;
+	}
+		
+	header li.selected {
+		cursor	: default;
+	}
+
+	header li a {
+		position	: relative;
+		height		: 100%;
+		box-sizing	: border-box;
+	}
+
+	header li a:before,
+	header li a:after{
+	  content		: "";
+	  display		: inline-block;
+	  position		: absolute;
+	  top			: 2em;
+	  bottom		: 0;
+	  width			: 0;
+	  height		: 1px; 
+	  margin		: auto;
+	  background	: #aaa;
+	  transition	: 0.1s;
+	}
+
+	header li a:before{
+	  left: 50%;
+	}
+
+	header li a:after{
+	  right: 50%;
+	}
+
+	/* 900px 以上のとき */
+	@media screen and (min-width:900px) {
+		header li {
+			line-height	: 80px;
+		}
+
+		header li.selected {
+			color		: #40bfb0;
+			font-weight	: bold;
+		}
+
+		header li a,
+		header li.selected {
+			padding	: 0 15px;
+		}
+
+		header li a:hover:before,
+		header li a:hover:after {
+		  width: 50%;
+		}
+	}
+
+	/* 900px以下のとき */
+	@media screen and (max-width:900px) {
+		#top-link {
+			border-right	: 1px solid rgb(200,200,200);
+		}
+
+		#font-size {
+			width	: 50%;
+		}
+
+		header ul {
+			width				: 100%;
+			order				: 3;
+			border-top			: 1px solid rgb(200,200,200);
+		}
+
+		header li {
+			height				: 45px;
+			line-height			: 45px;
+			-webkit-flex-grow	: 1;
+			flex-grow			: 1;
+		}
+
+		header li:not(:last-child) {
+			border-right		: 1px solid rgb(200,200,200);
+		}
+
+		header a:hover,
+		header li.selected {
+			color		: white;
+			background	: #40bfb0;
+		}
+	}
+
+
+
+	/* フッター */
+	footer {
+		color	: gray;
+		padding	: 15px 6.25% 15px;
+	}
+
+	footer ul {
+		margin			: 0 auto;
+		border-top		: 1px solid rgb(210, 210, 210);
+		border-bottom	: 1px solid rgb(210, 210, 210);
+		height			: 2;
+		text-align		: center;
+	}
+
+	footer li {
+		display			: inline-block;
+		height			: 2;
+		line-height		: 2;
+		text-align		: center;
+		margin			: 0 2%;
+	}
+	
+	footer a,
+	footer a:visited {
+		color			: gray;
+		padding			: 0 5px;
+		text-decoration	: none;
+	}
+
+	footer p {
+		font-size	: 16px;
+		margin		: 15px 0 0;
+	}
+
+
+
+	#menu-list {
+		margin	: 50px 0 80px;
+		padding	: 0;
+	}
+
+	#menu-list li {
+		font-size		: 16px;
+		font-size		: 1rem;
+		border-bottom	: solid 1px gray;
+	}
+
+	#menu-list li:first-child {
+		border-top	: solid	1px gray;
+	}
+
+	#menu-list a {
+		padding		: 12px 30px;
+	}
+
+	#menu-list a:hover {
+		color		: skyblue;
+	}
+
+
+
+
+
+	article {
+		padding-bottom	: 50px;
+	}
+
+	article h1 {
+		color			: #555;
+    	border-bottom	: 1px solid #555;
+    }
+
+	.paragraphs {
+		width		: 93%;
+		width		: 87.5%;
+		margin		: 0 auto;
+	}
+
+	p {
+		margin		: 20px 0;
+		line-height	: 1.5;
+	}
+
+	@media screen and (min-width: 800px) {
+		.paragraphs {
+			width		: 87.5%;
+			margin		: 0 auto;
+		}
+
+		p {
+			white-space	: pre-wrap;
+		}
+	}
+
+	h2 {
+		max-width	: 548px;
+		margin		: 50px 0 6px;
+		font-size	: 15px;
+		color		: rgb(57, 156, 151);
+	}
+
+
+
+	.information-box {
+		max-width		: 440px;
+	}
+
+	.information {
+		height			: 110px;
+		margin			: 0 5px 5px;
+		border			: solid 2px #aaa;
+		border-radius	: 12px;
+		display			: table;
+	}
+
+	.information p {
+		width			: 600px;
+		padding			: 10px;
+		line-height		: 1.5;
+		font-weight		: 300;
+		vertical-align	: middle;
+		display			: table-cell;
+	}
+
+
+
+	.button-box {
+		height			: 35px;
+	}
+
+	.button-group {
+		width		: 220px;
+		margin		: 0 auto;
+	}
+
+	.button {
+		float			: left;
+		text-align		: center;
+		vertical-align	: middle;
+		border-radius	: 5px;
+		font-family		: "‚l‚r ‚oƒSƒVƒbƒN", arial, helvetica, clean, sans-serif;
+		vertical-align	: middle;
+	}
+
+	.button:not(.freeze):active {
+		position	: relative;
+		top			: 2px;
+		box-shadow	: none;
+	}
+
+	.infoNum {
+		float			: left;
+		width			: 60px;
+		height			: 35px;
+		line-height		: 35px;
+		font-size		: 17px;
+		text-align		: center;
+	}
+
+
+
+	#goToTop {
+		width			: 44px;
+		height			: 44px;
+		line-height		: 44px;
+		position		: fixed;
+		right			: 5%;
+		bottom			: 5%;
+		font-weight		: bold;
+		text-align		: center;
+		color			: white;
+		background		: black;
+		opacity			: 0.5;
+		cursor			: pointer;
+		z-index			: 30;
+		border-radius	: 5px;
+		display			: none;
+	}
+
+
+	.palette {
+		color		: #333;
+		text-align	: center;
+	}
+
+	.palette div {
+		margin			: 10px auto 0;
+		font-size		: 13px;
+		line-height		: 35px;
+		border-radius	: 5px;
+		text-align		: center;
+	}
+
+	.rule-info {
+		position	: relative;
+		color		: red;
+		z-index		: -1;
+	}
+
+	.turn-info {
+		display		: none;
+		background	: white;
+		border		: 1px solid #777;
+	}
+
+	.reset {
+		cursor	: pointer;
+		border	: 1px solid #777;
+	}
+
+	.reset:active {
+		position: relative;
+	    top		: 2px;
+	}

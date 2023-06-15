@@ -1,0 +1,96 @@
+/* グローバルに使用するフォントファミリーを設定 */
+
+@font-face {
+  font-family: "starmap-icons";
+  src: url("/assets/fonts/icons.eot");
+  src:
+    url("/assets/fonts/icons.eot") format("embedded-opentype"),
+    url("/assets/fonts/icons.ttf") format("truetype"),
+    url("/assets/fonts/icons.woff") format("woff"),
+    url("/assets/fonts/icons.svg") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "melete";
+  src: url("/assets/fonts/melete_0100");
+  src:
+    url("/assets/fonts/melete_0100/Melete-Bold.otf") format("truetype"),
+    url("/assets/fonts/melete_0100/Melete-Light.otf") format("truetype"),
+    url("/assets/fonts/melete_0100/Melete-Medium.otf") format("truetype"),
+    url("/assets/fonts/melete_0100/Melete-Regular.otf") format("truetype"),
+    url("/assets/fonts/melete_0100/Melete-UltraLight.otf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Electrolize";
+  src: url("/assets/fonts/Electrolize/Electrolize-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Nunito";
+  src: url("/assets/fonts/Nunito/static/Nunito-Light.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+// @font-face {
+//   font-family: "Orbitron";
+//   src: url("/assets/fonts/Orbitron/static/Orbitron-Regular.ttf") format("truetype");
+//   font-weight: normal;
+//   font-style: normal;
+// }
+
+// @font-face {
+//   font-family: "Orbitron";
+//   src: url("/assets/fonts/Orbitron/static/Orbitron-Medium.ttf") format("truetype");
+//   font-weight: 200;
+//   font-style: normal;
+// }
+
+// @font-face {
+//   font-family: "Orbitron";
+//   src: url("/assets/fonts/Orbitron/static/Orbitron-SemiBold.ttf") format("truetype");
+//   font-weight: 300;
+//   font-style: normal;
+// }
+
+// @font-face {
+//   font-family: "Orbitron";
+//   src: url("/assets/fonts/Orbitron/static/Orbitron-Bold.ttf") format("truetype");
+//   font-weight: 400;
+//   font-style: normal;
+// }
+
+// @font-face {
+//   font-family: "Orbitron";
+//   src: url("/assets/fonts/Orbitron/static/Orbitron-ExtraBold.ttf") format("truetype");
+//   font-weight: 500;
+//   font-style: normal;
+// }
+
+// @font-face {
+//   font-family: "Orbitron";
+//   src: url("/assets/fonts/Orbitron/static/Orbitron-Black.ttf") format("truetype");
+//   font-weight: 600;
+//   font-style: normal;
+// }
+
+$fontFamily1: avenir, helvetica, arial, sans-serif;
+$fontFamily2: "Poppins", sans-serif;
+$fontFamily3: consolas, sans-serif;
+$fontFamily4: electrolize, "Electrolize", sans-serif;
+$fontFamily5: "Orbitron", sans-serif;
+$fontFamily6: "Nunito", sans-serif;
+$fontFamily7: "Inconsolata", sans-serif;
+$fontFamily8: "Roboto", sans-serif;
+$fontFamily9: "Roboto+Mono", sans-serif;
+$fontFamily10: melete, sans-serif;
+
+// input[type="text"], textarea
+$normalFont: normal 16px/1.5em $fontFamily4;

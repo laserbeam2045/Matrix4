@@ -1,0 +1,283 @@
+﻿<!doctype html>
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>誰もがわかる囲碁入門　実戦</title>
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+		<link rel="stylesheet" href="css/contents.css">
+		<!--[if lt IE 9]>
+		<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+		<![endif]-->
+		<style>
+			/* 追加 */
+			article {
+				padding-bottom	: 100px;
+			}
+
+			h1 {
+				color			: #333;
+				font-size		: 24px;
+				border-bottom	: 1px solid;
+				padding			: 15px 0 0;
+			}
+
+			article {
+				display			: flex;
+				flex-wrap		: wrap;
+				align-items		: flex-end;
+				justify-content	: left;
+			}
+
+			article:nth-of-type(1) {
+				align-items		: center;
+			}
+
+			article {
+				width	: 90%;
+				margin	: auto;
+			}
+
+			h1 {
+				width	: 100%;
+			}
+
+			article:nth-of-type(5) .palette {
+				visibility	: hidden;
+			}
+
+			@media screen and (max-width:1005px) {
+				article:nth-of-type(5) .canvas-group {
+					max-width	: 295px;
+				}
+				article:nth-of-type(5) .palette {
+					display		: none;
+				}
+
+				article {
+					width			: 100%;
+					justify-content	: center;
+				}
+
+				article:nth-of-type(1) > p {
+					margin	: 15px 3%;
+				}
+
+				#contents h1 {
+					width	: 94%;
+					margin	: auto;
+				}
+			}
+			/* 追加終 */
+
+			#captureGameInfo {
+				font-size	: 12px;
+				line-height	: 22px;
+//				padding		: 10px 20px;
+				position	: relative;
+			}
+
+			.canvas-box {
+				width	: 100%;
+			}
+
+			.palette {
+				display: none;
+			}
+
+			.rule-info {
+				width		: 290px;
+				height		: 30px;
+			}
+
+			canvas {
+				box-shadow	: 3px 4px 3px gray;
+			}
+
+			#setGame {
+				position	: absolute;
+				top			: 30px;
+				left		: 0;
+				right		: 0;
+				margin		: auto;
+				width		: 243px;
+				height		: 150px;
+				z-index		: 10;
+				box-sizing	: border-box;
+				color		: white;
+				background	: rgba(41, 160, 180, 0.95);
+				font		: 16px/1.7 '游明朝','Yu Mincho',YuMincho,'Hiragino Mincho Pro',serif;
+				border-radius	: 10px;
+			}
+
+			table {
+				width			: 100%;
+				margin			: 20px 0;
+			}
+
+			th, td {
+				height	: 30px;
+			}
+
+			th {
+				width	: 57%;
+			}
+
+			td {
+				text-align	: left;
+			}
+
+			label, input, select, button {
+				cursor	: pointer;
+			}
+		</style>
+
+		<script>
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		  ga('create', 'UA-69756713-2', 'auto');
+		  ga('send', 'pageview');
+		</script>
+	</head>
+
+	<body>
+	<div id="body">
+		<header>
+			<div class="container">
+				<a href="index" id="top-link" style="width:50%;">誰もがわかる囲碁入門</a>
+				<div id="font-size">
+					<p>文字サイズ</p>
+					<div id="buttons">
+						<div id="left"  >小</div>
+						<div id="center">標準</div>
+						<div id="right" >大</div>
+					</div>
+				</div>
+				<ul>
+					<li><a href="introduction">はじめに</a></li>
+					<li><a href="rule">ルール</a></li>
+					<li><a href="knowledge">慣習</a></li>
+					<li><a href="life-and-death">死活</a></li>
+				</ul>
+			</div>
+		</header>
+
+		<div class="margin" style="text-align:center; text-align:left; margin:50px auto; padding:0;">
+			<noscript>
+				<div class="paragraphs">
+					<p>（お使いの環境は、javascriptが無効です。コンテンツを正しく表示するには、javascriptが有効な環境でご覧ください。）</p>
+				</div>
+			</noscript>		
+			<ul id="menu-list">
+				<li><a href="#one">やってみよう！石取りゲーム</a></li>
+				<li><a href="#two">対局相手を見つけよう</a></li>
+			</ul>
+		</div>
+
+		<div id="contents">
+			<article>
+
+				<h1 id="one" class="title">やってみよう！石取りゲーム</h1>
+				<div class="paragraphs">
+					<p>ルールを覚えたばかりの人は、まずは石取りゲームをやってみましょう。先に相手の石を取れば勝ちです。</p>
+				</div>
+
+				<div class="canvas-box" style="text-align: center; position: relative;">
+
+					<div id="setGame">
+						<table>
+							<tr>
+								<th>手番</th>
+								<td>
+									<label for="r1">黒<input type="radio" id="r1" name="ex" value="2" checked="checked"></label>
+									<label for="r2">白<input type="radio" id="r2" name="ex" value="3"></label>
+								</td>
+							</tr>
+							<tr>
+								<th>ＣＯＭの強さ</th>
+								<td>
+									<select>
+										<option value="1">レベル１</option>
+										<option value="2">レベル２</option>
+										<option value="3">レベル３</option>
+										<option value="4">レベル４</option>
+										<option value="5">レベル５</option>
+									</select>
+								</td>
+							</tr>
+						</table>
+
+						<button>はじめる</button>
+					</div>
+
+					<div class="canvas-group" style="display: inline-block;">
+						<div class="palette">
+							<div class="turn-info"></div>
+						</div>
+						<canvas id="world0"></canvas>
+					</div>
+
+					<div id="captureGameInfo" style="display: inline-block; text-align: center;">
+						<div>5個取れば勝ち</div>
+						<div id="prisonersInfo">得点：
+						　黒 <span id="prisonersB">０</span>
+						　白 <span id="prisonersW">０</span>　　</div>
+						<div class="rule-info"></div>
+						<button onmousedown="$('#setGame').show();">ゲーム開始</button>
+					</div>
+
+				</div>
+			</article>
+
+			<article>
+				<h1 id="two" class="title">対局相手を見つけよう</h1>
+			</article>
+		</div>
+
+		<footer>
+			<ul>
+				<li><a href="about-this-site">このサイトについて</a></li>
+				<li><a href="feedback">ご意見・ご感想</a></li>
+			</ul>
+			<p>Copyright (c) 2016</p>
+		</footer>
+		<div id="goToTop">↑</div>
+		<script src="jsLibrary/tmlib.js"></script>
+		<script src="jsLibrary/jQuery.js"></script>
+		<script src="jsLibrary/jQuery.fastClick.js"></script>
+		<script src="jsBoard/fontSize.js"></script>
+		<script src="jsBoard/boardSystem.js"></script>
+		<script src="jsBoard/boardCanvas.js"></script>
+		<script src="jsControl/playing-brain.js?version=5"></script>
+		<script>
+			var turn_info = document.getElementsByClassName("turn-info");
+			var rule_info = document.getElementsByClassName("rule-info");
+
+			var hoge = document.getElementById("prisonersB");
+			var huga = document.getElementById("prisonersW");
+
+			var elmPrisoners	= [0, 0, hoge, huga];
+			var usersTurn		= BLACK;
+			var comsTurn		= WHITE;
+
+			$("#setGame button").fastClick(function(){
+				$("#setGame").hide();
+
+				gameStart();
+			});
+
+			$("input").change(function(){
+				usersColor		= $(this).prop("value");
+				computersColor	= 5 - usersColor;
+			});
+
+			$("select").change(function(){
+				level = $(this).val();
+			});
+		</script>
+	</div>
+	</body>
+</html>
