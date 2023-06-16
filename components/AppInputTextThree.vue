@@ -27,6 +27,8 @@ export default {
 </script>
 
 <script lang="ts" setup>
+import { useVModel } from '@vueuse/core'
+
 const props = withDefaults(defineProps<{
   value: string | number
   type?: string

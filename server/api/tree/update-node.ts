@@ -22,12 +22,23 @@ export type UpdateNodeResponse = {
 
 const endpoint = `${API_PATH}/sets/update/node.php`
 
-export default async (req: IncomingMessage) => {
+// export default async (req: IncomingMessage) => {
+//   try {
+//     const response: string = await $fetch(endpoint + req.url)
+//     return JSON.parse(response) as UpdateNodeResponse
+//   } catch (err) {
+//     console.log(err)
+//     return { result: 1 }
+//   }
+// }
+export default defineEventHandler(async (event) => {
   try {
-    const response: string = await $fetch(endpoint + req.url)
-    return JSON.parse(response) as UpdateNodeResponse
+    const { id, txt, link, opened, isGroup } = getQuery(event)
+
+    const response = await $fetch(`${endpoint}?id=${id}&txt=${txt}&link=${link}&opened=${opened}&isGroup=${isGroup}`)
+    return JSON.parse(response as string) as UpdateNodeResponse
   } catch (err) {
     console.log(err)
     return { result: 1 }
   }
-}
+})

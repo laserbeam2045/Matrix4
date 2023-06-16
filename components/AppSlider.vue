@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { useScroll } from '@vueuse/core'
+
 const props = defineProps<{
   tabs: string[]
   tabIndex: number

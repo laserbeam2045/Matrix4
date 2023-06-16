@@ -19,12 +19,24 @@ export type UpdateGroupResponse = {
 
 const endpoint = `${API_PATH}/sets/update/group.php`
 
-export default async (req: IncomingMessage) => {
+// export default async (req: IncomingMessage) => {
+//   try {
+//     const response: string = await $fetch(endpoint + req.url)
+//     return JSON.parse(response) as UpdateGroupResponse
+//   } catch (err) {
+//     console.log(err)
+//     return { result: 1 }
+//   }
+// }
+
+export default defineEventHandler(async (event) => {
   try {
-    const response: string = await $fetch(endpoint + req.url)
-    return JSON.parse(response) as UpdateGroupResponse
+    const { id, isGroup } = getQuery(event)
+
+    const response = await $fetch(`${endpoint}?id=${id}&isGroup=${isGroup}`)
+    return JSON.parse(response as string) as UpdateGroupResponse
   } catch (err) {
     console.log(err)
     return { result: 1 }
   }
-}
+})

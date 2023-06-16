@@ -41,6 +41,7 @@ export default {
 
 <script lang="ts" setup>
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { useVModel } from '@vueuse/core'
 
 const props = withDefaults(defineProps<{
   value: string | number

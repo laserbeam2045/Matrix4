@@ -18,12 +18,24 @@ export type InsertCloneResponse = {
 
 const endpoint = `${API_PATH}/sets/insert/tree.php`
 
-export default async (req: IncomingMessage) => {
+// export default async (req: IncomingMessage) => {
+//   try {
+//     const response: string = await $fetch(endpoint + req.url)
+//     return JSON.parse(response) as InsertCloneResponse
+//   } catch (err) {
+//     console.log(err)
+//     return { id: null }
+//   }
+// }
+
+export default defineEventHandler(async (event) => {
   try {
-    const response: string = await $fetch(endpoint + req.url)
-    return JSON.parse(response) as InsertCloneResponse
+    const id = getQuery(event).id
+
+    const response = await $fetch(`${endpoint}?id=${id}`)
+    return JSON.parse(response as string) as InsertCloneResponse
   } catch (err) {
     console.log(err)
-    return { id: null }
+    return { result: null }
   }
-}
+})

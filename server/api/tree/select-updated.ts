@@ -20,12 +20,23 @@ export type SelectUpdatedResponse = {
 
 const endpoint = `${API_PATH}/sets/select/updated.php`
 
-export default async (req: IncomingMessage) => {
+// export default async (req: IncomingMessage) => {
+//   try {
+//     const response: string = await $fetch(endpoint + req.url)
+//     return JSON.parse(response) as SelectUpdatedResponse
+//   } catch (err) {
+//     console.log(err)
+//     return { result: null }
+//   }
+// }
+export default defineEventHandler(async (event) => {
   try {
-    const response: string = await $fetch(endpoint + req.url)
-    return JSON.parse(response) as SelectUpdatedResponse
+    const id = getQuery(event).id
+
+    const response = await $fetch(`${endpoint}?id=${id}`)
+    return JSON.parse(response as string) as SelectUpdatedResponse
   } catch (err) {
     console.log(err)
-    return { result: null }
+    return { result: 1 }
   }
-}
+})

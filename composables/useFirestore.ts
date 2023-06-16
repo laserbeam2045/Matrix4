@@ -28,9 +28,9 @@ export const useFirestore = () => {
         resolve(null)
       } else {
         querySnapshot.forEach((doc) => {
-          console.table({ doc })
+          // console.table({ doc })
           const d = doc.data()
-          console.table({ d })
+          // console.table({ d })
           resolve(doc.data() as User)
         })
       }

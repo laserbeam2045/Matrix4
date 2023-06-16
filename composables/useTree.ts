@@ -161,7 +161,7 @@ export default function useTree(): {
   const table: Ref<SetResponse[]> = useState('treeTable', () => [])
 
   // ルートノード
-  const root: ComputedRef<SetResponse | null> = computed(() => table.value[0] ?? null)
+  const root: ComputedRef<SetResponse | null> = computed(() => table?.value?.[0] ?? null)
 
   // 再帰的な構造のオブジェクト
   const treeData: ComputedRef<TreeData | null> = computed(() => root.value ? assemble(root.value, 0) : null)

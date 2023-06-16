@@ -61,8 +61,8 @@ export default defineConfig({
         cleanupOutdatedCaches: true,
       },
     }),
-    commonjsExternals({
-      externals: ['path'],
-    }),
+    // commonjsExternals({
+    //   externals: ['path'],
+    // }),
   ],
 })

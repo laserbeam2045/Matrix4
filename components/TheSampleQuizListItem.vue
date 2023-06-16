@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useIntersectionObserver } from '@vueuse/core'
+
 defineProps<{
   question: string
   pressPoint: number

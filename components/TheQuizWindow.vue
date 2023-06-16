@@ -487,7 +487,7 @@ onMounted(() => {
             <span
               v-for="(c, i) in currentQuestion"
               :key="i"
-              :class="{ yet: i < currentQuiz.pressPoint }"
+              :class="{ yet: i < currentQuiz.push_point }"
             >
               {{ c }}
             </span>

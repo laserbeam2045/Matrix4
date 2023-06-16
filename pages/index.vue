@@ -8,8 +8,11 @@ import {
   onAuthStateChanged,
 } from 'firebase/auth'
 
+import { initializeApp } from 'firebase/app'
+
 // import { useAuth } from '@/composables/useAuth'
 import { useFirestore } from '@/composables/useFirestore'
+// import { config } from 'process';
 
 const state = reactive({
   isEnterArrowed: false,
@@ -55,13 +58,13 @@ const bgColor: Ref<string> = useState('bgColor')
 
 const blackout = () => {
   color.value = '#42cbf8'
-  // bgColor.value = '#070b17'
+  bgColor.value = '#070b17'
   bgColor.value = '#0D0208'
   return new Promise((resolve) => setTimeout(() => {
     state.isDarkMode = true
-    // matrix.value.addEventListener('pause', () => {
-    //   redirect()
-    // })
+    matrix.value.addEventListener('pause', () => {
+      redirect()
+    })
     resolve(1)
   }, 1000))
 }
@@ -99,6 +102,9 @@ const onKeyEnterTwo = async (e: Event) => {
 const mounted = ref(false)
 
 onMounted(async () => {
+  const config = useRuntimeConfig()
+  initializeApp(config.public.firebaseConfig)
+
   const auth = getAuth()
 
   onAuthStateChanged(auth, async (user) => {
@@ -133,7 +139,7 @@ onMounted(async () => {
       v-if="!state.isEnterArrowed && mounted"
       id="signin"
     >
-      <!-- <transition-group
+      <transition-group
         name="fade-input"
         mode="out-in"
         appear
@@ -148,7 +154,7 @@ onMounted(async () => {
           preload="auto"
           style="position: absolute; top: 50%; transform: translateY(-50%); width: 100vw; background: transparent;"
         />
-      </transition-group> -->
+      </transition-group>
       <div class="wrapper">
         <transition name="fade" appear>
           <div
@@ -179,16 +185,16 @@ onMounted(async () => {
               style="width: 200px;"
               placeholder="Access Code"
               :activate="false"
-              @keydown.enter="onKeyEnterOne"
-            />
+              />
+              <!-- @keydown.enter="onKeyEnterOne" -->
             <AppInputTextThree
               v-if="state.inputState === 2"
               v-model:value="state.codeName"
               style="width: 200px;"
               placeholder="Your Code Name"
               :activate="state.isDarkMode"
-              @keydown.enter="onKeyEnterTwo"
-            />
+              />
+              <!-- @keydown.enter="onKeyEnterTwo" -->
           </transition-group>
         </div>
       </div>

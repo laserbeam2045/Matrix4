@@ -20,12 +20,24 @@ export type SearchNodesResponse = {
 
 const endpoint = `${API_PATH}/sets/select/search.php`
 
-export default async (req: IncomingMessage) => {
+// export default async (req: IncomingMessage) => {
+//   try {
+//     const response: string = await $fetch(endpoint + req.url)
+//     return JSON.parse(response) as SearchNodesResponse
+//   } catch (err) {
+//     console.log(err)
+//     return { result: null }
+//   }
+// }
+
+export default defineEventHandler(async (event) => {
   try {
-    const response: string = await $fetch(endpoint + req.url)
-    return JSON.parse(response) as SearchNodesResponse
+    const word = getQuery(event).word
+
+    const response = await $fetch(`${endpoint}?word=${word}`)
+    return JSON.parse(response as string) as SearchNodesResponse
   } catch (err) {
     console.log(err)
     return { result: null }
   }
-}
+})

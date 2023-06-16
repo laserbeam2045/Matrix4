@@ -9,15 +9,15 @@ import { resolve } from 'pathe'
 //   }
 // }
 
-// // firebase configuration
-// const firebaseConfig = {
-//   apiKey: process.env.FIREBASE_API_KEY,
-//   authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-//   projectId: process.env.FIREBASE_PROJECT_ID,
-//   storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-//   messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-//   appId: process.env.FIREBASE_APP_ID,
-// }
+// firebase configuration
+const firebaseConfig = {
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
+}
 
 // https://v3.nuxtjs.org/docs/directory-structure/nuxt.config
 export default defineNuxtConfig({
@@ -84,6 +84,7 @@ export default defineNuxtConfig({
     // '@nuxtjs/tailwindcss',
     // '@vitejs/plugin-vue',
     // '@nuxtjs/pwa',
+    // '@nuxt/ui'
   ],
 
   css: [
@@ -153,13 +154,15 @@ export default defineNuxtConfig({
     strict: false,
   },
 
-  // publicRuntimeConfig: {
-  //   dataOf: 'public',
-  //   // firebaseConfig: undefined,
-  //   // firebaseConfig: process.env.NODE_ENV === 'production'
-  //   //   ? undefined
-  //   //   : firebaseConfig,
-  // },
+  runtimeConfig: {
+    apiSecret: '123',
+    public: {
+      // firebaseConfig: process.env.NODE_ENV === 'production'
+      //   ? {}
+      //   : firebaseConfig,
+      firebaseConfig: firebaseConfig,
+    },
+  },
 
   // privateRuntimeConfig: {
   //   dataOf: 'private',
