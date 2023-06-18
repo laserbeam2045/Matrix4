@@ -4,7 +4,7 @@ import gsap from 'gsap'
 
 import { useBreakpoints } from '@vueuse/core'
 
-import type { CompleteQuizData } from '@/composables/useQuiz'
+import type { CompleteQuizData, QuizData } from '@/composables/useQuiz'
 
 import { shuffle } from '@/utilities/v_array_functions'
 
@@ -21,6 +21,7 @@ import { shuffle } from '@/utilities/v_array_functions'
 
 const props = defineProps<{
   quizData: CompleteQuizData[]
+  // quizData: QuizData[]
 }>()
 
 const emit = defineEmits<{

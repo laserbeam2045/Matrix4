@@ -1,5 +1,7 @@
 import type { SetResponse } from '@/composables/useTree'
-import { API_PATH } from '../../db'
+// import { API_PATH } from '../../db'
+const config = useRuntimeConfig()
+const API_PATH = config.public.API_PATH
 
 const endpoint = `${API_PATH}/sets/select/node.php`
 

@@ -1,9 +1,8 @@
-import type { IncomingMessage } from 'http'
-import url from 'url'
-
-import { API_PATH } from '../../db'
-
 import type { CompleteQuizData } from '@/composables/useQuiz'
+
+const config = useRuntimeConfig()
+const API_PATH = config.public.API_PATH
+const endpoint = `${API_PATH}/quizzes/select/search.php`
 
 /**
  * リクエストに必要なパラメータ
@@ -23,14 +22,20 @@ export type Response = {
   items: CompleteQuizData[]
 }
 
-const endpoint = `${API_PATH}/quizzes/select/search.php`
-
-export default async (req: IncomingMessage) => {
+export default defineEventHandler(async (event) => {
   try {
-    const a = url.parse(req.url, false)
-    console.log(a, req.url)
-    const response: string = await $fetch(endpoint + req.url)
-    return JSON.parse(response) as Response
+    const word = encodeURI(getQuery(event).word as string)
+    const min = encodeURI(getQuery(event).min as string)
+    const max = encodeURI(getQuery(event).max as string)
+    const query = `?word=${word}&min=${min}&max=${max}`
+    const response = await $fetch(endpoint + query)
+
+    console.log(endpoint + query)
+    console.log(endpoint + query)
+    console.log(endpoint + query)
+    console.log(endpoint + query)
+
+    return JSON.parse(response as string) as Response
   } catch (err) {
     console.log(err)
     return {
@@ -39,4 +44,4 @@ export default async (req: IncomingMessage) => {
       items: [],
     } as Response
   }
-}
+})

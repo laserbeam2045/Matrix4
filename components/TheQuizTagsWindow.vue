@@ -35,8 +35,9 @@ const mounted = ref(false)
 
 onMounted(() => {
   setTimeout(async () => {
-    await treeMethods.changeRoot('11ZWlbuwWcP2+Bwi')
-    await treeMethods.updateData()
+    // await treeMethods.changeRoot('11ZWlbuwWcP2+Bwi')
+    // await treeMethods.changeRoot('11ZWlbuwWcP2+Bwi')
+    // await treeMethods.updateData()
 
     console.log(treeData.value)
 

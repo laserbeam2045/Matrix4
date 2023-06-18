@@ -1,8 +1,8 @@
-import type { IncomingMessage } from 'http'
-
-import { API_PATH } from '../../db'
-
 import { QuizData } from '@/composables/useQuiz'
+
+const config = useRuntimeConfig()
+const API_PATH = config.public.API_PATH
+const endpoint = `${API_PATH}/quizzes/select/all.php`
 
 /**
  * APIから取得されるデータ型
@@ -13,12 +13,17 @@ export type Response = {
   items: QuizData[]
 }
 
-const endpoint = `${API_PATH}/quizzes/select/all.php`
-
-export default async (req: IncomingMessage) => {
+export default defineEventHandler(async (event) => {
   try {
-    const response: string = await $fetch(endpoint + req.url)
-    return JSON.parse(response) as Response
+    const query = ``
+    const response = await $fetch(endpoint + query)
+
+    console.log(endpoint + query)
+    console.log(endpoint + query)
+    console.log(endpoint + query)
+    console.log(endpoint + query)
+
+    return JSON.parse(response as string) as Response
   } catch (err) {
     console.log(err)
     return {
@@ -27,4 +32,4 @@ export default async (req: IncomingMessage) => {
       items: [],
     } as Response
   }
-}
+})

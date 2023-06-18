@@ -7,9 +7,12 @@ include('../../functions.php');
 
 $sql_1 = "
   UPDATE
-    quizzes3
+    quizzes
   SET
-    push_point = :push_point
+    question = :question,
+    answer1 = :answer1,
+    answer2 = :answer2,
+    correctAnswerRate = :correctAnswerRate
   WHERE
     id = :id;
 ";
@@ -22,7 +25,10 @@ try {
   $dbh->beginTransaction();
   try {
     // 挿入先を取得
-    $stmt_1->bindValue(':push_point', $_GET['push_point'], PDO::PARAM_INT);
+    $stmt_1->bindValue(':question', $_GET['question'], PDO::PARAM_STR);
+    $stmt_1->bindValue(':answer1', $_GET['answer1'], PDO::PARAM_STR);
+    $stmt_1->bindValue(':answer2', $_GET['answer2'], PDO::PARAM_STR);
+    $stmt_1->bindValue(':correctAnswerRate', $_GET['correctAnswerRate'], PDO::PARAM_STR);
     $stmt_1->bindValue(':id', $_GET['id'], PDO::PARAM_INT);
     $stmt_1->execute();
 

@@ -1,4 +1,8 @@
-import { API_PATH } from '../../db'
+// import { API_PATH } from '../../db'
+const config = useRuntimeConfig()
+const API_PATH = config.public.API_PATH
+
+const endpoint = `${API_PATH}/sets/move/tree.php`
 
 /**
  * リクエストに必要なパラメータ
@@ -15,8 +19,6 @@ export type MovingTreeArguments = {
 export type MovingTreeResponse = {
   result: 0 | 1 | 2
 }
-
-const endpoint = `${API_PATH}/sets/move/tree.php`
 
 export default defineEventHandler(async (event) => {
   try {
