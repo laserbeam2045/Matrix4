@@ -1,8 +1,8 @@
 # For have-a-go
 
-RewriteEngine on
-RewriteCond %{REQUEST_URI} ^/$
-RewriteRule ^.*$ /go/ [R=301,L]
+#RewriteEngine on
+#RewriteCond %{REQUEST_URI} ^/$
+#RewriteRule ^.*$ /go/ [R=301,L]
 
 #RewriteEngine on
 #RewriteCond %{REQUEST_URI} ^/$ [OR]
@@ -49,13 +49,13 @@ RewriteRule ^.*$ /go/ [R=301,L]
 
 # For tree
 
-#RewriteEngine on
-#RewriteCond %{REQUEST_URI} !/tree
-#RewriteRule ^(.*) /tree2/$1 [L]
+RewriteEngine on
+RewriteCond %{REQUEST_URI} !/tree
+RewriteRule ^(.*) /tree2/$1 [L]
 
-#RewriteEngine on
-#RewriteCond %{REQUEST_URI} ^/src/assets/audios/.*\.(mp3|wav)$
-#RewriteRule ^audios/(.*)$ /tree/assets/audios/$1 [L]
+RewriteEngine on
+RewriteCond %{REQUEST_URI} ^/src/assets/audios/.*\.(mp3|wav)$
+RewriteRule ^audios/(.*)$ /tree/assets/audios/$1 [L]
 
 #RewriteEngine on
 #RewriteCond %{REQUEST_URI} ^/favicon\.ico$
