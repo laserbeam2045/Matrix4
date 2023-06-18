@@ -2,6 +2,7 @@
 import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
 import commonjsExternals from 'vite-plugin-commonjs-externals'
+import vue from '@vitejs/plugin-vue'
 import path from 'path'
 
 // import vue from '@vitejs/plugin-vue'
@@ -64,5 +65,13 @@ export default defineConfig({
     // commonjsExternals({
     //   externals: ['path'],
     // }),
+    // [
+    //   vue({
+    //     script: {
+    //       defineModel: true,
+    //       propsDestructure: true,
+    //     }
+    //   })
+    // ]
   ],
 })

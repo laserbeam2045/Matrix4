@@ -136,7 +136,7 @@ onMounted(async () => {
 <template>
   <transition name="page" appear>
     <div
-      v-if="!state.isEnterArrowed && mounted"
+      v-if="mounted"
       id="signin"
     >
       <transition-group

@@ -1,6 +1,6 @@
-import type { IncomingMessage } from 'http'
-
 import { API_PATH } from '../../db'
+
+const endpoint = `${API_PATH}/sets/update/sparse.php`
 
 /**
  * リクエストに必要なパラメータ
@@ -16,25 +16,16 @@ export type SparseTreeResponse = {
   result: 0 | 1
 }
 
-const endpoint = `${API_PATH}/sets/update/sparse.php`
-
-// export default async (req: IncomingMessage) => {
-//   try {
-//     const response: string = await $fetch(endpoint + req.url)
-//     return JSON.parse(response) as SparseTreeResponse
-//   } catch (err) {
-//     console.log(err)
-//     return { result: 1 }
-//   }
-// }
 export default defineEventHandler(async (event) => {
   try {
-    const id = getQuery(event).id
-
-    const response = await $fetch(`${endpoint}?id=${id}`)
+    const id = encodeURI(getQuery(event).id as string)
+    const query = `?id=${id}`
+    const response = await $fetch(endpoint + query)
+    
     return JSON.parse(response as string) as SparseTreeResponse
   } catch (err) {
     console.log(err)
+    
     return { result: 1 }
   }
 })

@@ -243,7 +243,7 @@ const ROOT_ID = useState('TREE_ROOT_ID').value as string
 const about = useState('about') as Ref<TreeData | null>
 
 // 親がrootではないときにtrue
-const isValidParent = computed(() => about.value.parent.length === 16 && about.value.parent !== ROOT_ID)
+const isValidParent = computed(() => about.value.parent?.length === 16 && about.value.parent !== ROOT_ID)
 
 const stateValues = reactive({
   insert: {

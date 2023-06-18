@@ -1,7 +1,6 @@
-import type { IncomingMessage } from 'http'
-// import * as url from 'url'
-
 import { API_PATH } from '../../db'
+
+const endpoint = `${API_PATH}/sets/delete/node.php`
 
 /**
  * リクエストに必要なパラメータ
@@ -43,16 +42,16 @@ export type DeleteNodeResponse = {
 //   }
 // }
 
-const endpoint = `${API_PATH}/sets/delete/node.php`
-
 export default defineEventHandler(async (event) => {
   try {
-    const id = getQuery(event).id
-
-    const response = await $fetch(`${endpoint}?id=${id}`)
+    const id = encodeURI(getQuery(event).id as string)
+    const query = `?id=${id}`
+    const response = await $fetch(endpoint + query)
+    
     return JSON.parse(response as string) as DeleteNodeResponse
   } catch (err) {
     console.log(err)
+    
     return { result: 1 }
   }
 })

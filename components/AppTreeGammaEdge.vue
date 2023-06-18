@@ -88,7 +88,7 @@ const handleDragEnd = (e: CustomDragEvent) => {
 .app-tree-edge {
   // max-width: 100%;
   height: 100%;
-  margin: 0px 0px 0px 50px;
+  margin: 0px 0px 0px 10px;
   // border: 1px dotted red;
 
   position: relative;

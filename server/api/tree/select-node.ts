@@ -1,8 +1,7 @@
-// import type { IncomingMessage } from 'http'
-
 import type { SetResponse } from '@/composables/useTree'
-
 import { API_PATH } from '../../db'
+
+const endpoint = `${API_PATH}/sets/select/node.php`
 
 /**
  * リクエストに必要なパラメータ
@@ -18,17 +17,16 @@ export type SelectNodeResponse = {
   result: SetResponse[] | null
 }
 
-const endpoint = `${API_PATH}/sets/select/node.php`
-
 export default defineEventHandler(async (event) => {
   try {
-    const id = getQuery(event).id
-
-    // const response = await useFetch(endpoint + `?id="${id}"`)
-    const response = await $fetch(`${endpoint}?id=${id}`)
+    const id = encodeURI(getQuery(event).id as string)
+    const query = `?id=${id}`
+    const response = await $fetch(endpoint + query)
+    
     return JSON.parse(response as string) as SelectNodeResponse
   } catch (err) {
     console.log(err)
+    
     return { result: null }
   }
 })

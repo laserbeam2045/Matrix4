@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  layout: 'the-matrix',
-}
-</script>
-
 <script setup lang="ts">
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Ref } from 'vue'
@@ -119,11 +113,15 @@ const factions = computed(() => treeState.value.display.factions)
 
 const sensor = computed(() => treeState.value.display.sensors)
 
+const appTreeAlpha = resolveComponent('AppTreeAlpha')
+const appTreeBeta = resolveComponent('AppTreeBeta')
+const appTreeGamma = resolveComponent('AppTreeGamma')
+
 const treeComponent = computed(() => {
   switch (sensor.value) {
-  case 'lifeforms': return 'AppTreeAlpha'
-  case 'economy': return 'AppTreeBeta'
-  case 'crime': return 'AppTreeGamma'
+  case 'lifeforms': return appTreeAlpha
+  case 'economy': return appTreeBeta
+  case 'crime': return appTreeGamma
   }
 })
 
@@ -140,7 +138,8 @@ onMounted(async () => {
 
   if (route.params.id === 'home') {
     setTimeout(async () => {
-      await treeMethods.changeRoot('ozmkiRCEBnh7ZT83')
+      // await treeMethods.changeRoot('ozmkiRCEBnh7ZT83') // 本番環境
+      await treeMethods.changeRoot('9FGOQhg2IodypRvq')
       mounted.value = true
     }, 2100)
   } else {
@@ -160,7 +159,8 @@ onMounted(async () => {
       <div id="tree-container">
         <transition :appear="true">
           <div v-if="!isTreeOldData">
-            <AppTreeAlpha
+            <component
+              :is="treeComponent"
               :tree-data="treeData"
               :tree-options="treeOptions"
               :item-component="AppItem"
@@ -183,6 +183,7 @@ onMounted(async () => {
       :tree-methods="treeMethods"
       :tree-history="treeHistory"
     />
+    <NuxtLayout name="the-loading" />
   </div>
 </template>
 

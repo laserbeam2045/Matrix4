@@ -1,8 +1,7 @@
-import type { IncomingMessage } from 'http'
-
 import type { SetResponse } from '@/composables/useTree'
-
 import { API_PATH } from '../../db'
+
+const endpoint = `${API_PATH}/sets/select/search.php`
 
 /**
  * リクエストに必要なパラメータ
@@ -18,26 +17,16 @@ export type SearchNodesResponse = {
   result: SetResponse[] | null
 }
 
-const endpoint = `${API_PATH}/sets/select/search.php`
-
-// export default async (req: IncomingMessage) => {
-//   try {
-//     const response: string = await $fetch(endpoint + req.url)
-//     return JSON.parse(response) as SearchNodesResponse
-//   } catch (err) {
-//     console.log(err)
-//     return { result: null }
-//   }
-// }
-
 export default defineEventHandler(async (event) => {
   try {
-    const word = getQuery(event).word
-
-    const response = await $fetch(`${endpoint}?word=${word}`)
+    const word = encodeURI(getQuery(event).word as string)
+    const query = `?word=${word}`
+    const response = await $fetch(endpoint + query)
+    
     return JSON.parse(response as string) as SearchNodesResponse
   } catch (err) {
     console.log(err)
+
     return { result: null }
   }
 })

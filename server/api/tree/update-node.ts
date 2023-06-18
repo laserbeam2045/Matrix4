@@ -1,6 +1,6 @@
-import type { IncomingMessage } from 'http'
-
 import { API_PATH } from '../../db'
+
+const endpoint = `${API_PATH}/sets/update/node.php`
 
 /**
  * リクエストに必要なパラメータ
@@ -20,25 +20,20 @@ export type UpdateNodeResponse = {
   result: 0 | 1
 }
 
-const endpoint = `${API_PATH}/sets/update/node.php`
-
-// export default async (req: IncomingMessage) => {
-//   try {
-//     const response: string = await $fetch(endpoint + req.url)
-//     return JSON.parse(response) as UpdateNodeResponse
-//   } catch (err) {
-//     console.log(err)
-//     return { result: 1 }
-//   }
-// }
 export default defineEventHandler(async (event) => {
   try {
-    const { id, txt, link, opened, isGroup } = getQuery(event)
-
-    const response = await $fetch(`${endpoint}?id=${id}&txt=${txt}&link=${link}&opened=${opened}&isGroup=${isGroup}`)
+    const id = encodeURI(getQuery(event).id as string)
+    const txt = encodeURI(getQuery(event).txt as string)
+    const link = encodeURI(getQuery(event).link as string)
+    const opened = encodeURI(getQuery(event).opened as string)
+    const isGroup = encodeURI(getQuery(event).isGroup as string)
+    const query = `?id=${id}&txt=${txt}&link=${link}&opened=${opened}&isGroup=${isGroup}`
+    const response = await $fetch(endpoint + query)
+    
     return JSON.parse(response as string) as UpdateNodeResponse
   } catch (err) {
     console.log(err)
+    
     return { result: 1 }
   }
 })

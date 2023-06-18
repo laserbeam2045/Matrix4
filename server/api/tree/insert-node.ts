@@ -1,6 +1,6 @@
-import type { IncomingMessage } from 'http'
-
 import { API_PATH } from '../../db'
+
+const endpoint = `${API_PATH}/sets/insert/node.php`
 
 /**
  * リクエストに必要なパラメータ
@@ -18,26 +18,18 @@ export type InsertNodeResponse = {
   id: string | null
 }
 
-const endpoint = `${API_PATH}/sets/insert/node.php`
-
-// export default async (req: IncomingMessage) => {
-//   try {
-//     const response: string = await $fetch(endpoint + req.url)
-//     return JSON.parse(response) as InsertNodeResponse
-//   } catch (err) {
-//     console.log(err)
-//     return { id: null }
-//   }
-// }
-
 export default defineEventHandler(async (event) => {
   try {
-    const { pID, txt, link } = getQuery(event)
+    const pID = encodeURI(getQuery(event).pID as string)
+    const txt = encodeURI(getQuery(event).txt as string)
+    const link = encodeURI(getQuery(event).link as string)
+    const query = `?pID=${pID}&txt=${txt}&link=${link}`
+    const response = await $fetch(endpoint + query)
 
-    const response = await $fetch(`${endpoint}?pID=${pID}&txt=${txt}&link=${link}`)
     return JSON.parse(response as string) as InsertNodeResponse
   } catch (err) {
     console.log(err)
-    return { result: 1 }
+    
+    return { id: null }
   }
 })

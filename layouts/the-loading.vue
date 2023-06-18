@@ -3,7 +3,7 @@ const { matrix } = useMatrix()
 </script>
 
 <template>
-  <div style="display: none;">
+  <div style="">
     <teleport to="#layer-4">
       <transition name="fade">
         <section v-if="matrix.isLoading" id="app-loading">

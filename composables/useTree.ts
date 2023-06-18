@@ -149,7 +149,7 @@ export default function useTree(): {
   // ルートID
   const rootId = useState('treeRootId', () => '')
 
-  // const updatedAt = useState('updatedAt', () => '')
+  const updatedAt = useState('updatedAt', () => '')
 
   // 遷移履歴
   const history: Ref<string[]> = useState('treeHistory', () => [])

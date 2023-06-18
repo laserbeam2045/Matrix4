@@ -25,6 +25,9 @@ onMounted(() => {
 <template>
   <!-- <div></div> -->
   <NuxtLayout name="the-matrix" />
+      <!-- <NuxtLayout name="the-header" />
+      <NuxtLayout name="the-loading" />
+      <NuxtLayout name="the-navigation" /> -->
 </template>
 
 <style lang="scss" scoped>
