@@ -185,8 +185,8 @@ onMounted(async () => {
               style="width: 200px;"
               placeholder="Access Code"
               :activate="false"
+              @keydown.enter="onKeyEnterOne"
               />
-              <!-- @keydown.enter="onKeyEnterOne" -->
             <AppInputTextThree
               v-if="state.inputState === 2"
               v-model:value="state.codeName"
