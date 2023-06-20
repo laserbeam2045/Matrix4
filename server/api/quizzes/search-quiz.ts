@@ -24,9 +24,9 @@ export type Response = {
 
 export default defineEventHandler(async (event) => {
   try {
-    const word = encodeURI(getQuery(event).word as string)
-    const min = encodeURI(getQuery(event).min as string)
-    const max = encodeURI(getQuery(event).max as string)
+    const word = encodeURIComponent(getQuery(event).word as string)
+    const min = encodeURIComponent(getQuery(event).min as string)
+    const max = encodeURIComponent(getQuery(event).max as string)
     const query = `?word=${word}&min=${min}&max=${max}`
     const response = await $fetch(endpoint + query)
 

@@ -21,7 +21,7 @@ export type SearchNodesResponse = {
 
 export default defineEventHandler(async (event) => {
   try {
-    const word = encodeURI(getQuery(event).word as string)
+    const word = encodeURIComponent(getQuery(event).word as string)
     const query = `?word=${word}`
     const response = await $fetch(endpoint + query)
     

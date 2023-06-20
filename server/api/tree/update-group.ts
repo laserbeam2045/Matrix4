@@ -21,8 +21,8 @@ export type UpdateGroupResponse = {
 
 export default defineEventHandler(async (event) => {
   try {
-    const id = encodeURI(getQuery(event).id as string)
-    const isGroup = encodeURI(getQuery(event).isGroup as string)
+    const id = encodeURIComponent(getQuery(event).id as string)
+    const isGroup = encodeURIComponent(getQuery(event).isGroup as string)
     const query = `?id=${id}&isGroup=${isGroup}`
     const response = await $fetch(endpoint + query)
     

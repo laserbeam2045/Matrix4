@@ -28,7 +28,7 @@ try {
   $stmt_3 = $dbh->prepare($sql_3);
 
   // 主キーとなるidをランダムに生成
-  $id = randomstr(16, 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/');
+  $id = randomstr(16, 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789');
 
   // トランザクション処理を開始
   $dbh->beginTransaction();

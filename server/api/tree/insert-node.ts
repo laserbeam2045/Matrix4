@@ -22,9 +22,9 @@ export type InsertNodeResponse = {
 
 export default defineEventHandler(async (event) => {
   try {
-    const pID = encodeURI(getQuery(event).pID as string)
-    const txt = encodeURI(getQuery(event).txt as string)
-    const link = encodeURI(getQuery(event).link as string)
+    const pID = encodeURIComponent(getQuery(event).pID as string)
+    const txt = encodeURIComponent(getQuery(event).txt as string)
+    const link = encodeURIComponent(getQuery(event).link as string)
     const query = `?pID=${pID}&txt=${txt}&link=${link}`
     const response = await $fetch(endpoint + query)
 

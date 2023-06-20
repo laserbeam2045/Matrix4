@@ -27,16 +27,16 @@ export type Response = {
 
 export default defineEventHandler(async (event) => {
   try {
-    const id = encodeURI(getQuery(event).id as string)
-    const question = encodeURI(getQuery(event).question as string)
-    const answer = encodeURI(getQuery(event).answer as string)
-    const reading = encodeURI(getQuery(event).reading as string)
-    const player_id = encodeURI(getQuery(event).player_id as string)
-    const corrected_num = encodeURI(getQuery(event).corrected_num as string)
-    const wronged_num = encodeURI(getQuery(event).wronged_num as string)
-    const answered_num = encodeURI(getQuery(event).answered_num as string)
-    const like_num = encodeURI(getQuery(event).like_num as string)
-    const is_history = encodeURI(getQuery(event).is_history as string)
+    const id = encodeURIComponent(getQuery(event).id as string)
+    const question = encodeURIComponent(getQuery(event).question as string)
+    const answer = encodeURIComponent(getQuery(event).answer as string)
+    const reading = encodeURIComponent(getQuery(event).reading as string)
+    const player_id = encodeURIComponent(getQuery(event).player_id as string)
+    const corrected_num = encodeURIComponent(getQuery(event).corrected_num as string)
+    const wronged_num = encodeURIComponent(getQuery(event).wronged_num as string)
+    const answered_num = encodeURIComponent(getQuery(event).answered_num as string)
+    const like_num = encodeURIComponent(getQuery(event).like_num as string)
+    const is_history = encodeURIComponent(getQuery(event).is_history as string)
     const query = `?id=${id}&question=${question}&answer=${answer}&reading=${reading}&player_id=${player_id}&corrected_num=${corrected_num}&wronged_num=${wronged_num}&answered_num=${answered_num}&like_num=${like_num}&is_history=${is_history}`
     const response = await $fetch(endpoint + query)
 

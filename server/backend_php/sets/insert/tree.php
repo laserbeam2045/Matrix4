@@ -130,7 +130,7 @@ try {
     $stmt4->execute();
 
     // コピー先のトップのid（上書きされないように保存している）
-    $newId1 = randomstr(16, 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/');
+    $newId1 = randomstr(16, 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789');
     $newId2 = $newId1;
 
     // 順次コピーする
@@ -141,7 +141,7 @@ try {
       $stmt6->execute();
 
       // 次のid
-      $newId2 = randomstr(16, 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/');
+      $newId2 = randomstr(16, 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789');
     }
 
     $dbh->commit();

@@ -23,12 +23,12 @@ export type Response = {
 
 export default defineEventHandler(async (event) => {
   try {
-    const quiz_id = encodeURI(getQuery(event).quiz_id as string)
-    const order_num = encodeURI(getQuery(event).order_num as string)
-    const correct_char = encodeURI(getQuery(event).correct_char as string)
-    const wrong_char1 = encodeURI(getQuery(event).wrong_char1 as string)
-    const wrong_char2 = encodeURI(getQuery(event).wrong_char2 as string)
-    const wrong_char3 = encodeURI(getQuery(event).wrong_char3 as string)
+    const quiz_id = encodeURIComponent(getQuery(event).quiz_id as string)
+    const order_num = encodeURIComponent(getQuery(event).order_num as string)
+    const correct_char = encodeURIComponent(getQuery(event).correct_char as string)
+    const wrong_char1 = encodeURIComponent(getQuery(event).wrong_char1 as string)
+    const wrong_char2 = encodeURIComponent(getQuery(event).wrong_char2 as string)
+    const wrong_char3 = encodeURIComponent(getQuery(event).wrong_char3 as string)
     const query = `?quiz_id=${quiz_id}&order_num=${order_num}&correct_char=${correct_char}&wrong_char1=${wrong_char1}&wrong_char2=${wrong_char2}&wrong_char3=${wrong_char3}`
     const response = await $fetch(endpoint + query)
 

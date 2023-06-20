@@ -24,11 +24,11 @@ export type UpdateNodeResponse = {
 
 export default defineEventHandler(async (event) => {
   try {
-    const id = encodeURI(getQuery(event).id as string)
-    const txt = encodeURI(getQuery(event).txt as string)
-    const link = encodeURI(getQuery(event).link as string)
-    const opened = encodeURI(getQuery(event).opened as string)
-    const isGroup = encodeURI(getQuery(event).isGroup as string)
+    const id = encodeURIComponent(getQuery(event).id as string)
+    const txt = encodeURIComponent(getQuery(event).txt as string)
+    const link = encodeURIComponent(getQuery(event).link as string)
+    const opened = encodeURIComponent(getQuery(event).opened as string)
+    const isGroup = encodeURIComponent(getQuery(event).isGroup as string)
     const query = `?id=${id}&txt=${txt}&link=${link}&opened=${opened}&isGroup=${isGroup}`
     const response = await $fetch(endpoint + query)
     

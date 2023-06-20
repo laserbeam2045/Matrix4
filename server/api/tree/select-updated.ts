@@ -31,7 +31,7 @@ export type SelectUpdatedResponse = {
 // }
 export default defineEventHandler(async (event) => {
   try {
-    const id = encodeURI(getQuery(event).id as string)
+    const id = encodeURIComponent(getQuery(event).id as string)
     const query = `?id=${id}`
     const response = await $fetch(endpoint + query)
     

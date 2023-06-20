@@ -19,8 +19,8 @@ export type Response = {
 
 export default defineEventHandler(async (event) => {
   try {
-    const id = encodeURI(getQuery(event).id as string)
-    const push_point = encodeURI(getQuery(event).push_point as string)
+    const id = encodeURIComponent(getQuery(event).id as string)
+    const push_point = encodeURIComponent(getQuery(event).push_point as string)
     const query = `?id=${id}&push_point=${push_point}`
     const response = await $fetch(endpoint + query)
 

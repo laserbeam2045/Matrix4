@@ -22,11 +22,11 @@ export type Response = {
 
 export default defineEventHandler(async (event) => {
   try {
-    const id = encodeURI(getQuery(event).id as string)
-    const question = encodeURI(getQuery(event).question as string)
-    const answer1 = encodeURI(getQuery(event).answer1 as string)
-    const answer2 = encodeURI(getQuery(event).answer2 as string)
-    const correctAnswerRate = encodeURI(getQuery(event).correctAnswerRate as string)
+    const id = encodeURIComponent(getQuery(event).id as string)
+    const question = encodeURIComponent(getQuery(event).question as string)
+    const answer1 = encodeURIComponent(getQuery(event).answer1 as string)
+    const answer2 = encodeURIComponent(getQuery(event).answer2 as string)
+    const correctAnswerRate = encodeURIComponent(getQuery(event).correctAnswerRate as string)
     const query = `?id=${id}&question=${question}&answer1=${answer1}&answer2=${answer2}&correctAnswerRate=${correctAnswerRate}`
     const response = await $fetch(endpoint + query)
 

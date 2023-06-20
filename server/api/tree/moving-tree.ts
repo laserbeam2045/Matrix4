@@ -22,10 +22,15 @@ export type MovingTreeResponse = {
 
 export default defineEventHandler(async (event) => {
   try {
-    const cID = encodeURI(getQuery(event).cID as string)
-    const pID = encodeURI(getQuery(event).pID as string)
-    const idx = encodeURI(getQuery(event).idx as string)
+    const cID = encodeURIComponent(getQuery(event).cID as string)
+    const pID = encodeURIComponent(getQuery(event).pID as string)
+    const idx = encodeURIComponent(getQuery(event).idx as string)
     const query = `?cID=${cID}&pID=${pID}&idx=${idx}`
+
+    console.log(endpoint + query)
+    console.log(endpoint + query)
+    console.log(endpoint + query)
+    console.log(endpoint + query)
     const response = await $fetch(endpoint + query)
 
     return JSON.parse(response as string) as MovingTreeResponse
