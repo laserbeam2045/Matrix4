@@ -138,8 +138,8 @@ onMounted(async () => {
 
   if (route.params.id === 'home') {
     setTimeout(async () => {
-      // await treeMethods.changeRoot('ozmkiRCEBnh7ZT83') // 本番環境
-      await treeMethods.changeRoot('9FGOQhg2IodypRvq')
+      await treeMethods.changeRoot('ozmkiRCEBnh7ZT83') // 本番環境
+      // await treeMethods.changeRoot('9FGOQhg2IodypRvq')
       mounted.value = true
     }, 2100)
   } else {

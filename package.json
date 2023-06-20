@@ -21,6 +21,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/vue-fontawesome": "^3.0.3",
+    "@nuxt/typescript-build": "^3.0.1",
     "@vueuse/core": "^10.1.2",
     "firebase": "^9.22.2",
     "gsap": "^3.12.1",

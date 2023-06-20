@@ -84,7 +84,7 @@ export default defineNuxtConfig({
     // '@nuxtjs/tailwindcss',
     // '@vitejs/plugin-vue',
     // '@nuxtjs/pwa',
-    // '@nuxt/ui'
+    '@nuxt/ui'
   ],
 
   css: [
