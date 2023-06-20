@@ -4,6 +4,7 @@ import { VitePWA } from 'vite-plugin-pwa'
 import commonjsExternals from 'vite-plugin-commonjs-externals'
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
+import { fileURLToPath } from 'url'
 
 // import vue from '@vitejs/plugin-vue'
 
@@ -15,6 +16,11 @@ import path from 'path'
 // }
 
 export default defineConfig({
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url))
+    }
+  },
   css: {
     preprocessorOptions: {
       scss: {
