@@ -66,12 +66,12 @@ export default defineConfig({
     //   externals: ['path'],
     // }),
     // [
-    //   vue({
-    //     script: {
-    //       defineModel: true,
-    //       propsDestructure: true,
-    //     }
-    //   })
+      // vue({
+      //   script: {
+      //     defineModel: true,
+      //     propsDestructure: true,
+      //   }
+      // })
     // ]
   ],
 })

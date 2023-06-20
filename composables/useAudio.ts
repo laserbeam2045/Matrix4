@@ -1,7 +1,8 @@
 import { reactive, Ref } from 'vue'
 // import { resolve } from 'pathe'
 
-const API_ROOT = 'https://have-a-go.moo.jp/tree2'
+const config = useRuntimeConfig()
+const API_PATH = config.public.API_PATH
 
 // DBから取得したレコードの型定義
 type Record = {
@@ -84,7 +85,7 @@ export default function useAudio() {
       audio.load()
       return audio
     }
-    const paths = `/audios/${path}${fileName}.${extension}`
+    const paths = `https://have-a-go.moo.jp/tree2/assets/audios/${path}${fileName}.${extension}`
     const audio = new Audio(paths)
     audio.volume = volume
     audio.load()
@@ -118,7 +119,7 @@ export default function useAudio() {
     const audioLabels: string | null | undefined = labels2csv(labels)
     if (audioLabels) {
       try {
-        const url = `${API_ROOT}/api/audios/select/index.php`
+        const url = `${API_PATH}/audios/select/index.php`
         const option = { audioLabels }
         const result = await useFetch(url, { params: option })
         JSON.parse(result.data.value as string).forEach((record: Record) => {

@@ -135,10 +135,7 @@ onMounted(async () => {
 
 <template>
   <transition name="page" appear>
-    <div
-      v-if="mounted"
-      id="signin"
-    >
+    <div v-if="mounted" id="signin">
       <transition-group
         name="fade-input"
         mode="out-in"
