@@ -190,8 +190,8 @@ onMounted(async () => {
               style="width: 200px;"
               placeholder="Your Code Name"
               :activate="state.isDarkMode"
+              @keydown.enter="onKeyEnterTwo"
               />
-              <!-- @keydown.enter="onKeyEnterTwo" -->
           </transition-group>
         </div>
       </div>

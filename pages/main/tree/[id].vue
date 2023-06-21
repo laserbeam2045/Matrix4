@@ -183,6 +183,8 @@ onMounted(async () => {
       :tree-methods="treeMethods"
       :tree-history="treeHistory"
     />
+    <NuxtLayout name="the-header" />
+    <NuxtLayout name="the-navigation" />
     <NuxtLayout name="the-loading" />
   </div>
 </template>

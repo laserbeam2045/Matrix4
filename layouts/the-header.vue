@@ -36,7 +36,7 @@ const toggleNavigation = () => {
     playAudio(AUDIOS.ETC.CYBER_17_1)
   }
 
-  // $toggleNavigation()
+  $toggleNavigation()
 }
 
 const displayInfo = ref('')
