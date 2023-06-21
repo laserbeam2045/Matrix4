@@ -290,14 +290,14 @@ const tableState = reactive({
       thText: 'NestLevel',
       tdText: computed(() => about.value.level),
     },
-    {
-      thText: 'Lft',
-      tdText: computed(() => about.value.lft % 1 ? about.value.lft : Math.floor(about.value.lft)),
-    },
-    {
-      thText: 'Rgt',
-      tdText: computed(() => about.value.rgt % 1 ? about.value.rgt : Math.floor(about.value.rgt)),
-    },
+    // {
+    //   thText: 'Lft',
+    //   tdText: computed(() => about.value.lft % 1 ? about.value.lft : Math.floor(about.value.lft)),
+    // },
+    // {
+    //   thText: 'Rgt',
+    //   tdText: computed(() => about.value.rgt % 1 ? about.value.rgt : Math.floor(about.value.rgt)),
+    // },
   ],
   AUTH: [
     {
