@@ -399,18 +399,18 @@ export default function useTree(): {
   const intervalId = ref(null)
 
   onMounted(async () => {
-    // intervalId.value = setInterval(async () => {
-    //   if (!rootId.value) return
-    //   const response = await treeMethods.selectUpdated({ id: rootId.value })
-    //   if (typeof response?.updatedAt === 'string') {
-    //     console.log(`%c${response.updatedAt}`, 'color: green')
-    //     if (updatedAt.value !== response.updatedAt) {
-    //       updatedAt.value = response.updatedAt
-    //       treeMethods.updateData()
-    //       console.log('%cData has been Updated', 'color: blue')
-    //     }
-    //   }
-    // }, 30000)
+    intervalId.value = setInterval(async () => {
+      if (!rootId.value) return
+      const response = await treeMethods.selectUpdated({ id: rootId.value })
+      if (typeof response?.updatedAt === 'string') {
+        console.log(`%c${response.updatedAt}`, 'color: green')
+        if (updatedAt.value !== response.updatedAt) {
+          updatedAt.value = response.updatedAt
+          treeMethods.updateData()
+          console.log('%cData has been Updated', 'color: blue')
+        }
+      }
+    }, 1000)
   })
 
   onUnmounted(() => {
