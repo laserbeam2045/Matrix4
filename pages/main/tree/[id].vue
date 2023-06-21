@@ -156,7 +156,7 @@ onMounted(async () => {
   <div>
     <div class="bg" :class="{ mounted }" />
     <div id="the-sample-tree">
-      <div id="tree-container">
+      <div id="tree-container" :class="{ lifeforms: sensor === 'lifeforms', economy: sensor === 'economy', crime: sensor === 'crime' }">
         <transition :appear="true">
           <div v-if="!isTreeOldData">
             <component
@@ -184,7 +184,7 @@ onMounted(async () => {
       :tree-history="treeHistory"
     />
     <NuxtLayout name="the-header" />
-    <NuxtLayout name="the-navigation" />
+    <!-- <NuxtLayout name="the-navigation" /> -->
     <NuxtLayout name="the-loading" />
   </div>
 </template>
@@ -205,6 +205,10 @@ onMounted(async () => {
     padding: 100px max(32px, 5%) 185px;
     margin: 0;
     flex-shrink: 0;
+
+    &.economy {
+      margin: 0 auto;
+    }
   }
 }
 

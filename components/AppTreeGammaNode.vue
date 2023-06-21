@@ -242,6 +242,10 @@ onMounted(() => {
       background: transparent;
     }
 
+    //&[data-level="1"] {
+      //border: none !important;
+    //}
+
     // &.parent {
     //   display: block;
     //   display: grid;
@@ -285,6 +289,10 @@ onMounted(() => {
     z-index: 2;
     align-items: center;
     text-align: left;
+
+    //> * {
+    //  transform: rotateY(180deg);
+    //}
   }
 
   &.treeDragging > .item-container {
