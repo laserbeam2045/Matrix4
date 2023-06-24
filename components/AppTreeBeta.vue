@@ -129,6 +129,6 @@ const {
   flex-direction: column;
   padding: 0;
   margin: 0;
-  flex-shrink: 0;
+  flex-shrink: 1;
 }
 </style>

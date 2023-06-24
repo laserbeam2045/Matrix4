@@ -202,7 +202,7 @@ onMounted(async () => {
   // background-color: rgba(0,61,125, 0.33);
 
   #tree-container {
-    padding: 100px max(32px, 5%) 185px;
+    padding: 80px max(16px, 5%) 185px;
     margin: 0;
     flex-shrink: 0;
 

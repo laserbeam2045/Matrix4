@@ -47,7 +47,7 @@
         :is-parent-open="isParent && isChildrenOpen"
         :is-dragging="isSomeDragging"
         :style="{
-          maxWidth: isParent ? `calc(max(30px, 100vw - 16px) - ${treeData.level * 28}px)` : 'auto',
+          maxWidth: isParent ? `calc(max(30px, 100vw - 10vw) - ${treeData.level * 28}px)` : 'auto',
         }"
         @moveItem="$emit('moveItem', $event)"
         @touchItem="$emit('touchItem', $event)"
@@ -172,7 +172,7 @@ onMounted(() => {
 
 .app-tree-node {
   position: relative;
-  flex-shrink: 0;
+  flex-shrink: 1;
   background: rgba(0, 170, 170, 0.2);
   // background: $textColor2;
   // background: rgba(0, 108, 108, 1);
@@ -193,6 +193,7 @@ onMounted(() => {
     text-align: center;
 
     &[data-level="1"] {
+      margin-top: 0;
       margin-left: 0;
     }
 
