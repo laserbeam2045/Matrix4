@@ -1,6 +1,5 @@
 <script setup lang="ts">
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Ref } from 'vue'
 import type { TreeData, TreeOptions } from '@/composables/useTree'
 import type { MovingNodeArguments } from '@/server/api/tree/moving-node'
 import type { MovingTreeArguments } from '@/server/api/tree/moving-tree'

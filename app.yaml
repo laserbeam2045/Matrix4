@@ -1,0 +1,32 @@
+runtime: nodejs16
+service: default
+
+instance_class: F1
+
+automatic_scaling:
+  # CPU利用率 0.5〜0.95で設定可 デフォルト0.6 この値を超えると新しいインスタンスを作成
+  target_cpu_utilization: 0.8
+  # 新しいインスタンスが作成されるタイミング0.5〜0.95で設定可 デフォルト0.6
+  # 同時リクエスト数 = max_concurrent_requests × target_throughput_utilizationの場合インスタンスを生成
+  target_throughput_utilization: 0.8
+  # リクエストが来なくても、常時立ち上げておく最低インスタンス数
+  min_instances: 0
+  # 最大インスタンス数
+  max_instances: 1
+  # 最大アイドルインスタンス数
+  max_idle_instances: 0
+  # Pending Request Queueの中で、既存のインスタンスが空くのを待つ最小時間
+  min_pending_latency: automatic
+  # Pending Request Queueの中で、待てる最大時間 超えると新インスタンスを生成
+  max_pending_latency: automatic
+  # 1インスタンスで、同時に処理して良いリクエスト数。
+  max_concurrent_requests: 80
+
+handlers:
+  - url: /.*
+    script: auto
+    secure: always
+
+env_variables:
+  HOST: '0.0.0.0'
+  NODE_ENV: 'production'
