@@ -240,6 +240,8 @@ const { teleportInfo, resetTeleportInfo } = useTeleport()
 
 const ROOT_ID = useState('TREE_ROOT_ID').value as string
 
+console.table({ ROOT_ID })
+
 const about = useState('about') as Ref<TreeData | null>
 
 // 親がrootではないときにtrue
@@ -621,6 +623,7 @@ const onClickItem = async () => {
             playAudio(AUDIOS.ETC.DECISION_30)
             askChangeRoot(id)
           }
+          // console.table({pID, txt, link})
           insertNode({ pID, txt, link }).then(ok).catch(ng)
         } else if (txt === 'sparse') {
           sparseTree({}).then(ok).catch(ng)

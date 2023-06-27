@@ -22,6 +22,8 @@ watch(applicationMode, (mode: number) => {
 
 const auth = getAuth()
 
+const showNavigation = useState('showNavigation')
+
 onMounted(() => {
   const user = auth.currentUser
   console.log(user)
@@ -32,6 +34,7 @@ onMounted(() => {
   //   console.table({ user })
   // }
   console.table({ user })
+  showNavigation.value = true
 })
 </script>
 
@@ -40,8 +43,6 @@ onMounted(() => {
     <div v-if="user.codeName || true" class="contents">
       <NuxtLayout name="the-header" />
       <NuxtLayout name="the-loading" />
-      <NuxtLayout name="the-navigation" />
-      <slot />
     </div>
   </div>
 </template>

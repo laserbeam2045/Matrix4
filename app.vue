@@ -69,12 +69,13 @@ onUnmounted(() => {
         type="text/css"
         href="//fonts.googleapis.com/css2?family=Nunito:wght@100;200;300;400;500;600"
       />
-      <Link
+      <!-- <Link
         rel="manifest"
         href="/_nuxt/manifest.webmanifest"
-      />
+      /> -->
     </Head>
     <Body>
+      <VitePwaManifest />
       <div id="layer-0" />
       <div id="layer-1">
         <NuxtPage />

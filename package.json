@@ -6,11 +6,13 @@
     "build": "nuxt build",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
+    "start": "nuxt preview",
     "gcp-build": ""
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
     "@nuxt/ui": "^0.4.1",
+    "@nuxtjs/pwa": "^3.3.5",
     "@types/node": "^18",
     "gsap": "^3.12.1",
     "sass": "^1.63.6",
@@ -26,6 +28,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/vue-fontawesome": "^3.0.3",
     "@nuxt/typescript-build": "^3.0.1",
+    "@vite-pwa/nuxt": "^0.1.0",
     "@vueuse/core": "^10.1.2",
     "firebase": "^9.22.2",
     "nuxt": "^3.6.0",

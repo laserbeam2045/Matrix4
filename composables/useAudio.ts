@@ -1,9 +1,6 @@
 import { reactive, Ref } from 'vue'
 // import { resolve } from 'pathe'
 
-const config = useRuntimeConfig()
-const API_PATH = config.public.API_PATH
-
 // DBから取得したレコードの型定義
 type Record = {
   path: string
@@ -27,6 +24,9 @@ type State = {
 
 // storeを作成する関数(一度だけ実行されます)
 export default function useAudio() {
+  const config = useRuntimeConfig()
+  const API_PATH = config.public.API_PATH
+
   const data = useState('audioData', () => ({})) as Ref<Data>
   const isSoundOn = useState('isSoundOn') as Ref<boolean>
 

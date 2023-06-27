@@ -18,12 +18,10 @@ const getMessage = () => {
 
 onMounted(() => {
   setTimeout(() => setInfo(getMessage()), 1000)
-  // setPageLayout('the-matrix')
 })
 </script>
 
 <template>
-  <!-- <div></div> -->
   <NuxtLayout name="the-matrix" />
       <!-- <NuxtLayout name="the-header" />
       <NuxtLayout name="the-loading" />

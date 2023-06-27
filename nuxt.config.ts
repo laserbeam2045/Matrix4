@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { defineConfig } from 'vite'
+// import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
 import commonjsExternals from 'vite-plugin-commonjs-externals'
 // import vue from '@vitejs/plugin-vue'
@@ -30,12 +30,43 @@ const firebaseConfig = {
 // https://v3.nuxtjs.org/docs/directory-structure/nuxt.config
 export default defineNuxtConfig({
   ssr: true,
-  // mode: 'spa',
+
+  pwa: {
+    registerType: 'autoUpdate',
+    manifest: {
+      name: 'MATRIX',
+      short_name: 'MATRIX',
+      description: 'The future of the world.',
+      icons: [{
+        src: 'favicon.png',
+        sizes: '32x32',
+        type: 'image/png',
+      }],
+      start_url: '/',
+      background_color: '#0D0208',
+      theme_color: '#00FF41',
+      lang: 'en',
+      shortcuts: [{
+        name: 'MATRIX',
+        short_name: 'MATRIX',
+        url: 'https://matrix-code.net/',
+        description: 'The future of the world.',
+        // icons: ['favicon.png'],
+      }],
+    },
+    // srcDir: '_nuxt',
+    filename: 'sw.js',
+    injectRegister: 'auto',
+    workbox: {
+      cleanupOutdatedCaches: true,
+    },
+  },
 
   // nitro: {
   //   // preset: 'browser',
   //   preset: 'node',
   // },
+  // mode: 'spa',
 
   alias: {
     'audios': resolve(__dirname, './assets/audios'),
@@ -94,9 +125,9 @@ export default defineNuxtConfig({
           cleanupOutdatedCaches: true,
         },
       }),
-      // commonjsExternals({
-      //   externals: ['path'],
-      // }),
+      commonjsExternals({
+        externals: ['path'],
+      }),
       // [
         // vue({
         //   script: {
@@ -107,6 +138,91 @@ export default defineNuxtConfig({
       // ]
     ],
   },
+
+  // pwa: {
+  //   registerType: "autoUpdate",
+  //   includeAssets: ["favicon.ico"],
+  //   client: {
+  //     installPrompt: true,
+  //   },
+  //   manifest: {
+  //     name: 'name',
+  //     description: "description",
+  //     theme_color: "#ffffff",
+  //     lang: "ja",
+  //     short_name: "short_name",
+  //     start_url: "/",
+  //     display: "standalone",
+  //     background_color: "#ffffff",
+  //     icons: [
+  //       {
+  //         src: "icons/36x36.png",
+  //         sizes: "36x36",
+  //         type: "image/png"
+  //       },
+  //       {
+  //         src: "icons/48x48.png",
+  //         sizes: "48x48",
+  //         type: "image/png"
+  //       },
+  //       {
+  //         src: "icons/72x72.png",
+  //         sizes: "72x72",
+  //         type: "image/png"
+  //       },
+  //       {
+  //         src: "icons/96x96.png",
+  //         sizes: "96x96",
+  //         type: "image/png"
+  //       },
+  //       {
+  //         src: "icons/128x128.png",
+  //         sizes: "128x128",
+  //         type: "image/png"
+  //       },
+  //       {
+  //         src: "icons/144x144.png",
+  //         sizes: "144x144",
+  //         type: "image/png"
+  //       },
+  //       {
+  //         src: "icons/152x152.png",
+  //         sizes: "152x152",
+  //         type: "image/png"
+  //       },
+  //       {
+  //         src: "icons/192x192.png",
+  //         sizes: "192x192",
+  //         type: "image/png"
+  //       },
+  //       {
+  //         src: "icons/256x256.png",
+  //         sizes: "256x256",
+  //         type: "image/png"
+  //       },
+  //       {
+  //         src: "icons/384x384.png",
+  //         sizes: "384x384",
+  //         type: "image/png"
+  //       },
+  //       {
+  //         src: "icons/512x512.png",
+  //         sizes: "512x512",
+  //         type: "image/png"
+  //       }
+  //     ]
+  //   },
+  //   workbox: {
+  //     navigateFallback: null
+  //   },
+  //   devOptions: {
+  //     enabled: true,
+  //     type: "module"
+  //   },
+  //   icon: {
+  //     source: "icon.png",
+  //   }
+  // },
 
   vue: {
     compilerOptions: {
@@ -159,6 +275,7 @@ export default defineNuxtConfig({
     // '@nuxtjs/tailwindcss',
     // '@vitejs/plugin-vue',
     // '@nuxtjs/pwa',
+    '@vite-pwa/nuxt',
     '@nuxt/ui'
   ],
 
@@ -232,10 +349,10 @@ export default defineNuxtConfig({
   runtimeConfig: {
     apiSecret: '123',
     public: {
-      firebaseConfig: process.env.NODE_ENV === 'production'
-        ? {}
-        : firebaseConfig,
-      // firebaseConfig: firebaseConfig,
+      // firebaseConfig: process.env.NODE_ENV === 'production'
+      //   ? {}
+      //   : firebaseConfig,
+      firebaseConfig: firebaseConfig,
       API_PATH: process.env.API_PATH,
     },
   },

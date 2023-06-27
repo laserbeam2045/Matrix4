@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { Ref } from 'vue'
-
 import useEvent from '@/composables/useEvent'
 // import { useAudio, AUDIOS } from '@/composable/useAudio'
 
@@ -95,7 +93,7 @@ const selectItem = (item: CircularItem) => {
   emit('selectItem', item.itemId)
   applicationMode.value = item.itemId
   // rotate()
-  // setTimeout($deactivateNavigation, 800)
+  setTimeout($deactivateNavigation, 800)
   // }
 }
 
@@ -150,8 +148,9 @@ const foo = async (item: CircularItem) => {
 
 onMounted(async () => {
   setTimeout(async () => {
+    if (!showNavigation.value) return
     isOuterActive.value = true
-    setTimeout($activateNavigation, 100)
+    setTimeout($activateNavigation, 10)
   }, 3500)
 })
 </script>

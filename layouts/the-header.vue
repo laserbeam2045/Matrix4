@@ -8,9 +8,6 @@ const { AUDIOS, loadAudio, playAudio, stopAudio } = useAudio()
 
 const eventName = computed(() => mouseTouchEvent.value.END + 'Passive')
 
-// const count = ref(0)
-// const increment = () => count.value++
-
 const { $toggleNavigation } = useNuxtApp()
 
 const isSoundOn = useState('isSoundOn') as Ref<boolean>
@@ -25,15 +22,17 @@ const toggleSound = async () => {
     await loadAudio(AUDIOS.QUIZ)
     await loadAudio(AUDIOS.ETC)
     playAudio(AUDIOS.ETC.CYBER_17_1)
-    playAudio(AUDIOS.ETC.AlanWalker)
+    // playAudio(AUDIOS.ETC.AlanWalker)
   }
 }
 
 const toggleNavigation = () => {
   if (showNavigation.value) {
     playAudio(AUDIOS.ETC.CYBER_18_1)
+    showNavigation.value = false
   } else {
     playAudio(AUDIOS.ETC.CYBER_17_1)
+    showNavigation.value = true
   }
 
   $toggleNavigation()
@@ -105,6 +104,7 @@ watch(matrixTime, () => {
           </ul>
         </div>
       </div>
+      <NuxtLayout name="the-navigation" />
     </teleport>
   </div>
 </template>

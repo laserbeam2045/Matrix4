@@ -242,21 +242,22 @@ onMounted(() => {
   .item-container {
     position: relative;
     display: flex;
-    align-items: center;
+    align-items: center !important;
     z-index: 2;
   }
 
   &.treeDragging > .item-container {
     z-index: 0;
+    align-items: center !important;
   }
 
   .toggle-container {
     width: 38px;
     // height: 38px;
     display: flex;
-    align-items: center;
     margin: 0 0 0 -4px;
     z-index: 1;
+    align-items: center !important;
     // border: 1px solid yellow;
   }
 
@@ -267,7 +268,7 @@ onMounted(() => {
   .drag-container {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: center;
     margin: 0 8px 0 -16px;
     z-index: 2;
     // background: skyblue;

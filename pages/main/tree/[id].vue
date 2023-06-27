@@ -17,6 +17,10 @@ type MoveInfo = (
 
 const { setLoading } = useMatrix()
 
+const showNavigation = useState('showNavigation') as Ref<boolean>
+
+showNavigation.value = false
+
 const dragMode = ref<DragMode>(DRAG_MODE.EDGE)
 
 const treeOptions: TreeOptions = reactive({ dragMode })
@@ -133,8 +137,6 @@ onMounted(async () => {
   setInfo('')
   setLoading(true)
 
-  console.log(route.params.id)
-
   if (route.params.id === 'home') {
     setTimeout(async () => {
       await treeMethods.changeRoot('ozmkiRCEBnh7ZT83') // 本番環境
@@ -183,7 +185,6 @@ onMounted(async () => {
       :tree-history="treeHistory"
     />
     <NuxtLayout name="the-header" />
-    <!-- <NuxtLayout name="the-navigation" /> -->
     <NuxtLayout name="the-loading" />
   </div>
 </template>

@@ -4,7 +4,7 @@ import { defineNuxtPlugin } from '#app'
 
 export default defineNuxtPlugin(() => {
   useState('client', () => 'client')
-  useState('TREE_ROOT_ID', () => process.env.TREE_ROOT_ID)
+  useState('TREE_ROOT_ID', () => '9FGOQhg2IodypRvq')
   useState('clipboardData', () => '')
   useState('treeMode', () => 'DISPLAY')
   useState('applicationMode', () => null)
@@ -18,7 +18,7 @@ export default defineNuxtPlugin(() => {
     showNavigation.value = true
     setTimeout(() => isCircleActive.value = true, 100)
   }
-
+  
   const deactivateNavigation = () => {
     isCircleActive.value = false
     setTimeout(() => {
