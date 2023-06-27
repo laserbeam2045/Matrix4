@@ -18,7 +18,7 @@ $sql_2 = "
 ";
 
 $sql_3 = "
-  CALL updateAncestors(:id);
+  CALL updateAncestors(:id, 3);
 ";
 
 try {

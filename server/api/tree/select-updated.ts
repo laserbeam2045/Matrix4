@@ -17,6 +17,7 @@ export interface SelectUpdatedArguments {
 export type SelectUpdatedResponse = {
   result: {
     updatedAt: string
+    updatedType: number
   } | null
 }
 

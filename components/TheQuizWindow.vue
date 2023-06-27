@@ -621,6 +621,7 @@ onMounted(() => {
         flex-direction: column;
         padding: 16px 0px;
         width: 99%;
+        z-index: 10;
 
         > label {
           display: flex;

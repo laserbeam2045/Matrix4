@@ -40,6 +40,7 @@ $sql = "
     Node.isGroup,
     Node.lft,
     Node.rgt,
+    Node.updatedType,
     Node.createdAt,
     Node.updatedAt,
     Parents.id AS parent,

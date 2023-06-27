@@ -87,10 +87,11 @@ const onChangeOpen = async (payload: TreeData) => {
   }
 }
 
-const onUpdated = () => {
+const onUpdated = (update = true) => {
+  console.table({ update })
   onFinished()
   setTimeout(() => {
-    treeMethods.updateData()
+    treeMethods.updateData(update)
   }, 100)
 }
 
@@ -131,7 +132,6 @@ const treeComponent = computed(() => {
 const mounted = ref(route.params.id !== 'home')
 
 onMounted(async () => {
-
   const { setInfo } = useMatrix()
 
   setInfo('')

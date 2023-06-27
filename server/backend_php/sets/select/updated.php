@@ -8,7 +8,8 @@ include('../../functions.php');
 
 $sql_1 = "
   SELECT
-    updatedAt
+    updatedAt,
+    updatedType
   FROM
     sets
   WHERE

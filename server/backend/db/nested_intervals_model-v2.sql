@@ -298,10 +298,11 @@ DELIMITER ;
 /********************************
 集合(id = id)と、その祖先の更新日時を更新するストアドプロシージャ
 第1引数(入力): id: 対象となる集合のid
+第2引数(入力): type: 変更の種類
 ********************************/
 DELIMITER //
   DROP PROCEDURE IF EXISTS updateAncestors//
-CREATE PROCEDURE updateAncestors (IN tID VARCHAR(16))
+CREATE PROCEDURE updateAncestors (IN tID VARCHAR(16), IN uType INT)
 BEGIN
   DECLARE done INT DEFAULT FALSE;
   DECLARE vID VARCHAR(16);
@@ -331,6 +332,7 @@ BEGIN
       UPDATE
         `sets`
       SET
+        `updatedType` = uType,
         `updatedAt` = CURRENT_TIMESTAMP
       WHERE
         `id` = vID;
@@ -527,7 +529,7 @@ BEGIN
     SELECT `id` AS root FROM `sets` c WHERE
       NOT EXISTS ( SELECT * FROM `sets` p WHERE c.lft > p.lft AND c.rgt < p.rgt );
 
-     2. 入れ子の検証
+    -- 2. 入れ子の検証
     SELECT
       parents.id AS pid,
       children.id AS cid,
@@ -550,11 +552,12 @@ BEGIN
       )
     LIMIT 0, 2300;
 
-     3 重複値チェック
-     ※ 左右併せて一つの position = view_seq.seq は１行のみに出現し、id が複数出てきたりしないことを検証
+    -- 3 重複値チェック
+    -- ※ 左右併せて一つの position = view_seq.seq は１行のみに出現し、
+    -- id が複数出てきたりしないことを検証
     SELECT * FROM (SELECT seq, COUNT(*) AS cnt, MAX(id) AS maxid, MIN(id) AS minid FROM view_seq GROUP BY seq ORDER BY seq) AS foo WHERE cnt <> 1;
 
-     実行前に 最大値、最小値、件数 をチェック
+    -- 実行前に 最大値、最小値、件数 をチェック
     SELECT COUNT(id) cnt, MIN(lft) AS min, MAX(rgt) AS max FROM sets;
 
     REPLACE INTO sets (id, txt, link, opened, isGroup, lft, rgt, createdAt, updatedAt)

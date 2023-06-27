@@ -7,7 +7,7 @@ include('../../db.php');
 include('../../functions.php');
 
 $sql_1 = "
-  CALL updateAncestors(:id);
+  CALL updateAncestors(:id, 5);
 ";
 
 $sql_2 = "

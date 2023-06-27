@@ -31,6 +31,7 @@ export interface SetResponse {
   progeniesCount: number  // 子孫の数
   lft: number
   rgt: number
+  updatedType: number
   createdAt: string
   updatedAt: string
 }
@@ -84,7 +85,7 @@ export interface TreeState {
 
 export type SelectNode = (args: SelectNodeArguments) => Promise<SetResponse>
 export type SelectTree = (args: SelectTreeArguments) => Promise<SetResponse[]>
-export type SelectUpdated = (args: SelectUpdatedArguments) => Promise<{ updatedAt: string }>
+export type SelectUpdated = (args: SelectUpdatedArguments) => Promise<{ updatedAt: string, updatedType }>
 export type SearchNodes = (args: SearchNodesArguments) => Promise<SetResponse[]>
 export type InsertNode = (args: InsertNodeArguments) => Promise<{ id: string }>
 export type InsertClone = (args: InsertCloneArguments) => Promise<{ id: string }>
@@ -97,7 +98,7 @@ export type DeleteTree = (args: DeleteTreeArguments) => Promise<void>
 export type MovingNode = (args: MovingNodeArguments) => Promise<void>
 export type MovingTree = (args: MovingTreeArguments) => Promise<void>
 export type ChangeRoot = (id: string) => Promise<void>
-export type UpdateData = () => Promise<void>
+export type UpdateData = (loading?: boolean) => Promise<void>
 export type ChangeOpen = (args: { id: string }) => Promise<void>
 
 /**
@@ -326,12 +327,13 @@ export default function useTree(): {
       return Promise.resolve()
     },
 
-    updateData: async function() {
+    updateData: async function(loading = true) {
       if (!rootId.value) {
         return Promise.reject('No tree data')
       }
-
-      isTreeLoading.value = true
+      if (loading) {
+        isTreeLoading.value = true
+      }
       const params = { id: rootId.value }
       const { data, error } = await useFetch('/api/tree/select-tree', { params })
 
@@ -401,12 +403,24 @@ export default function useTree(): {
   onMounted(async () => {
     intervalId.value = setInterval(async () => {
       if (!rootId.value) return
+
       const response = await treeMethods.selectUpdated({ id: rootId.value })
       if (typeof response?.updatedAt === 'string') {
         console.log(`%c${response.updatedAt}`, 'color: green')
-        if (updatedAt.value !== response.updatedAt) {
+        if (
+            updatedAt.value !== response.updatedAt
+          ) {
+          if (
+            response.updatedType !== 1 &&
+            response.updatedType !== 2
+          ) {
+            console.table({ response })
+            treeMethods.updateData()
+          } else {
+            console.table({ response })
+            treeMethods.updateData(false)
+          }
           updatedAt.value = response.updatedAt
-          treeMethods.updateData()
           console.log('%cData has been Updated', 'color: blue')
         }
       }

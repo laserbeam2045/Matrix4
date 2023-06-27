@@ -225,7 +225,7 @@ const {
 } = props.treeMethods
 
 const emit = defineEmits<{
-  (event: 'update'): void,
+  (event: 'update', update?: boolean): void,
   (event: 'finish'): void,
   (event: 'cancel'): void,
 }>()
@@ -530,6 +530,13 @@ const ok = (result?: any) => {
   playAudio(AUDIOS.ETC.DECISION_30)
 }
 
+// 何らかの処理が成功した時のコールバック関数
+const okb = (result?: any) => {
+  emit('update', false)
+  setInfo('Succeeded')
+  playAudio(AUDIOS.ETC.DECISION_30)
+}
+
 // 何らかの処理が失敗した時のコールバック関数
 const ng = (err?: string) => {
   playAudio(AUDIOS.ETC.CYBER_06_4)
@@ -626,7 +633,7 @@ const onClickItem = async () => {
           // console.table({pID, txt, link})
           insertNode({ pID, txt, link }).then(ok).catch(ng)
         } else if (txt === 'sparse') {
-          sparseTree({}).then(ok).catch(ng)
+          sparseTree({}).then(okb).catch(ng)
         } else {
           insertNode({ pID, txt, link }).then(ok).catch(ng)
         }
