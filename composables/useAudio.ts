@@ -1,6 +1,3 @@
-import { reactive, Ref } from 'vue'
-// import { resolve } from 'pathe'
-
 // DBから取得したレコードの型定義
 type Record = {
   path: string
@@ -26,6 +23,7 @@ type State = {
 export default function useAudio() {
   const config = useRuntimeConfig()
   const API_PATH = config.public.API_PATH
+  const ASSETS_PATH = config.public.ASSETS_PATH
 
   const data = useState('audioData', () => ({})) as Ref<Data>
   const isSoundOn = useState('isSoundOn') as Ref<boolean>
@@ -79,13 +77,13 @@ export default function useAudio() {
   const createAudio = (audioData: Record) => {
     const { path, fileName, extension, volume } = audioData
     if (fileName === 'AlanWalker') {
-      const paths = 'https://have-a-go.moo.jp/tree2/assets/audios/etc/AlanWalker.mp3'
+      const paths = `${ASSETS_PATH}/audios/etc/AlanWalker.mp3`
       const audio = new Audio(paths)
       audio.volume = volume
       audio.load()
       return audio
     }
-    const paths = `https://have-a-go.moo.jp/tree2/assets/audios/${path}${fileName}.${extension}`
+    const paths = `${ASSETS_PATH}/audios/${path}${fileName}.${extension}`
     const audio = new Audio(paths)
     audio.volume = volume
     audio.load()

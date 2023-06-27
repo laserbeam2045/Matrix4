@@ -354,6 +354,7 @@ export default defineNuxtConfig({
       //   : firebaseConfig,
       firebaseConfig: firebaseConfig,
       API_PATH: process.env.API_PATH,
+      ASSETS_PATH: process.env.ASSETS_PATH,
     },
   },
 
