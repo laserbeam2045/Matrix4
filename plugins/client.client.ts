@@ -5,6 +5,7 @@ import { defineNuxtPlugin } from '#app'
 export default defineNuxtPlugin(() => {
   useState('client', () => 'client')
   useState('TREE_ROOT_ID', () => '9FGOQhg2IodypRvq')
+  useState('HOME_ROOT_ID', () => 'ozmkiRCEBnh7ZT83')
   useState('clipboardData', () => '')
   useState('treeMode', () => 'DISPLAY')
   useState('applicationMode', () => null)

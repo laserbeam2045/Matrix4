@@ -147,6 +147,8 @@ export default function useTree(): {
 
   const isTreeOldData = useState('isTreeOldData', () => true)
 
+  const isTreeMoving = useState('isTreeMoving', () => false)
+
   // ルートID
   const rootId = useState('treeRootId', () => '')
 
@@ -344,6 +346,9 @@ export default function useTree(): {
 
       table.value = data.value.result
       isTreeLoading.value = false
+      isTreeOldData.value = false
+      updatedAt.value = root.value.updatedAt
+      isTreeMoving.value = false
       return Promise.resolve()
     },
 
@@ -395,6 +400,7 @@ export default function useTree(): {
       history.value.push(id)
       currentPosition.value++
       isTreeOldData.value = true
+      isTreeMoving.value = true
     }
   })
 
@@ -403,6 +409,9 @@ export default function useTree(): {
   onMounted(async () => {
     intervalId.value = setInterval(async () => {
       if (!rootId.value) return
+      if (isTreeOldData.value || isTreeLoading.value || isTreeMoving.value) {
+        return
+      }
 
       const response = await treeMethods.selectUpdated({ id: rootId.value })
       if (typeof response?.updatedAt === 'string') {
@@ -424,7 +433,7 @@ export default function useTree(): {
           console.log('%cData has been Updated', 'color: blue')
         }
       }
-    }, 1000)
+    }, 800)
   })
 
   onUnmounted(() => {

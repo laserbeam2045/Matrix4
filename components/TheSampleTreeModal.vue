@@ -240,8 +240,6 @@ const { teleportInfo, resetTeleportInfo } = useTeleport()
 
 const ROOT_ID = useState('TREE_ROOT_ID').value as string
 
-console.table({ ROOT_ID })
-
 const about = useState('about') as Ref<TreeData | null>
 
 // 親がrootではないときにtrue

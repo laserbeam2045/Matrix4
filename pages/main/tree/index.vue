@@ -35,9 +35,8 @@ const {
   isTreeOldData,
 } = useTree()
 
-watch(rootId, async (id) => {
-  useNuxtApp().$router.push(`/main/tree/${encodeURIComponent(id)}`)
-})
+const TREE_ROOT_ID = useState('TREE_ROOT_ID').value as string
+const HOME_ROOT_ID = useState('HOME_ROOT_ID').value as string
 
 const canceledCount = ref(0)
 
@@ -105,7 +104,15 @@ const onCanceled = () => {
   console.log('canceled: ' + canceledCount.value)
 }
 
+watch(rootId, async (id) => {
+  // useNuxtApp().$router.push(`/main/tree/${encodeURIComponent(id)}`)
+  console.table({id})
+  await treeMethods.changeRoot(id)
+  await treeMethods.updateData()
+})
+
 watch(isTreeLoading, (isLoading) => {
+  console.table({ isLoading })
   setLoading(isLoading)
 })
 
@@ -137,19 +144,28 @@ onMounted(async () => {
   setInfo('')
   setLoading(true)
 
-  if (route.params.id === 'home') {
-    setTimeout(async () => {
-      await treeMethods.changeRoot('ozmkiRCEBnh7ZT83') // 本番環境
-      // await treeMethods.changeRoot('9FGOQhg2IodypRvq')
-      mounted.value = true
-    }, 2100)
-  } else {
-    await treeMethods.updateData()
+  rootId.value = HOME_ROOT_ID
 
-    setTimeout(() => {
-      isTreeOldData.value = false
-    }, 100)
-  }
+  await treeMethods.updateData(false)
+
+  // setTimeout(() => {
+  //   isTreeOldData.value = false
+  // }, 100)
+
+  // if (route.params.id === 'home') {
+  //   setTimeout(async () => {
+  //     await treeMethods.changeRoot('ozmkiRCEBnh7ZT83') // 本番環境
+  //     // await treeMethods.changeRoot('9FGOQhg2IodypRvq')
+  //     mounted.value = true
+  //   }, 2100)
+  // } else {
+  //   await treeMethods.updateData()
+
+  //   setTimeout(() => {
+  //     isTreeOldData.value = false
+  //   }, 100)
+  // }
+
 })
 </script>
 

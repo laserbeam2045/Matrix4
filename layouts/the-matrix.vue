@@ -11,7 +11,7 @@ watch(applicationMode, (mode: number) => {
   setTimeout(() => {
     switch (mode) {
     case 1: $router.push('/main/conf'); break
-    case 2: $router.push('/main/tree/home'); break
+    case 2: $router.push('/main/tree'); break
     case 3: $router.push('/main/quiz'); break
     case 4: $router.push('/main/cube'); break
     case 5: $router.push('/main/chart'); break
