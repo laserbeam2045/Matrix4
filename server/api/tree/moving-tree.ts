@@ -1,8 +1,4 @@
-// import { API_PATH } from '../../db'
-const config = useRuntimeConfig()
-const API_PATH = config.public.API_PATH
-
-const endpoint = `${API_PATH}/sets/move/tree.php`
+import { createClient } from '@supabase/supabase-js'
 
 /**
  * リクエストに必要なパラメータ
@@ -22,20 +18,37 @@ export type MovingTreeResponse = {
 
 export default defineEventHandler(async (event) => {
   try {
-    const cID = encodeURIComponent(getQuery(event).cID as string)
-    const pID = encodeURIComponent(getQuery(event).pID as string)
-    const idx = encodeURIComponent(getQuery(event).idx as string)
-    const query = `?cID=${cID}&pID=${pID}&idx=${idx}`
+    const config = useRuntimeConfig()
+    console.log('=== MOVE TREE DEBUG ===')
+    
+    const supabase = createClient(
+      config.public.supabaseUrl,
+      config.public.supabaseAnonKey
+    )
 
-    console.log(endpoint + query)
-    console.log(endpoint + query)
-    console.log(endpoint + query)
-    console.log(endpoint + query)
-    const response = await $fetch(endpoint + query)
+    const cID = getQuery(event).cID as string
+    const pID = getQuery(event).pID as string
+    const idx = parseInt(getQuery(event).idx as string)
+    
+    console.log('Moving tree:', { cID, pID, idx })
+    
+    // Call PostgreSQL function to move tree (same as node - moves subtree)
+    const { data, error } = await supabase.rpc('move_node_api', {
+      child_id: cID,
+      parent_id: pID,
+      insert_idx: idx
+    })
 
-    return JSON.parse(response as string) as MovingTreeResponse
+    console.log('Move tree response:', { data, error })
+
+    if (error) {
+      console.error('Move tree error:', error)
+      return { result: 2 }
+    }
+
+    return { result: data } as MovingTreeResponse
   } catch (err) {
-    console.log(err)
+    console.error('Tree moving error:', err)
     return { result: 2 }
   }
 })

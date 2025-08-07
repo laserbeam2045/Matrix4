@@ -58,8 +58,35 @@ const {
 } = useTeleport()
 
 // アイテムをDnDで移動した時のイベントハンドラ
-const onMoveItem = (payload: MoveInfo) => {
-  if (treeOptions.dragMode === DRAG_MODE.EDGE) {
+const onMoveItem = async (payload: MoveInfo) => {
+  console.log('onMoveItem called:', payload, 'dragMode:', treeOptions.dragMode)
+  
+  if (treeOptions.dragMode === DRAG_MODE.NODE) {
+    // NODE モード: 実際にAPIを呼び出してノードを移動
+    const { cID, pID, idx } = payload
+    console.log('Calling move API:', { cID, pID, idx })
+    
+    try {
+      // ノード移動APIを呼び出し
+      const response = await $fetch('/api/tree/moving-node', {
+        method: 'GET',
+        query: { cID, pID, idx }
+      })
+      
+      console.log('Move API response:', response)
+      
+      if (response.result === 0) {
+        // 成功した場合、ツリーデータを再読み込み
+        console.log('Move successful, refreshing tree data')
+        await treeMethods.updateData(true)
+      } else {
+        console.error('Move failed with result:', response.result)
+      }
+    } catch (error) {
+      console.error('Error calling move API:', error)
+    }
+  } else if (treeOptions.dragMode === DRAG_MODE.EDGE) {
+    // EDGE モード: テレポート情報を設定
     const { cID, pID, idx } = payload
     teleportInfo.value.index = idx
     teleportInfo.value.departure = cID
