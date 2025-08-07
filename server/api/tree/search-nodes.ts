@@ -1,9 +1,4 @@
-import type { SetResponse } from '@/composables/useTree'
-// import { API_PATH } from '../../db'
-const config = useRuntimeConfig()
-const API_PATH = config.public.API_PATH
-
-const endpoint = `${API_PATH}/sets/select/search.php`
+import { createClient } from '@supabase/supabase-js'
 
 /**
  * リクエストに必要なパラメータ
@@ -16,19 +11,40 @@ export interface SearchNodesArguments {
  * APIから取得されるデータ型
 */
 export type SearchNodesResponse = {
-  result: SetResponse[] | null
+  result: {
+    id: string
+    txt: string
+    text: string
+    parent: string
+    parentTxt: string
+  }[] | null
 }
 
 export default defineEventHandler(async (event) => {
   try {
-    const word = encodeURIComponent(getQuery(event).word as string)
-    const query = `?word=${word}`
-    const response = await $fetch(endpoint + query)
-    
-    return JSON.parse(response as string) as SearchNodesResponse
-  } catch (err) {
-    console.log(err)
+    const config = useRuntimeConfig()
+    const supabase = createClient(
+      config.public.supabaseUrl,
+      config.public.supabaseAnonKey
+    )
 
+    const word = getQuery(event).word as string
+    
+    // Use PostgreSQL function for search with parent information
+    const { data, error } = await supabase.rpc('search_nodes_by_text', {
+      search_word: word
+    })
+
+    if (error) {
+      throw error
+    }
+
+    return {
+      result: data || []
+    } as SearchNodesResponse
+
+  } catch (err) {
+    console.error('Node search error:', err)
     return { result: null }
   }
 })

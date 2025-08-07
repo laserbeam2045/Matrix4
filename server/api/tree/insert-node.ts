@@ -1,8 +1,4 @@
-// import { API_PATH } from '../../db'
-const config = useRuntimeConfig()
-const API_PATH = config.public.API_PATH
-
-const endpoint = `${API_PATH}/sets/insert/node.php`
+import { createClient } from '@supabase/supabase-js'
 
 /**
  * リクエストに必要なパラメータ
@@ -10,6 +6,7 @@ const endpoint = `${API_PATH}/sets/insert/node.php`
 export type InsertNodeArguments = {
   pID: string
   txt: string
+  text: string
   link: string
 }
 
@@ -22,16 +19,35 @@ export type InsertNodeResponse = {
 
 export default defineEventHandler(async (event) => {
   try {
-    const pID = encodeURIComponent(getQuery(event).pID as string)
-    const txt = encodeURIComponent(getQuery(event).txt as string)
-    const link = encodeURIComponent(getQuery(event).link as string)
-    const query = `?pID=${pID}&txt=${txt}&link=${link}`
-    const response = await $fetch(endpoint + query)
+    const config = useRuntimeConfig()
+    const supabase = createClient(
+      config.public.supabaseUrl,
+      config.public.supabaseAnonKey
+    )
 
-    return JSON.parse(response as string) as InsertNodeResponse
-  } catch (err) {
-    console.log(err)
+    const pID = getQuery(event).pID as string
+    const txt = getQuery(event).txt as string
+    const text = getQuery(event).text as string
+    const link = getQuery(event).link as string
     
+    // Call PostgreSQL function to insert node with proper space allocation
+    const { data, error } = await supabase.rpc('insert_node_with_space', {
+      parent_id: pID,
+      txt,
+      text,
+      link
+    })
+
+    if (error) {
+      throw error
+    }
+
+    return {
+      id: data
+    } as InsertNodeResponse
+
+  } catch (err) {
+    console.error('Node insertion error:', err)
     return { id: null }
   }
 })

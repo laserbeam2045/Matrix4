@@ -1,8 +1,4 @@
-// import { API_PATH } from '../../db'
-const config = useRuntimeConfig()
-const API_PATH = config.public.API_PATH
-
-const endpoint = `${API_PATH}/sets/delete/node.php`
+import { createClient } from '@supabase/supabase-js'
 
 /**
  * リクエストに必要なパラメータ
@@ -18,42 +14,40 @@ export type DeleteNodeResponse = {
   result: 0 | 1
 }
 
-// export default async (req: IncomingMessage) => {
-  // const queryObject = url.parse(req.url as string, true).query
-  // let data = {
-  //   result: 1,
-  // }
-
-  // const { id } = queryObject
-
-  // if (id) {
-  //   data = await $fetch(`${API_PATH}/sets/delete/node.php?id=${id}`)
-  // }
-
-  // res.writeHead(200, { 'Content-Type': 'application/json' })
-  // res.write(JSON.stringify(data))
-  // console.log(data, id, req.url)
-  // res.end()
-
-//   try {
-//     const response: string = await $fetch(`${API_PATH}/sets/delete/node.php` + req.url)
-//     return JSON.parse(response) as DeleteNodeResponse
-//   } catch (err) {
-//     console.log(err)
-//     return { result: 1 }
-//   }
-// }
-
 export default defineEventHandler(async (event) => {
   try {
-    const id = encodeURIComponent(getQuery(event).id as string)
-    const query = `?id=${id}`
-    const response = await $fetch(endpoint + query)
+    const config = useRuntimeConfig()
+    const supabase = createClient(
+      config.public.supabaseUrl,
+      config.public.supabaseAnonKey
+    )
+
+    const id = getQuery(event).id as string
     
-    return JSON.parse(response as string) as DeleteNodeResponse
+    // Update ancestors first (equivalent to CALL updateAncestors with type 5 for delete)
+    const { error: ancestorsError } = await supabase.rpc('update_ancestors', {
+      target_id: id,
+      update_type: 5
+    })
+
+    if (ancestorsError) {
+      throw ancestorsError
+    }
+
+    // Delete the node
+    const { error: deleteError } = await supabase
+      .from('sets')
+      .delete()
+      .eq('id', id)
+
+    if (deleteError) {
+      throw deleteError
+    }
+
+    return { result: 0 } as DeleteNodeResponse
+
   } catch (err) {
-    console.log(err)
-    
+    console.error('Node deletion error:', err)
     return { result: 1 }
   }
 })
