@@ -1,8 +1,4 @@
-// import { API_PATH } from '../../db'
-const config = useRuntimeConfig()
-const API_PATH = config.public.API_PATH
-
-const endpoint = `${API_PATH}/sets/insert/tree.php`
+import { createClient } from '@supabase/supabase-js'
 
 /**
  * リクエストに必要なパラメータ
@@ -20,14 +16,36 @@ export type InsertCloneResponse = {
 
 export default defineEventHandler(async (event) => {
   try {
-    const id = encodeURIComponent(getQuery(event).id as string)
-    const query = `?id=${id}`
-    const response = await $fetch(endpoint + query)
+    const config = useRuntimeConfig()
+    console.log('=== CLONE NODE DEBUG ===')
     
-    return JSON.parse(response as string) as InsertCloneResponse
+    const supabase = createClient(
+      config.public.supabaseUrl,
+      config.public.supabaseAnonKey
+    )
+
+    const id = getQuery(event).id as string
+    console.log('Cloning node ID:', id)
+    
+    // Call PostgreSQL function to clone node
+    const { data, error } = await supabase.rpc('clone_single_node', {
+      source_id: id,
+      target_parent_id: 'SiEBuCsBGkm/UUUe' // Default parent for clones
+    })
+
+    console.log('Clone response:', { data, error })
+
+    if (error) {
+      console.error('Clone error details:', error)
+      throw error
+    }
+
+    return {
+      id: data
+    } as InsertCloneResponse
+
   } catch (err) {
-    console.log(err)
-    
+    console.error('Node cloning error:', err)
     return { id: null }
   }
 })
