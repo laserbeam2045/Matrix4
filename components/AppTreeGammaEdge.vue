@@ -25,10 +25,10 @@ type MoveProps = {
 }
 
 const emit = defineEmits<{
-  (event: 'move', e: Event): void
-  (event: 'moveItem', payload: MoveProps): void
-  (event: 'touchItem', treeData: TreeData): void
-  (event: 'changeOpen', payload: TreeData): void
+  'move': [e: Event]
+  'moveItem': [payload: MoveProps]
+  'touchItem': [treeData: TreeData]
+  'changeOpen': [payload: TreeData]
 }>()
 
 const treeState = useState('treeState') as Ref<TreeState>

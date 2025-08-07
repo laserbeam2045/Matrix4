@@ -4,9 +4,9 @@ import { useElementHover } from '@vueuse/core'
 import useEvent from '@/composables/useEvent'
 
 const emit = defineEmits<{
-  (event: 'end', e: Event): void
-  (event: 'start', e: Event): void
-  (event: 'clicked', e: Event): void
+  end: [e: Event]
+  start: [e: Event]
+  clicked: [e: Event]
 }>()
 
 const myHoverElement = ref(null)

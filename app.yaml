@@ -1,4 +1,4 @@
-runtime: nodejs16
+runtime: nodejs20
 service: default
 
 instance_class: F1
@@ -25,7 +25,7 @@ automatic_scaling:
 handlers:
   - url: /.*
     script: auto
-    secure: always
+    secure: never
 
 env_variables:
   HOST: '0.0.0.0'

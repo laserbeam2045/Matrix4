@@ -5,7 +5,7 @@ import { default as useTree, TreeOptions } from '@/composables/useTree'
 import AppItem from '@/components/AppItem.vue'
 
 defineEmits<{
-  (event: 'touch'): void
+  'touch': []
 }>()
 
 // const { mouseTouchEvent } = useEvent()

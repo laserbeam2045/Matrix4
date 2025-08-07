@@ -1,3 +1,134 @@
+<!-- <script lang="ts">
+export default {
+  inheritAttrs: false,
+}
+</script> -->
+
+<script lang="ts" setup>
+import type {
+  TreeMethods,
+  TreeHistory,
+  TreeState,
+} from '@/composables/useTree'
+
+import useTeleport from '@/composables/useTeleport'
+
+// import { useAudio, AUDIOS } from '@/composables/useAudio'
+
+import useEvent from '@/composables/useEvent'
+
+type OperationMode = 'SEARCH' | 'BOOKMARKS' | 'TELEPORT' | 'DISPLAY'
+
+const operationMode = useState('treeMode') as Ref<OperationMode>
+
+const {
+  treeMethods,
+  treeHistory,
+} = defineProps<{
+  treeMethods: TreeMethods
+  treeHistory: TreeHistory
+}>()
+
+// const emit = defineEmits<{
+//   departure: []
+// }>()
+
+// const showNavigation = useState('showNavigation')
+
+// const handleNavigation = (e: Event) => {
+//   if ((e.target as HTMLElement).scrollLeft === 0) {
+//     showNavigation.value = true
+//   } else {
+//     showNavigation.value = false
+//   }
+// }
+const showNavigation = useState('showNavigation') as Ref<boolean>
+
+const treeState = useState('treeState') as Ref<TreeState>
+
+const onSearchInput = () => {
+  if (treeState.value.search.result.length === 0) {
+    treeState.value.search.showWindow = false
+  }
+}
+
+const searchNodes = async () => {
+  const { word } = treeState.value.search
+  const response = await treeMethods.searchNodes({ word })
+  treeState.value.search.result = response
+  treeState.value.search.showWindow = true
+}
+
+const {
+  teleportInfo,
+  isSendable,
+} = useTeleport()
+
+const onDeparture = () => {
+  if (isSendable.value) {
+    teleportInfo.value.state = 'SENDABLE'
+  }
+}
+
+const clipboardData = useState('clipboardData')
+
+const paste = (where: 'departure' | 'destination') => {
+  const data = clipboardData.value as string
+  if (teleportInfo.value[where] === data) {
+    teleportInfo.value[where] = ''
+  } else {
+    teleportInfo.value[where] = data
+  }
+}
+
+// const { playAudio } = useAudio()
+
+// const activateSound = () => playAudio(AUDIOS.ETC.ACTIVATE)
+// const deactivateSound = () => playAudio(AUDIOS.ETC.DEACTIVATE)
+
+const playSound = (e: Event) => e
+// (e.target as HTMLInputElement).checked ? activateSound() : deactivateSound()
+
+const { mouseTouchEvent } = useEvent()
+
+const eventName = computed(() => `${mouseTouchEvent.value.START}`)
+
+const changeMode = (mode: OperationMode) => {
+  if (operationMode.value !== mode) {
+    operationMode.value = mode
+    if (mode === 'SEARCH' && treeState.value.search.result.length === 0) {
+      treeState.value.search.showWindow = false
+    }
+    // playAudio(AUDIOS.ETC.CYBER_14_1)
+  }
+}
+
+const windowObject = useState('windowObject') as Ref<{
+  innerWidth: number
+  innerHeight: number
+}>
+
+const minWidth = computed(() => {
+  return (
+    operationMode.value === 'SEARCH'
+      ? 612
+      : operationMode.value === 'TELEPORT'
+        ? 712
+        : operationMode.value === 'DISPLAY'
+          ? 712
+          : 712
+  )
+})
+
+const maxWidth = computed(() => {
+  return Math.max(minWidth.value, windowObject.value.innerWidth)
+})
+
+const maxRight = computed(() => {
+  return Math.min(0, windowObject.value.innerWidth - maxWidth.value)
+})
+</script>
+
 <template>
   <teleport to="#layer-2">
     <div
@@ -410,139 +541,6 @@
     </div>
   </teleport>
 </template>
-
-<script lang="ts">
-export default {
-  inheritAttrs: false,
-}
-</script>
-
-<script lang="ts" setup>
-import { Ref } from 'vue'
-
-import type {
-  TreeMethods,
-  TreeHistory,
-} from '@/composables/useTree'
-
-import type { TreeState } from '@/composables/useTree'
-
-import useTeleport from '@/composables/useTeleport'
-
-// import { useAudio, AUDIOS } from '@/composables/useAudio'
-
-import useEvent from '@/composables/useEvent'
-
-type OperationMode = 'SEARCH' | 'BOOKMARKS' | 'TELEPORT' | 'DISPLAY'
-
-const operationMode = useState('treeMode') as Ref<OperationMode>
-
-const {
-  treeMethods,
-  treeHistory,
-} = defineProps<{
-  treeMethods: TreeMethods
-  treeHistory: TreeHistory
-}>()
-
-// const emit = defineEmits<{
-//   (event: 'departure'): void
-// }>()
-
-// const showNavigation = useState('showNavigation')
-
-// const handleNavigation = (e: Event) => {
-//   if ((e.target as HTMLElement).scrollLeft === 0) {
-//     showNavigation.value = true
-//   } else {
-//     showNavigation.value = false
-//   }
-// }
-
-const treeState = useState('treeState') as Ref<TreeState>
-
-const onSearchInput = () => {
-  if (treeState.value.search.result.length === 0) {
-    treeState.value.search.showWindow = false
-  }
-}
-
-const searchNodes = async () => {
-  const { word } = treeState.value.search
-  const response = await treeMethods.searchNodes({ word })
-  treeState.value.search.result = response
-  treeState.value.search.showWindow = true
-}
-
-const {
-  teleportInfo,
-  isSendable,
-} = useTeleport()
-
-const onDeparture = () => {
-  if (isSendable.value) {
-    teleportInfo.value.state = 'SENDABLE'
-  }
-}
-
-const clipboardData = useState('clipboardData')
-
-const paste = (where: 'departure' | 'destination') => {
-  const data = clipboardData.value as string
-  if (teleportInfo.value[where] === data) {
-    teleportInfo.value[where] = ''
-  } else {
-    teleportInfo.value[where] = data
-  }
-}
-
-// const { playAudio } = useAudio()
-
-// const activateSound = () => playAudio(AUDIOS.ETC.ACTIVATE)
-// const deactivateSound = () => playAudio(AUDIOS.ETC.DEACTIVATE)
-
-const playSound = (e: Event) => e
-// (e.target as HTMLInputElement).checked ? activateSound() : deactivateSound()
-
-const { mouseTouchEvent } = useEvent()
-
-const eventName = computed(() => `${mouseTouchEvent.value.START}`)
-
-const changeMode = (mode: OperationMode) => {
-  if (operationMode.value !== mode) {
-    operationMode.value = mode
-    if (mode === 'SEARCH' && treeState.value.search.result.length === 0) {
-      treeState.value.search.showWindow = false
-    }
-    // playAudio(AUDIOS.ETC.CYBER_14_1)
-  }
-}
-
-const windowObject = useState('windowObject') as Ref<{
-  innerWidth: number
-  innerHeight: number
-}>
-
-const minWidth = computed(() => {
-  return (
-    operationMode.value === 'SEARCH'
-      ? 612
-      : operationMode.value === 'TELEPORT'
-        ? 712
-        : operationMode.value === 'DISPLAY'
-          ? 712
-          : 712
-  )
-})
-
-const maxWidth = computed(() => {
-  return Math.max(minWidth.value, windowObject.value.innerWidth)
-})
-
-const maxRight = computed(() => {
-  return Math.min(0, windowObject.value.innerWidth - maxWidth.value)
-})
-</script>
 
 <style lang="scss" scoped>
 *,

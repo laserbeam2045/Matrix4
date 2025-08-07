@@ -71,9 +71,9 @@ type MoveProps = {
 }
 
 defineEmits<{
-  (event: 'moveItem', payload: MoveProps): void
-  (event: 'touchItem', treeData: TreeData): void
-  (event: 'changeOpen', payload: TreeData): void
+  'moveItem': [payload: MoveProps]
+  'touchItem': [treeData: TreeData]
+  'changeOpen': [payload: TreeData]
 }>()
 
 // DnDに関する設定

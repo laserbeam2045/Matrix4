@@ -7,9 +7,9 @@ import { Ref } from 'vue'
 //   }
 // }>()
 
-// defineEmits<{
-//   (event: 'touch'): void
-// }>()
+defineEmits<{
+  'touch': []
+}>()
 
 const filterConditions: Ref<{
   unplayed: boolean

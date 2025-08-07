@@ -90,12 +90,12 @@ onUnmounted(() => {
 </template>
 
 <style lang="scss" scoped>
-  #layer-0 { position: relative; z-index: 0;   }
-  #layer-1 { position: relative; z-index: 100; }
-  #layer-2 { position: absolute; z-index: 200; }
-  #layer-3 { position: absolute; z-index: 300; }
-  #layer-4 { position: absolute; z-index: 400; }
-  #layer-5 { position: absolute; z-index: 500; }
+  #layer-0 { color: #42cbf8; position: relative; z-index: 0;   }
+  #layer-1 { color: #42cbf8; position: relative; z-index: 100; }
+  #layer-2 { color: #42cbf8; position: absolute; z-index: 200; }
+  #layer-3 { color: #42cbf8; position: absolute; z-index: 300; }
+  #layer-4 { color: #42cbf8; position: absolute; z-index: 400; }
+  #layer-5 { color: #42cbf8; position: absolute; z-index: 500; }
 
   #layer-1 {
     width: 100vw;

@@ -18,7 +18,6 @@
 </template>
 
 <script lang="ts" setup>
-import { Ref } from 'vue'
 
 const props = withDefaults(defineProps<{
   isOpen: boolean

@@ -88,8 +88,8 @@ const {
 }>()
 
 const emit = defineEmits<{
-  (event: 'update:isVisible', value: boolean): void
-  (event: 'close'): void
+  'update:isVisible': [value: boolean]
+  close: []
 }>()
 
 const close  = () => emit('update:isVisible', false)

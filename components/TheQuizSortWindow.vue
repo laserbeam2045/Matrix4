@@ -8,7 +8,7 @@ const props = defineProps<{
 }>()
 
 defineEmits<{
-  (event: 'touch'): void
+  touch: []
 }>()
 
 const { mouseTouchEvent } = useEvent()

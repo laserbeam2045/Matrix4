@@ -4,7 +4,7 @@ const { setInfo } = useMatrix()
 
 const getMessage = () => {
   const rand = Math.random()
-  if (rand < 0.1) return `Banjimasite ${user.value.codeName}`  // 日本語(出雲弁)
+  if (rand < 0.1) return `こんにちは ${user.value.codeName}`  // 日本語(出雲弁)
   if (rand < 0.2) return `Hola ${user.value.codeName}`         // スペイン語
   if (rand < 0.3) return `Hello ${user.value.codeName}`        // 英語
   if (rand < 0.4) return `Jambo ${user.value.codeName}`        // スワヒリ語(ケニア／ウガンダ／タンザニア)
@@ -13,19 +13,30 @@ const getMessage = () => {
   if (rand < 0.7) return `Guten tag ${user.value.codeName}`    // ドイツ語
   if (rand < 0.8) return `Buon giorno ${user.value.codeName}`  // スペイン語
   if (rand < 0.9) return `Здравствуйте ${user.value.codeName}` // ロシア語
-  return `${user.value.codeName} السلام عليكم`
 }
+
+const {
+  $isOuterActive,
+  $showNavigation,
+  $activateNavigation,
+} = useNuxtApp()
 
 onMounted(() => {
   setTimeout(() => setInfo(getMessage()), 1000)
+
+  setTimeout(async () => {
+    // if (!$showNavigation.value) return
+    $isOuterActive.value = true
+    setTimeout($activateNavigation, 10)
+  }, 3000)
 })
 </script>
 
 <template>
   <NuxtLayout name="the-matrix" />
-      <!-- <NuxtLayout name="the-header" />
+      <NuxtLayout name="the-header" />
       <NuxtLayout name="the-loading" />
-      <NuxtLayout name="the-navigation" /> -->
+      <NuxtLayout name="the-navigation" />
 </template>
 
 <style lang="scss" scoped>

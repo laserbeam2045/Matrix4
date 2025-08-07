@@ -55,10 +55,10 @@ type MoveProps = {
 }
 
 const emit = defineEmits<{
-  (event: 'move', e: Event): void
-  (event: 'moveItem', payload: MoveProps): void
-  (event: 'touchItem', treeData: TreeData): void
-  (event: 'changeOpen', payload: TreeData): void
+  'move': [e: Event]
+  'moveItem': [payload: MoveProps]
+  'touchItem': [treeData: TreeData]
+  'changeOpen': [payload: TreeData]
 }>()
 
 // ノードの移動イベントハンドラ
@@ -85,6 +85,7 @@ const handleDragEnd = (e: CustomDragEvent) => {
   margin: 0px 0px 0px 12px;
   // border: 1px dotted red;
   // max-width: 400px;
+  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
 
   &:not(.is_alpha) {
     display: inline-flex;

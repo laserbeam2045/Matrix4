@@ -8,7 +8,7 @@ defineProps<{
 }>()
 
 defineEmits<{
-  (event: 'close'): void
+  close: []
 }>()
 
 const dragMode = ref<DragMode>(DRAG_MODE.LOCK)

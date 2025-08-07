@@ -74,8 +74,8 @@ const { treeMethods } = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (event: 'update:isVisible', value: boolean): void
-  (event: 'close'): void
+  'update:isVisible': [value: boolean]
+  close: []
 }>()
 
 const { bookMarks, deleteBookMark } = useBookMark()

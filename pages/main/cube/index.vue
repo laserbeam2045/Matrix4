@@ -186,6 +186,9 @@ onMounted(() => {
         {{ num }}
       </AppButton>
     </div>
+    <NuxtLayout name="the-header" />
+    <NuxtLayout name="the-loading" />
+    <NuxtLayout name="the-navigation" />
   </div>
 </template>
 

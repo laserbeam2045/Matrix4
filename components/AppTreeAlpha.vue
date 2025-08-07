@@ -1,7 +1,8 @@
 <template>
   <div>
-    <ul
+    <TransitionGroup
       v-if="treeData && displayRoot"
+      tag="ul"
       :key="treeData.id"
       class="app-tree"
     >
@@ -20,9 +21,10 @@
         @touchItem="$emit('touchItem', $event)"
         @changeOpen="$emit('changeOpen', $event)"
       />
-    </ul>
-    <ul
+    </TransitionGroup>
+    <TransitionGroup
       v-else-if="treeData"
+      tag="ul"
       :key="treeData.id + 'foo'"
       class="app-tree"
     >
@@ -43,7 +45,7 @@
         @touchItem="$emit('touchItem', $event)"
         @changeOpen="$emit('changeOpen', $event)"
       />
-    </ul>
+    </TransitionGroup>
   </div>
 </template>
 
@@ -72,9 +74,9 @@ type MoveProps = {
 }
 
 defineEmits<{
-  (event: 'moveItem', payload: MoveProps): void
-  (event: 'touchItem', treeData: TreeData): void
-  (event: 'changeOpen', payload: TreeData): void
+  'moveItem': [payload: MoveProps]
+  'touchItem': [treeData: TreeData]
+  'changeOpen': [payload: TreeData]
 }>()
 
 // DnDに関する設定
@@ -131,5 +133,6 @@ const {
   padding: 0;
   margin: 0;
   flex-shrink: 0;
+  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
 }
 </style>

@@ -30,7 +30,7 @@ const props = withDefaults(defineProps<{
 })
 
 const emit = defineEmits<{
-  (event: 'update:value', value: string | number): void
+  'update:value': [value: string | number]
 }>()
 
 const input = ref(null)

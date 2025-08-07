@@ -13,7 +13,7 @@ export type CircularItem = {
 // }>()
 
 const emit = defineEmits<{
-  (event: 'selectItem', itemId: number): void
+  selectItem: [itemId: number]
 }>()
 
 const applicationMode = useState('applicationMode')
@@ -21,16 +21,19 @@ const applicationMode = useState('applicationMode')
 const circularItems = [
   {
     itemId: 1,
-    iconName: 'cogs',
+    iconName: 'squadron',
+    color: 'springgreen',
   },
   {
     itemId: 2,
     iconName: 'project-diagram',
+    color: 'springgreen',
   },
   {
     itemId: 3,
     prefix: 'fab',
     iconName: 'quora',
+    color: 'springgreen',
   },
   // {
   //   itemId: 4,
@@ -56,11 +59,11 @@ const circularItems = [
   },
   {
     itemId: 6,
-    iconName: 'address-card',
+    iconName: 'cogs',
   },
 ]
 
-const isOuterActive = ref(false)
+const isOuterActive = useState('isOuterActive')
 const showNavigation = useState('showNavigation')
 const isCircleActive = useState('isCircleActive')
 
@@ -145,14 +148,6 @@ const foo = async (item: CircularItem) => {
   playAudio(AUDIOS.ETC.DECISION_43)
   selectItem(item)
 }
-
-onMounted(async () => {
-  setTimeout(async () => {
-    if (!showNavigation.value) return
-    isOuterActive.value = true
-    setTimeout($activateNavigation, 10)
-  }, 3500)
-})
 </script>
 
 <template>
@@ -213,6 +208,7 @@ onMounted(async () => {
                       icon="tree"
                       :width="30"
                       :height="30"
+                      :style="{ color: item.color }"
                       view-box="0 0 16 16"
                     />
                     <AppSquidGame
@@ -221,6 +217,7 @@ onMounted(async () => {
                       :width="48"
                       :height="48"
                       view-box="0 0 48 48"
+                      :style="{ color: item.color }"
                       style="position: relative; top: -9px;"
                     />
                     <AppSquidGame
@@ -240,12 +237,21 @@ onMounted(async () => {
                       style="position: relative; top: -11px;"
                     />
                     <AppSquidGame
-                      v-else-if="item.iconName === 'cogs' || item.iconName === 'address-card'"
+                      v-else-if="item.iconName === 'cogs'"
                       icon="null"
                       :width="32"
                       :height="32"
                       view-box="0 0 24 24"
                       style="position: relative; top: -1px;"
+                    />
+                    <AppSquidGame
+                      v-else-if="item.iconName === 'squadron'"
+                      icon="squadron"
+                      :width="32"
+                      :height="32"
+                      view-box="0 0 24 24"
+                      style="position: relative; top: -1px;"
+                      :style="{ color: item.color }"
                     />
                     <AppFontAwesome
                       v-else

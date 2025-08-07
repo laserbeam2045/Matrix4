@@ -3,7 +3,7 @@
     class="app-input-text-two"
     :style="{ marginTop: placeholder ? '20px' : 0, minHeight: height, height }"
   >
-    <input
+    <textarea
       ref="inputRef"
       v-model="modelValue"
       v-quick-focus
@@ -16,7 +16,7 @@
       :style="{ paddingLeft: type === 'search' ? '24px' : '12px' }"
       v-bind="$attrs"
       @keydown.enter="onKeydown"
-    >
+    />
     <span
       v-if="placeholder"
       class="placeholder"
@@ -92,7 +92,7 @@ const onKeydown = (e) => {
   transition: 0.5s;
   // color: #45f3ff;
 
-  input {
+  textarea {
     position: absolute;
     top: 0;
     left: 0;
@@ -149,22 +149,24 @@ const onKeydown = (e) => {
   }
 
   .placeholder.outside:not(.dynamic),
-  input:focus + .placeholder.outside,
-  input:valid + .placeholder.outside,
-  input[readonly] + .placeholder.outside {
-    top: -32px;
+  textarea:focus + .placeholder.outside,
+  textarea:valid + .placeholder.outside,
+  textarea[readonly] + .placeholder.outside {
+    position: absolute;
+    top: -32px !important;
     left: -10px;
     color: #fff;
     @include textStyleC;
   }
 
-  input[type="range"] + .placeholder {
-    top: -36px !important;
+  textarea + .placeholder {
+    position: absolute;
+    top: 0px !important;
     // @include textStyleC;
   }
 
-  input:focus + .placeholder:not(.outside),
-  input:valid + .placeholder:not(.outside) {
+  textarea:focus + .placeholder:not(.outside),
+  textarea:valid + .placeholder:not(.outside) {
     opacity: 0;
   }
 
@@ -185,16 +187,15 @@ const onKeydown = (e) => {
   //   pointer-events: none;
   // }
 
-  // input:focus ~ .line,
-  // input:valid ~ .line {
+  // textarea:focus ~ .line,
+  // textarea:valid ~ .line {
   //   height: 100%;
   // }
 }
 
-input[type="range"] {
+textarea {
   -webkit-appearance: none; // 🚩これ無しだとスタイルがほぼ全く反映されないので注意
   appearance: none;
-  cursor: pointer; // カーソルを分かりやすく
   outline: none; // スライダーのアウトラインは目障りになるので消す
   // background: #8acdff; // バーの背景色
   background: $greenLikeColor2; // バーの背景色
@@ -202,7 +203,7 @@ input[type="range"] {
   height: 14px; // バーの高さ
   // border: solid 3px #dff1ff; // バーまわりの線
   border: solid 3px $textColor1; // バーまわりの線
-  border-radius: 10px; // バーの端の丸み
+  border-radius: 0px; // バーの端の丸み
 
   // -webkit-向けのつまみ
   &::-webkit-slider-thumb {

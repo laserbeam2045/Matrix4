@@ -6,7 +6,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (event: 'copy', payload: string)
+  copy: [payload: string]
 }>()
 
 const { copy } = useClipboard()

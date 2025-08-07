@@ -35,6 +35,15 @@
     0 0 16px #00b3ff;
 }
 
+@mixin textStyleD {
+  color: #fff;
+  // font-weight: 100;
+  text-shadow:
+    0 0 4px $matrix4,
+    0 0 8px $matrix4,
+    0 0 16px $matrix4;
+}
+
 @mixin boxStyleC {
   color: #fff;
   box-shadow:

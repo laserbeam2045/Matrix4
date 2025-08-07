@@ -11,7 +11,7 @@ import { Ref } from 'vue'
 import { useBreakpoints } from '@vueuse/core'
 
 import { default as useQuiz } from '@/composables/useQuiz'
-import type { SortItem, QuizData } from '@/composables/useQuiz'
+import type { SortItem, QuizData, CompleteQuizData } from '@/composables/useQuiz'
 import { default as useQuizFilters } from '@/composables/useQuizFilters'
 import { default as useQuizSorts } from '@/composables/useQuizSorts'
 
@@ -271,14 +271,14 @@ const searchQuery = useState('searchQuery', () => '')
 // 並べ替えの条件
 const sortConditions = ref<SortItem[]>([
   {
-    key: 'question',
-    label: 'Question',
+    key: 'quiz_id',
+    label: 'Created',
     order: 'ASC',
   },
   {
-    key: 'quiz_id',
-    label: 'Created',
-    order: 'DESC',
+    key: 'question',
+    label: 'Question',
+    order: 'ASC',
   },
   {
     key: 'car',
@@ -398,6 +398,7 @@ const {
 
 const simulatePressPoints = async () => {
   for (let i = 0; i < quizData.value.length; i++) {
+    console.log(`%c${i + 1} / ${quizData.value.length}`, 'color: orange')
     const { quiz_id: id, question, push_point: pp } = quizData.value[i]
     // if (1 < pp) continue
     let push_point
@@ -412,14 +413,21 @@ const simulatePressPoints = async () => {
   console.log('finished')
 }
 
+
+
+
+
+
+
 onMounted(async () => {
   const { setInfo } = useMatrix()
 
   setInfo('')
 
-  setTimeout(() => {
+  setTimeout(async () => {
     mounted.value = true
-  }, 100)
+    search('')
+  }, 1000)
 
   /*
   setTimeout(async () => {
@@ -481,11 +489,9 @@ onMounted(async () => {
   }, 50)
   */
 
-  setTimeout(() => {
-    // simulatePressPoints()
-  }, 10000)
-
-  search('')
+  // setTimeout(() => {
+  //   simulatePressPoints()
+  // }, 25000)
 })
 </script>
 
@@ -786,6 +792,10 @@ onMounted(async () => {
         </div>
       </div>
     </AppWindowModal> -->
+      <!-- <NuxtLayout name="the-footer2" /> -->
+    <NuxtLayout name="the-header" />
+    <NuxtLayout name="the-loading" />
+    <NuxtLayout name="the-navigation" />
   </div>
 </template>
 
@@ -855,6 +865,7 @@ onMounted(async () => {
     .the_quiz_list_window {
       padding: 64px 0px 0;
       width: 630px;
+      width: 99vw;
     }
   }
 
@@ -864,6 +875,7 @@ onMounted(async () => {
       padding: 64px 0px 0;
       width: 1014px;
       width: 630px;
+      width: 1014px;
     }
   }
 
@@ -873,6 +885,7 @@ onMounted(async () => {
       padding: 64px 0px 0;
       width: 1270px;
       width: 630px;
+      width: 99vw;
     }
   }
 }

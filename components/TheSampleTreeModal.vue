@@ -7,11 +7,12 @@
   >
     <div class="container">
       <div class="body">
-        <h1 class="title">{{ about.txt }}</h1>
+        <h1 class="title matrix">{{ about.txt }}123</h1>
+        <pre class="title mt-3 break-words whitespace-pre-wrap text-left" style="font-size: .9rem;">{{ about.text }}</pre>
         <AppSlider
           v-model:tabIndex="tabIndexMain"
           :tabs="Object.keys(tableState)"
-          class="mt-6"
+          class="mt-5"
         >
           <div
             v-for="(items, key) in tableState"
@@ -66,7 +67,7 @@
                 height="38px"
                 list="tokyo"
                 name="text"
-                placeholder="Text"
+                placeholder="Label"
                 @keydown.ctrl.enter="buttonEvent.press(2)"
                 @keydown.ctrl.delete="buttonEvent.press(1)"
               />
@@ -75,6 +76,18 @@
                 <option value="新宿" />
                 <option value="池袋" />
               </datalist> -->
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <AppInputTextarea
+                v-model:value="stateValues.insert.text"
+                height="86px"
+                name="text"
+                placeholder="Text"
+                @keydown.ctrl.enter="buttonEvent.press(2)"
+                @keydown.ctrl.delete="buttonEvent.press(1)"
+              />
             </td>
           </tr>
           <tr>
@@ -115,6 +128,17 @@
               <AppInputTextTwo
                 v-model:value="stateValues.update.txt"
                 height="38px"
+                placeholder="Label"
+                style="width: 260px;"
+                @keydown.ctrl.enter="buttonEvent.press(2)"
+                @keydown.ctrl.delete="buttonEvent.press(1)"
+              />
+            </div>
+            <div>
+              <AppInputTextarea
+                v-model:value="stateValues.update.text"
+                v-focus
+                height="86px"
                 placeholder="Text"
                 style="width: 260px;"
                 @keydown.ctrl.enter="buttonEvent.press(2)"
@@ -225,9 +249,9 @@ const {
 } = props.treeMethods
 
 const emit = defineEmits<{
-  (event: 'update', update?: boolean): void,
-  (event: 'finish'): void,
-  (event: 'cancel'): void,
+  update: [update?: boolean]
+  finish: []
+  cancel: []
 }>()
 
 const { setInfo } = useMatrix()
@@ -248,10 +272,12 @@ const isValidParent = computed(() => about.value.parent?.length === 16 && about.
 const stateValues = reactive({
   insert: {
     txt: '',
+    text: '',
     link: '',
   },
   update: {
     txt: '',
+    text: '',
     link: '',
     isGroup: true,
   },
@@ -290,14 +316,14 @@ const tableState = reactive({
       thText: 'NestLevel',
       tdText: computed(() => about.value.level),
     },
-    // {
-    //   thText: 'Lft',
-    //   tdText: computed(() => about.value.lft % 1 ? about.value.lft : Math.floor(about.value.lft)),
-    // },
-    // {
-    //   thText: 'Rgt',
-    //   tdText: computed(() => about.value.rgt % 1 ? about.value.rgt : Math.floor(about.value.rgt)),
-    // },
+    {
+      thText: 'Lft',
+      tdText: computed(() => about.value.lft % 1 ? Math.floor(about.value.lft) : Math.floor(about.value.lft)),
+    },
+    {
+      thText: 'Rgt',
+      tdText: computed(() => about.value.rgt % 1 ? Math.floor(about.value.rgt) : Math.floor(about.value.rgt)),
+    },
   ],
   AUTH: [
     {
@@ -357,12 +383,14 @@ type WindowMode = typeof WINDOW_MODE[keyof typeof WINDOW_MODE]
 // 新規作成時の入力情報を初期化する関数
 const resetInsertValues = () => {
   stateValues.insert.txt = ''
+  stateValues.insert.text = ''
   stateValues.insert.link = ''
 }
 
 // 編集時の入力情報を初期化する関数
 const resetUpdateValues = () => {
   stateValues.update.txt = about.value.txt
+  stateValues.update.text = about.value.text
   stateValues.update.link = about.value.link
   stateValues.update.isGroup = !!about.value.isGroup
 }
@@ -613,7 +641,7 @@ const onClickItem = async () => {
       // Insert -> Insert
       const onClickInsert = async () => {
         const { id: pID } = about.value
-        const { txt, link } = stateValues.insert
+        const { txt, text, link } = stateValues.insert
 
         playAudio(AUDIOS.ETC.DECISION_22)
 
@@ -629,11 +657,11 @@ const onClickItem = async () => {
             askChangeRoot(id)
           }
           // console.table({pID, txt, link})
-          insertNode({ pID, txt, link }).then(ok).catch(ng)
+          insertNode({ pID, txt, text, link }).then(ok).catch(ng)
         } else if (txt === 'sparse') {
           sparseTree({}).then(okb).catch(ng)
         } else {
-          insertNode({ pID, txt, link }).then(ok).catch(ng)
+          insertNode({ pID, txt, text, link }).then(ok).catch(ng)
         }
       }
       mainProcess()
@@ -697,8 +725,8 @@ const onClickItem = async () => {
     // Update -> Update
     const onClickUpdate = () => {
       const { id, opened } = about.value
-      const { txt, link, isGroup } = stateValues.update
-      updateNode({ id, txt, link, opened, isGroup: Number(isGroup) }).then(ok).catch(ng)
+      const { txt, text, link, isGroup } = stateValues.update
+      updateNode({ id, txt, text, link, opened, isGroup: Number(isGroup) }).then(ok).catch(ng)
       playAudio(AUDIOS.ETC.DECISION_22)
       emit('finish')
     }
@@ -939,7 +967,7 @@ watch(() => modalWindows.value.length, (newValue) => {
 
 <style lang="scss" scoped>
 .container {
-  padding: 16px 24px 24px;
+  padding: 0px 24px 24px;
 
   .body {
     min-width: 260px;
@@ -952,6 +980,10 @@ watch(() => modalWindows.value.length, (newValue) => {
       font-size: 1.2rem;
       font-family: $fontFamily9;
       @include textStyleC;
+
+      &.matrix {
+        @include textStyleD;
+      }
     }
 
     p.info,

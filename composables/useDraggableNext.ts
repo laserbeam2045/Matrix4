@@ -2,7 +2,7 @@ import { ComputedRef, reactive, computed } from 'vue'
 import Sortable from 'sortablejs'
 
 import { CustomDragEvent } from '@/types/Draggable'
-// import { DRAG_EVENT } from '@/utilities/v_event_functions'
+import { DRAG_EVENT } from '@/utilities/v_event_functions'
 
 type Options = Sortable.SortableOptions
 
@@ -29,7 +29,7 @@ export type DragEventListener = {
 // 一回の移動にかける時間（ms）
 const animation = 200
 
-// const UNLOCK_THRESHOLD = 3
+const UNLOCK_THRESHOLD = 3
 
 // デフォルトのセッティング
 const defaultSettings: Options = Object.freeze({
@@ -86,60 +86,60 @@ export default function useDraggable(
     },
   })
 
-  // const resetObserve = () => {
-  //   dragState.observed = true
-  //   dragState.countable = false
-  //   dragState.counterID = setTimeout(() => dragState.countable = true, animation - 100)
-  //   dragState.observeID = setTimeout(dragendHandler, animation)
-  // }
+  const resetObserve = () => {
+    dragState.observed = true
+    dragState.countable = false
+    dragState.counterID = setTimeout(() => dragState.countable = true, animation - 100)
+    dragState.observeID = setTimeout(dragendHandler, animation)
+  }
 
-  // const unObserve = () => {
-  //   dragState.observed = false
-  //   dragState.countable = false
-  //   if (dragState.counterID) clearTimeout(dragState.counterID)
-  //   if (dragState.observeID) clearTimeout(dragState.observeID)
-  // }
+  const unObserve = () => {
+    dragState.observed = false
+    dragState.countable = false
+    if (dragState.counterID) clearTimeout(dragState.counterID)
+    if (dragState.observeID) clearTimeout(dragState.observeID)
+  }
 
-  // const resetCounter = () => {
-  //   dragState.counter.generation++
-  //   dragState.counter.x = null
-  //   dragState.counter.y = null
-  // }
+  const resetCounter = () => {
+    dragState.counter.generation++
+    dragState.counter.x = null
+    dragState.counter.y = null
+  }
 
-  // const lock = () => {
-  //   const { generation } = dragState.counter
-  //   console.log(`%c(${generation}) lock`, 'color: red')
-  //   dragState.locked = true
-  // }
+  const lock = () => {
+    const { generation } = dragState.counter
+    console.log(`%c(${generation}) lock`, 'color: red')
+    dragState.locked = true
+  }
 
-  // const unlock = () => {
-  //   const { generation } = dragState.counter
-  //   console.log(`%c(${generation}) unlock`, 'color: blue')
-  //   dragState.locked = false
-  // }
+  const unlock = () => {
+    const { generation } = dragState.counter
+    console.log(`%c(${generation}) unlock`, 'color: blue')
+    dragState.locked = false
+  }
 
-  // const L1Norm = ({ x, y }: { x: number, y: number }) => {
-  //   if (dragState.counter.x === null || dragState.counter.y === null) {
-  //     dragState.counter.x = x
-  //     dragState.counter.y = y
-  //   }
-  //   return Math.abs(dragState.counter.x - x) + Math.abs(dragState.counter.y - y)
-  // }
+  const L1Norm = ({ x, y }: { x: number, y: number }) => {
+    if (dragState.counter.x === null || dragState.counter.y === null) {
+      dragState.counter.x = x
+      dragState.counter.y = y
+    }
+    return Math.abs(dragState.counter.x - x) + Math.abs(dragState.counter.y - y)
+  }
 
-  // // drag イベント時の処理
-  // const dragHandler = (e: DragEvent | TouchEvent) => {
-  //   const { pageX: x } = 'touches' in e ? e.touches[0] : e
-  //   const { pageY: y } = 'touches' in e ? e.touches[0] : e
-  //   dragState.countable && UNLOCK_THRESHOLD <= L1Norm({ x, y }) && dragendHandler()
-  // }
+  // drag イベント時の処理
+  const dragHandler = (e: DragEvent | TouchEvent) => {
+    const { pageX: x } = 'touches' in e ? e.touches[0] : e
+    const { pageY: y } = 'touches' in e ? e.touches[0] : e
+    dragState.countable && UNLOCK_THRESHOLD <= L1Norm({ x, y }) && dragendHandler()
+  }
 
-  // // dragend イベント時の処理
-  // const dragendHandler = () => {
-  //   window.removeEventListener(DRAG_EVENT.DRAGGING, dragHandler)
-  //   window.removeEventListener(DRAG_EVENT.DRAG_END, dragendHandler)
-  //   unObserve()
-  //   unlock()
-  // }
+  // dragend イベント時の処理
+  const dragendHandler = () => {
+    window.removeEventListener(DRAG_EVENT.DRAGGING, dragHandler)
+    window.removeEventListener(DRAG_EVENT.DRAG_END, dragendHandler)
+    unObserve()
+    unlock()
+  }
 
   // dragイベントの監視を開始する処理
   const changeListener = (e: CustomDragEvent) => {

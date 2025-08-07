@@ -1,3 +1,9 @@
+<script lang="ts">
+export default {
+  layout: 'the-matrix',
+}
+</script>
+
 <script setup lang="ts">
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { TreeData, TreeOptions } from '@/composables/useTree'
@@ -21,7 +27,7 @@ const showNavigation = useState('showNavigation') as Ref<boolean>
 
 showNavigation.value = false
 
-const dragMode = ref<DragMode>(DRAG_MODE.EDGE)
+const dragMode = ref<DragMode>(DRAG_MODE.NODE)
 
 const treeOptions: TreeOptions = reactive({ dragMode })
 
@@ -67,13 +73,14 @@ const onMoveItem = (payload: MoveInfo) => {
 
 // アイテムのクリックイベントハンドラ
 const onTouchItem = async (payload: TreeData) => {
-  if (operationMode.value === 'DISPLAY' && payload.link.length === 16) {
+  if (operationMode.value === 'TELEPORT' && payload.link.length === 16) {
     teleportInfo.value.destination = payload.link
     teleportInfo.value.state = 'SENDABLE'
     return
   }
-  if (treeOptions.dragMode === DRAG_MODE.EDGE) {
+  if (treeOptions.dragMode === DRAG_MODE.EDGE || 1) {
     about.value = payload
+    console.log(about.value)
   }
 }
 
@@ -114,6 +121,7 @@ watch(rootId, async (id) => {
 watch(isTreeLoading, (isLoading) => {
   console.table({ isLoading })
   setLoading(isLoading)
+  console.log(isLoading)
 })
 
 const route = useRoute()
@@ -136,17 +144,22 @@ const treeComponent = computed(() => {
   }
 })
 
-const mounted = ref(route.params.id !== 'home')
+// const mounted = ref(route.params.id !== 'home')
+const mounted = ref(false)
 
 onMounted(async () => {
   const { setInfo } = useMatrix()
 
   setInfo('')
-  setLoading(true)
+  if (isTreeLoading.value) setLoading(true)
 
   rootId.value = HOME_ROOT_ID
 
   await treeMethods.updateData(false)
+
+  setTimeout(() => {
+    mounted.value = true
+  }, 1000)
 
   // setTimeout(() => {
   //   isTreeOldData.value = false
@@ -167,12 +180,16 @@ onMounted(async () => {
   // }
 
 })
+
+onUnmounted(() => {
+  // alert('unmounted')
+})
 </script>
 
 <template>
   <div>
     <div class="bg" :class="{ mounted }" />
-    <div id="the-sample-tree">
+    <div id="the-sample-tree" v-if="mounted">
       <div id="tree-container" :class="{ lifeforms: sensor === 'lifeforms', economy: sensor === 'economy', crime: sensor === 'crime' }">
         <transition :appear="true">
           <div v-if="!isTreeOldData">
@@ -196,12 +213,15 @@ onMounted(async () => {
       </div>
     </div>
     <NuxtLayout
+      v-if="mounted"
       name="the-footer"
       :tree-methods="treeMethods"
       :tree-history="treeHistory"
     />
-    <NuxtLayout name="the-header" />
-    <NuxtLayout name="the-loading" />
+    <NuxtLayout v-if="mounted" name="the-header" />
+    <NuxtLayout v-if="mounted" name="the-loading" />
+    <NuxtLayout v-if="mounted" name="the-navigation" />
+    <!-- <NuxtLayout name="the-footer2" /> -->
   </div>
 </template>
 

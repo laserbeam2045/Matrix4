@@ -5,6 +5,16 @@ import { useBreakpoints } from '@vueuse/core'
 
 import type { SortItem, QuizData } from '@/composables/useQuiz'
 
+import type { TreeData, TreeOptions } from '@/composables/useTree'
+import type { MovingNodeArguments } from '@/server/api/tree/moving-node'
+import type { MovingTreeArguments } from '@/server/api/tree/moving-tree'
+import { DRAG_MODE, DragMode } from '@/types/Draggable'
+
+import AppItem from '@/components/AppItem.vue'
+
+import { default as useTree, TreeState } from '@/composables/useTree'
+import useTeleport from '@/composables/useTeleport'
+
 const props = defineProps<{
   quizData: QuizData[]
   failedIds: number[]
@@ -13,10 +23,10 @@ const props = defineProps<{
 }>()
 
 defineEmits<{
-  (event: 'quiz'): void
-  (event: 'plus'): void
-  (event: 'open', payload: QuizData): void
-  (event: 'touch'): void
+  quiz: []
+  plus: []
+  open: [payload: QuizData]
+  touch: []
 }>()
 
 // const { mouseTouchEvent } = useEvent()
@@ -58,9 +68,146 @@ watch(totalQuizCount, () => {
 })
 
 const mounted = ref(false)
+const countFlg = ref(false)
+
+
+
+
+type MoveInfo = (
+  MovingNodeArguments |
+  MovingTreeArguments
+)
+
+const { setLoading } = useMatrix()
+
+const showNavigation = useState('showNavigation') as Ref<boolean>
+
+showNavigation.value = false
+
+const dragMode = ref<DragMode>(DRAG_MODE.NODE)
+
+const treeOptions: TreeOptions = reactive({ dragMode })
+
+const {
+  rootId,
+  treeData,
+  treeMethods,
+  treeHistory,
+  isTreeLoading,
+  isTreeOldData,
+} = useTree()
+
+const TREE_ROOT_ID = useState('TREE_ROOT_ID').value as string
+const HOME_ROOT_ID = useState('HOME_ROOT_ID').value as string
+
+const canceledCount = ref(0)
+
+const about = useState('about', () => null)
+
+const operationMode = useState('treeMode')
+
+// const teleportInfo = ref<TeleportInfo | null>(null)
+
+const {
+  teleportInfo,
+  isSendable,
+} = useTeleport()
+
+// アイテムをDnDで移動した時のイベントハンドラ
+const onMoveItem = (payload: MoveInfo) => {
+  if (treeOptions.dragMode === DRAG_MODE.EDGE) {
+    const { cID, pID, idx } = payload
+    teleportInfo.value.index = idx
+    teleportInfo.value.departure = cID
+    teleportInfo.value.destination = pID
+
+    if (isSendable.value) {
+      teleportInfo.value.state = 'SENDABLE'
+    }
+  }
+}
+
+// アイテムのクリックイベントハンドラ
+const onTouchItem = async (payload: TreeData) => {
+  if (operationMode.value === 'TELEPORT' && payload.link.length === 16) {
+    teleportInfo.value.destination = payload.link
+    teleportInfo.value.state = 'SENDABLE'
+    return
+  }
+  if (treeOptions.dragMode === DRAG_MODE.EDGE) {
+    about.value = payload
+  }
+}
+
+// アイテムの開閉イベントハンドラ
+const onChangeOpen = async (payload: TreeData) => {
+  const { id, childrenCount } = payload
+  if (0 < childrenCount) {
+    await treeMethods.changeOpen({ id })
+    await treeMethods.updateOpen({ id })
+  }
+}
+
+const onUpdated = (update = true) => {
+  console.table({ update })
+  onFinished()
+  setTimeout(() => {
+    treeMethods.updateData(update)
+  }, 100)
+}
+
+const onFinished = () => {
+  about.value = null
+  // resetTeleportInfo()
+}
+
+const onCanceled = () => {
+  canceledCount.value++
+  console.log('canceled: ' + canceledCount.value)
+}
+
+watch(rootId, async (id) => {
+  // useNuxtApp().$router.push(`/main/tree/${encodeURIComponent(id)}`)
+  console.table({id})
+  await treeMethods.changeRoot(id)
+  await treeMethods.updateData()
+})
+
+watch(isTreeLoading, (isLoading) => {
+  console.table({ isLoading })
+  setLoading(isLoading)
+})
+
+const route = useRoute()
+
+const treeState = useState('treeState') as Ref<TreeState>
+
+const factions = computed(() => treeState.value.display.factions)
+
+const sensor = computed(() => treeState.value.display.sensors)
+
+const appTreeAlpha = resolveComponent('AppTreeAlpha')
+const appTreeBeta = resolveComponent('AppTreeBeta')
+const appTreeGamma = resolveComponent('AppTreeGamma')
+
+const treeComponent = computed(() => {
+  switch (sensor.value) {
+  case 'lifeforms': return appTreeAlpha
+  case 'economy': return appTreeBeta
+  case 'crime': return appTreeGamma
+  }
+})
+
 
 onMounted(() => {
   mounted.value = true
+
+  setTimeout(async () => {
+    rootId.value = HOME_ROOT_ID
+
+    await treeMethods.updateData(false)
+  }, 100)
+  setTimeout(() => countFlg.value = true, 20000)
 })
 </script>
 
@@ -88,35 +235,68 @@ onMounted(() => {
         <thead>
           <tr>
             <th>
-              <AppTweenNumber :value="mounted ? totalQuizCount: 0" /> results
+              <AppTweenNumber :value="countFlg ? totalQuizCount: 0" /> results
               <AppButton style="margin-left: 8px; border-radius: 30px; padding: 0px; width: 30px; height: 30px;" @end.self="$emit('plus')">+</AppButton>
               <AppButton style="margin-left: 8px; border-radius: 30px; padding: 0px; width: 30px; height: 30px;" @end.self="$emit('quiz')">Q</AppButton>
             </th>
           </tr>
         </thead>
-        <transition-group name="list-complete">
-          <tr
-            v-for="(quiz, index) in slicedQuizData"
-            :key="quiz.quiz_id"
-            :style="`--delay: ${Math.min(1.0, index * 0.15)}s`"
-            class="list_complete_item"
-          >
-            <td
-              :class="{
-                failed: failedIds.includes(quiz.quiz_id),
-                cleared: clearedIds.includes(quiz.quiz_id),
-              }"
-              @click="$emit('open', quiz)"
-            >
-              <span class="number">{{ index + 1 }}</span>
-              <TheSampleQuizListItem
-                :question="quiz.question"
-                :press-point="quiz?.push_point ?? 0"
-                @in="onVisible(index)"
-              />
-            </td>
-          </tr>
-        </transition-group>
+
+        <tbody style="position: relative;">
+          <div style="width: 100%; position: absolute; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; flex-wrap: wrap;">
+            <!-- <AppScrollable height="80vh"> -->
+              <transition-group name="list-complete">
+                <tr
+                v-for="(quiz, index) in slicedQuizData"
+                :key="quiz.quiz_id"
+                :style="`--delay: ${Math.min(1.0, index * 0.15)}s`"
+                class="list_complete_item"
+                >
+                <td
+                :class="{
+                  failed: failedIds.includes(quiz.quiz_id),
+                  cleared: clearedIds.includes(quiz.quiz_id),
+                }"
+                  @click="$emit('open', quiz)"
+                  >
+                  <span class="number">{{ index + 1 }}</span>
+                  <TheSampleQuizListItem
+                    :question="quiz.question"
+                    :press-point="quiz?.push_point ?? 0"
+                    @in="onVisible(index)"
+                    />
+                  </td>
+                </tr>
+              </transition-group>
+            <!-- </AppScrollable> -->
+          </div>
+          
+          <!-- <div id="the-sample-tree" style="position: absolute; left: 45%;">
+              <AppScrollable height="80vh">
+                <div id="tree-container" :class="{ lifeforms: sensor === 'lifeforms', economy: sensor === 'economy', crime: sensor === 'crime' }">
+                <transition :appear="true">
+                  <div v-if="!isTreeOldData">
+                    <component
+                      :is="treeComponent"
+                      :tree-data="treeData"
+                      :tree-options="treeOptions"
+                      :item-component="AppItem"
+                      @moveItem="onMoveItem"
+                      @touchItem="onTouchItem"
+                      @changeOpen="onChangeOpen"
+                    />
+                  </div>
+                </transition>
+                <TheSampleTreeModal
+                  :tree-methods="treeMethods"
+                  @update="onUpdated"
+                  @finish="onFinished"
+                  @cancel="onCanceled"
+                />
+              </div>
+            </AppScrollable>
+            </div> -->
+        </tbody>
       </table>
     </div>
   </div>
@@ -148,10 +328,12 @@ onMounted(() => {
   // 640 <= width <= 1024
   &.tablet {
     width: 624px;
+    width: 99%;
 
     .table_container {
       width: 624px;
       // width: 359px;
+      width: 99%;
 
       table {
         tr {
@@ -168,11 +350,13 @@ onMounted(() => {
   &.laptop {
     width: 1008px;
     width: 624px;
+    width: 100%;
 
     .table_container {
       width: 1008px;
       width: 624px;
       // width: 359px;
+      width: 100%;
 
       table {
         tr {

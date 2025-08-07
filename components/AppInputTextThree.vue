@@ -51,8 +51,8 @@ const props = withDefaults(defineProps<{
 })
 
 const emit = defineEmits<{
-  (event: 'update:value', e: Event): void
-  (event: 'keydown.enter', e: Event): void
+  'update:value': [e: Event]
+  'keydown.enter': [e: Event]
 }>()
 
 const modelValue = useVModel(props, 'value', emit)

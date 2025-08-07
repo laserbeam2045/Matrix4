@@ -23,6 +23,7 @@ import type { MovingTreeArguments } from '@/server/api/tree/moving-tree'
 export interface SetResponse {
   id: string              // 主キー
   txt: string             // ラベル
+  text: string            // テキスト
   link: string            // リンク
   level: number           // 階層（1 <= n）
   opened: number          // 開いているか
@@ -344,10 +345,10 @@ export default function useTree(): {
         return Promise.reject(error.value)
       }
 
-      table.value = data.value.result
+      table.value = data.value?.result ?? []
       isTreeLoading.value = false
       isTreeOldData.value = false
-      updatedAt.value = root.value.updatedAt
+      updatedAt.value = root.value?.updatedAt ?? ''
       isTreeMoving.value = false
       return Promise.resolve()
     },
@@ -433,7 +434,7 @@ export default function useTree(): {
           console.log('%cData has been Updated', 'color: blue')
         }
       }
-    }, 800)
+    }, 1000)
   })
 
   onUnmounted(() => {

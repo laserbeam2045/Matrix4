@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { Ref } from 'vue'
-
 const { matrix, setInfo } = useMatrix()
 const { mouseTouchEvent } = useEvent()
 
@@ -53,6 +51,39 @@ watch(matrixTime, () => {
     }, 5000)
   }
 })
+
+// aaaaaaaaaaaa
+
+const { $router } = useNuxtApp()
+const applicationMode = useState('applicationMode')
+
+watch(applicationMode, (mode: number) => {
+  setTimeout(() => {
+    switch (mode) {
+      case 1: $router.push('/main/prof'); break
+      case 2: $router.push('/main/tree'); break
+      case 3: $router.push('/main/quiz'); break
+      case 4: $router.push('/main/cube'); break
+      case 5: $router.push('/main/chart'); break
+      case 6: $router.push('/main/conf'); break
+    }
+  }, 1800)
+})
+
+
+const isSettingsOn = useState('isSettingsOn') as Ref<boolean>
+
+const toggleSettings = async () => {
+  if (isSettingsOn.value && isSoundOn.value) {
+    isSettingsOn.value = false
+    playAudio(AUDIOS.ETC.CYBER_18_1)
+  } else {
+    isSettingsOn.value = true
+    playAudio(AUDIOS.ETC.CYBER_17_1)
+  }
+}
+
+
 </script>
 
 <template>
@@ -104,7 +135,6 @@ watch(matrixTime, () => {
           </ul>
         </div>
       </div>
-      <NuxtLayout name="the-navigation" />
     </teleport>
   </div>
 </template>

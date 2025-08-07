@@ -20,7 +20,11 @@ type Arguments = {
 
 export default function useScrollable({ width, height, position }: Arguments) {
 
-  const state = useState('useScrollableState', () => {
+  const scrollableCount: Ref<number> = useState('scrollableCount')
+
+  scrollableCount.value += 1
+
+  const state = useState(`useScrollableState${scrollableCount.value}`, () => {
     return reactive({
       clientRect: {
         top   : 0,

@@ -41,7 +41,8 @@ const { fetchUser, registerUser } = useFirestore()
 //   }
 // }
 
-const matrix = ref(null)
+
+// const matrix = ref(null)
 
 const redirect = () => {
   window.scrollTo(0, 0)
@@ -62,9 +63,9 @@ const blackout = () => {
   bgColor.value = '#0D0208'
   return new Promise((resolve) => setTimeout(() => {
     state.isDarkMode = true
-    matrix.value.addEventListener('pause', () => {
+    // matrix.value.addEventListener('pause', () => {
       redirect()
-    })
+    // })
     resolve(1)
   }, 1000))
 }
@@ -74,6 +75,12 @@ const formatDate = (dt: Date) => {
   const m = ('00' + (dt.getMonth() + 1)).slice(-2)
   const d = ('00' + dt.getDate()).slice(-2)
   return y + m + d
+}
+
+const enterAnyway = () => {
+  state.accessCode = ''
+  state.inputState = 2
+  blackout()
 }
 
 const onKeyEnterOne = (e: Event) => {
@@ -108,6 +115,7 @@ onMounted(async () => {
   const auth = getAuth()
 
   onAuthStateChanged(auth, async (user) => {
+    enterAnyway()
     if (user) {
       const { uid } = user
       const userData = await fetchUser(uid)
@@ -136,7 +144,7 @@ onMounted(async () => {
 <template>
   <transition name="page" appear>
     <div v-if="mounted" id="signin">
-      <transition-group
+      <!-- <transition-group
         name="fade-input"
         mode="out-in"
         appear
@@ -151,7 +159,7 @@ onMounted(async () => {
           preload="auto"
           style="position: absolute; top: 50%; transform: translateY(-50%); width: 100vw; background: transparent;"
         />
-      </transition-group>
+      </transition-group> -->
       <div class="wrapper">
         <transition name="fade" appear>
           <div
@@ -170,7 +178,7 @@ onMounted(async () => {
           </div>
         </transition>
         <!-- <pre style="color: white;">{{ state }}</pre> -->
-        <div style="margin: 48px 0 0;">
+        <!-- <div style="margin: 48px 0 0;">
           <transition-group
             name="fade-input"
             mode="out-in"
@@ -193,7 +201,7 @@ onMounted(async () => {
               @keydown.enter="onKeyEnterTwo"
               />
           </transition-group>
-        </div>
+        </div> -->
       </div>
     </div>
   </transition>

@@ -9,7 +9,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (event: 'touch')
+  'touch': []
 }>()
 
 const text = computed(() => {

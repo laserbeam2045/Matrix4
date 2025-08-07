@@ -75,6 +75,8 @@ export default function useWindow(el: HTMLElement) {
     el.style.margin = '0px'
     el.style.top = elementState.value.offsetTop + 'px'
     el.style.left = elementState.value.offsetLeft + 'px'
+    // el.style.top = '0px'
+    // el.style.left = "0px"
   }
 
   return {

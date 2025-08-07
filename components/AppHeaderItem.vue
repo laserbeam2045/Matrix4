@@ -20,7 +20,7 @@ const props = withDefaults(defineProps<{
 })
 
 const emit = defineEmits<{
-  (event: 'click', e: Event): void
+  click: [e: Event]
 }>()
 
 const { mouseTouchEvent } = useEvent()

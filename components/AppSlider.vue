@@ -7,7 +7,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (event: 'update:tabIndex', newValue: number): void
+  'update:tabIndex': [newValue: number]
 }>()
 
 const {

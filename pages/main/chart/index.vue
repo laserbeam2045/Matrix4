@@ -105,10 +105,14 @@ const list3 = computed(() => {
 
 // charAの指定がある場合に、それら全ての文字を含む単語のみに絞ったもの
 const list4 = computed(() => {
-  let list = list3.value
+  let list = list3.value.concat()
+  
+  // 必要に応じてコメントアウト
+  const exp = new RegExp("[0-9\&\'\-\.\"\,]+", 'g')
+  list = list.filter(w => !w.match(exp))
 
   if (!(charA.value)) {
-    return list.concat()
+    return list
   }
 
   charA.value
@@ -153,6 +157,12 @@ const list6 = computed(() => {
     return ([...set]).filter((w, i) => list3.value.includes(w))
   }
 
+  let expWord = []
+  let noneWords = '[^'
+
+  const notUsableCharacters = []
+  const usableCharacters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+
   words.value.forEach((word) => {
     const WORD = word.map(W => W.character.toLowerCase()).join('')
     word.forEach((spell, i) => {
@@ -163,10 +173,17 @@ const list6 = computed(() => {
       // if (mode === 'blow') {
       //   console.log(word.map(W => W.character.toLowerCase()).join(''))
       // }
+
       switch (mode) {
-      case 'none': list = list.filter((w) => !w.includes(c)); break
-      case 'blow': list = list.filter((w) => w[i] !== c && ((w.match(exp) ?? '').length) === len2); break
-      case 'hit' : list = list.filter((w) => w[i] === c); break
+        case 'none': usableCharacters.splice(usableCharacters.indexOf(c), 1); break
+        case 'blow': break
+        case 'hit' : break
+      }
+
+      switch (mode) {
+        case 'none': list = list.filter((w) => w.includes(c) && (((w.match(exp) ?? '').length) === len2) ? false : true); break
+        case 'blow': list = list.filter((w) => (((w.match(exp) ?? '').length) === len2 || w[i] === c) ? false : true); break
+        case 'hit' : list = list.filter((w) => w[i] === c); break
       }
     })
   })
@@ -512,6 +529,10 @@ onMounted(() => {
       {{ item }}
     </li>
     <!-- </transition-group> -->
+    <!-- <NuxtLayout name="the-footer2" /> -->
+    <NuxtLayout name="the-header" />
+    <NuxtLayout name="the-loading" />
+    <NuxtLayout name="the-navigation" />
   </div>
 </template>
 

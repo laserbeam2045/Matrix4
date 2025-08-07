@@ -21,13 +21,13 @@ export const IS_SUPPORT_TOUCH = false
 //   LEAVE: IS_SUPPORT_TOUCH ? 'touchleave' : 'mouseleave',
 // }
 
-// const DRAGGING: 'touchmove' | 'drag' = IS_SUPPORT_TOUCH ? 'touchmove' : 'drag'
-// const DRAG_END: 'touchend' | 'dragend' = IS_SUPPORT_TOUCH ? 'touchend' : 'dragend'
+const DRAGGING: 'touchmove' | 'drag' = IS_SUPPORT_TOUCH ? 'touchmove' : 'drag'
+const DRAG_END: 'touchend' | 'dragend' = IS_SUPPORT_TOUCH ? 'touchend' : 'dragend'
 
-// export const DRAG_EVENT = {
-//   DRAGGING,
-//   DRAG_END,
-// }
+export const DRAG_EVENT = {
+  DRAGGING,
+  DRAG_END,
+}
 
 // デバイスの種類を取得する関数
 export const getDeviceType = () => {

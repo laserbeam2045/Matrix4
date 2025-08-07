@@ -7,8 +7,8 @@ defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (event: 'in'): void
-  (event: 'out'): void
+  in: []
+  out: []
 }>()
 
 const target = ref<HTMLElement | null>(null)

@@ -19,6 +19,8 @@ export default function useDraggable(el: HTMLElement) {
   const drag = (e: MouseTouch) => {
     el.style.top = ((e.pageY ?? e.touches[0].pageY) - frameY.value) + 'px'
     el.style.left = ((e.pageX ?? e.touches[0].pageX) - frameX.value) + 'px'
+    // el.style.top = 0 + 'px'
+    // el.style.left = 0 + 'px'
   }
 
   // イベントを追加する関数

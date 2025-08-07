@@ -4,7 +4,7 @@ defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (event: 'update:checked', payload: boolean): void
+  'update:checked': [payload: boolean]
 }>()
 
 const { AUDIOS, playAudio } = useAudio()

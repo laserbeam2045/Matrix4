@@ -22,7 +22,7 @@
     >
       <component
         :is="itemComponent"
-        class="app-tree-item"
+        class="app-tree-item item"
         :class="{ link: isLink, reflect: false }"
         :tree-data="treeData"
         v-on="eventListeners.item"
@@ -95,9 +95,9 @@ type MoveProps = {
 }
 
 const emit = defineEmits<{
-  (event: 'moveItem', payload: MoveProps): void
-  (event: 'touchItem', treeData: TreeData): void
-  (event: 'changeOpen', payload: TreeData): void
+  'moveItem': [payload: MoveProps]
+  'touchItem': [treeData: TreeData]
+  'changeOpen': [payload: TreeData]
 }>()
 
 const {
@@ -306,10 +306,10 @@ onMounted(() => {
   &.show_line:not([data-level="1"])::before {
     content: "";
     position: absolute;
-    top: -9973px;
+    top: -11973px;
     left: -21px;
     width: 30px;
-    height: 10000px;
+    height: 12000px;
     color: #ddd;
     border-left: 2px solid;
     border-bottom: 2px solid;

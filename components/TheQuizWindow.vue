@@ -25,9 +25,9 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (event: 'close'): void
-  (event: 'failed', id: number): void
-  (event: 'succeeded', id: number): void
+  close: []
+  failed: [id: number]
+  succeeded: [id: number]
 }>()
 
 const quizState = ref<

@@ -17,6 +17,7 @@ const set = computed(() => {
   case 'old-republic':
   case 'xing':
   case 'phoenix-framework':
+  case 'phoenix-squadron':
     return 'fab'
   case 'lightbulb':
   case 'copy':

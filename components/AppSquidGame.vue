@@ -37,6 +37,7 @@ withDefaults(defineProps<{
       <IconVolume v-if="icon === 'volume'" />
       <IconVolumeMute v-if="icon === 'mute'" />
       <IconPhoenix v-if="icon === 'phoenix'" />
+      <IconPhoenixSquadron v-if="icon === 'squadron'" />
     </AppIcon>
   </div>
 </template>
