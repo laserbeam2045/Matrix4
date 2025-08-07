@@ -356,6 +356,8 @@ export default defineNuxtConfig({
       API_PATH: process.env.API_PATH,
       API_PATH_2: process.env.API_PATH_2,
       ASSETS_PATH: process.env.ASSETS_PATH,
+      supabaseUrl: process.env.SUPABASE_URL,
+      supabaseAnonKey: process.env.SUPABASE_ANON_KEY,
     },
   },
 

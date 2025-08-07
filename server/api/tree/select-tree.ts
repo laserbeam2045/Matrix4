@@ -1,9 +1,5 @@
+import { createClient } from '@supabase/supabase-js'
 import type { SetResponse } from '@/composables/useTree'
-// import { API_PATH } from '../../db'
-const config = useRuntimeConfig()
-const API_PATH = config.public.API_PATH
-
-const endpoint = `${API_PATH}/sets/select/tree.php`
 
 /**
  * リクエストに必要なパラメータ
@@ -21,14 +17,29 @@ export type SelectTreeResponse = {
 
 export default defineEventHandler(async (event) => {
   try {
-    const id = encodeURIComponent(getQuery(event).id as string)
-    const query = `?id=${id}`
-    const response = await $fetch(endpoint + query)
+    const config = useRuntimeConfig()
+    const supabase = createClient(
+      config.public.supabaseUrl,
+      config.public.supabaseAnonKey
+    )
 
-    return JSON.parse(response as string) as SelectTreeResponse
+    const id = getQuery(event).id as string
+    
+    // Use PostgreSQL function to handle complex nested intervals query
+    const { data, error } = await supabase.rpc('select_tree_by_id', {
+      target_id: id
+    })
+
+    if (error) {
+      throw error
+    }
+
+    return {
+      result: data
+    } as SelectTreeResponse
+
   } catch (err) {
-    console.log(err)
-
+    console.error('Tree selection error:', err)
     return { result: null }
   }
 })
