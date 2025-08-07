@@ -57,7 +57,7 @@ const defaultSettings: Options = Object.freeze({
   forceFallback: true,               // ignore the HTML5 DnD behaviour and force the fallback to kick in
   fallbackClass: 'sortable-fallback', // Class name for the cloned DOM Element when using forceFallback
   fallbackOnBody: true,              // Appends the cloned DOM Element into the Document's Body
-  fallbackTolerance: 32,               // Specify in pixels how far the mouse should move before it's considered as a drag.
+  fallbackTolerance: 3,               // Specify in pixels how far the mouse should move before it's considered as a drag.
   dragoverBubble: false,
   removeCloneOnHide: true, // Remove the clone element when it is not showing, rather than just hiding it
   emptyInsertThreshold: 1, // px, distance mouse must be from empty sortable to insert drag element into it

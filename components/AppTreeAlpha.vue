@@ -91,10 +91,10 @@ const dragNodeSettings = computed<Sortable.SortableOptions>(() => (
     ? {
       group: {
         name: 'nodes',
-        pull: true,
-        put: true,
+        pull: 'clone',
+        put: false,
       },
-      sort: true,
+      sort: false,
     }
     : { disabled: true }
 ))
