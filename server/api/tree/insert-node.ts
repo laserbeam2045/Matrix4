@@ -20,6 +20,10 @@ export type InsertNodeResponse = {
 export default defineEventHandler(async (event) => {
   try {
     const config = useRuntimeConfig()
+    console.log('=== INSERT NODE DEBUG ===')
+    console.log('Supabase URL:', config.public.supabaseUrl ? 'Set' : 'Missing')
+    console.log('Supabase Key:', config.public.supabaseAnonKey ? 'Set' : 'Missing')
+    
     const supabase = createClient(
       config.public.supabaseUrl,
       config.public.supabaseAnonKey
@@ -30,6 +34,8 @@ export default defineEventHandler(async (event) => {
     const text = getQuery(event).text as string
     const link = getQuery(event).link as string
     
+    console.log('Input parameters:', { pID, txt, text, link })
+    
     // Call PostgreSQL function to insert node with proper space allocation
     const { data, error } = await supabase.rpc('insert_node_with_space', {
       parent_id: pID,
@@ -38,10 +44,14 @@ export default defineEventHandler(async (event) => {
       link
     })
 
+    console.log('Supabase response:', { data, error })
+
     if (error) {
+      console.error('Supabase error details:', error)
       throw error
     }
 
+    console.log('Returning ID:', data)
     return {
       id: data
     } as InsertNodeResponse
