@@ -7,7 +7,7 @@
   >
     <div class="container">
       <div class="body">
-        <h1 class="title matrix">{{ about.txt }}123</h1>
+        <h1 class="title matrix">{{ about.txt }}</h1>
         <pre class="title mt-3 break-words whitespace-pre-wrap text-left" style="font-size: .9rem;">{{ about.text }}</pre>
         <AppSlider
           v-model:tabIndex="tabIndexMain"
