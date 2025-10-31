@@ -35,6 +35,7 @@ $sql = "
   SELECT
     Node.id,
     Node.txt,
+    Node.text,
     Node.link,
     Node.opened,
     Node.isGroup,

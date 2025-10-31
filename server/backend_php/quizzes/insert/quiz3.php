@@ -6,6 +6,10 @@ header("Access-Control-Allow-Headers: Content-Type");
 include('../../db.php');
 include('../../functions.php');
 
+$sql_0 = "
+  DELETE FROM quizzes3 WHERE id = :id;
+";
+
 $sql_1 = "
   INSERT INTO quizzes3
     (id, question, answer, reading, player_id, corrected_num, wronged_num, answered_num, like_num, is_history, created_at, updated_at)
@@ -13,13 +17,22 @@ $sql_1 = "
     (:id, :question, :answer, :reading, :player_id, :corrected_num, :wronged_num, :answered_num, :like_num, :is_history, :created_at, :updated_at);
 ";
 
+$sql_2 = "
+  DELETE FROM `readings` WHERE quiz_id = :id;
+";
+
 try {
   $dbh = getPDO(DSN, USERNAME, PASSWORD, PDO_OPTION);
+  $stmt_0 = $dbh->prepare($sql_0);
   $stmt_1 = $dbh->prepare($sql_1);
+  $stmt_2 = $dbh->prepare($sql_2);
 
   // トランザクション処理を開始
   $dbh->beginTransaction();
   try {
+    $stmt_0->bindValue(':id', $_GET['id'], PDO::PARAM_INT);
+    $stmt_0->execute();
+
     // 挿入先を取得
     $stmt_1->bindValue(':id', $_GET['id'], PDO::PARAM_INT);
     $stmt_1->bindValue(':question', $_GET['question'], PDO::PARAM_STR);
@@ -34,6 +47,9 @@ try {
     $stmt_1->bindValue(':created_at', $_GET['created_at'], PDO::PARAM_STR);
     $stmt_1->bindValue(':updated_at', $_GET['updated_at'], PDO::PARAM_STR);
     $stmt_1->execute();
+
+    $stmt_2->bindValue(':id', $_GET['id'], PDO::PARAM_INT);
+    $stmt_2->execute();
 
     // コミット
     $dbh->commit();

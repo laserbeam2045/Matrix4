@@ -31,9 +31,6 @@ export default defineEventHandler(async (event) => {
     const response = await $fetch(endpoint + query)
 
     console.log(endpoint + query)
-    console.log(endpoint + query)
-    console.log(endpoint + query)
-    console.log(endpoint + query)
 
     return JSON.parse(response as string) as Response
   } catch (err) {

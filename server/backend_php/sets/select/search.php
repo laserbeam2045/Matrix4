@@ -10,6 +10,7 @@ $sql = "
   SELECT
     Node.id,
     Node.txt,
+    Node.text,
     Parents.id AS parent,
     Parents.txt AS parentTxt
   FROM

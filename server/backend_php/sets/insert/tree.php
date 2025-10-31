@@ -73,11 +73,13 @@ $sql4 = "
 $sql5 = "
   SELECT
     txt,
+    text,
     opened,
     lft,
     rgt
   INTO
     @targetName,
+    @targetText,
     @targetOpen,
     @targetLft,
     @targetRgt
@@ -90,10 +92,11 @@ $sql5 = "
 // ノードのコピーを作成
 $sql6 = "
   INSERT INTO sets
-  (id, txt, opened, lft, rgt) VALUES
+  (id, txt, text, opened, lft, rgt) VALUES
   (
     :id,
     @targetName,
+    @targetText,
     @targetOpen,
     @targetLft + @difference,
     @targetRgt + @difference

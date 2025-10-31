@@ -31,35 +31,87 @@ const firebaseConfig = {
 export default defineNuxtConfig({
   ssr: true,
 
+  // PWA Configuration for @vite-pwa/nuxt
   pwa: {
     registerType: 'autoUpdate',
     manifest: {
       name: 'MATRIX',
       short_name: 'MATRIX',
       description: 'The future of the world.',
-      icons: [{
-        src: 'favicon.png',
-        sizes: '32x32',
-        type: 'image/png',
-      }],
+      theme_color: '#00FF41',
+      background_color: '#000000',
+      display: 'standalone',
       start_url: '/',
-      background_color: 'rgba(0,0,0,0.9)',
-      theme_color: 'rgba(0,0,0,0.9)',
-      lang: 'en',
-      shortcuts: [{
-        name: 'MATRIX',
-        short_name: 'MATRIX',
-        url: '/',
-        description: 'The future of the world.',
-        // icons: ['favicon.png'],
-      }],
+      lang: 'ja',
+      icons: [
+        {
+          src: '/pwa-64x64.png',
+          sizes: '64x64',
+          type: 'image/png'
+        },
+        {
+          src: '/pwa-192x192.png',
+          sizes: '192x192',
+          type: 'image/png'
+        },
+        {
+          src: '/pwa-512x512.png',
+          sizes: '512x512',
+          type: 'image/png',
+          purpose: 'any'
+        },
+        {
+          src: '/maskable-icon-512x512.png',
+          sizes: '512x512',
+          type: 'image/png',
+          purpose: 'maskable'
+        }
+      ]
     },
-    // srcDir: '_nuxt',
-    filename: 'sw.js',
-    injectRegister: 'auto',
     workbox: {
+      navigateFallback: '/',
+      globPatterns: ['**/*.{js,css,html,png,svg,ico}'],
       cleanupOutdatedCaches: true,
+      runtimeCaching: [
+        {
+          urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+          handler: 'CacheFirst',
+          options: {
+            cacheName: 'google-fonts-cache',
+            expiration: {
+              maxEntries: 10,
+              maxAgeSeconds: 60 * 60 * 24 * 365 // 1 year
+            },
+            cacheableResponse: {
+              statuses: [0, 200]
+            }
+          }
+        },
+        {
+          urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
+          handler: 'CacheFirst',
+          options: {
+            cacheName: 'gstatic-fonts-cache',
+            expiration: {
+              maxEntries: 10,
+              maxAgeSeconds: 60 * 60 * 24 * 365 // 1 year
+            },
+            cacheableResponse: {
+              statuses: [0, 200]
+            }
+          }
+        }
+      ]
     },
+    client: {
+      installPrompt: true,
+      // Automatically register service worker after 60 seconds of inactivity
+      periodicSyncForUpdates: 3600
+    },
+    devOptions: {
+      enabled: true,
+      type: 'module'
+    }
   },
 
   // nitro: {
@@ -95,36 +147,6 @@ export default defineNuxtConfig({
       chunkSizeWarningLimit: 3000,
     },
     plugins: [
-      VitePWA({
-        registerType: 'autoUpdate',
-        manifest: {
-          name: 'MATRIX',
-          short_name: 'MATRIX',
-          description: 'The future of the world.',
-          icons: [{
-            src: 'favicon.png',
-            sizes: '32x32',
-            type: 'image/png',
-          }],
-          start_url: '/',
-          background_color: 'rgba(0,0,0,0.9)',
-          theme_color: '#00FF41',
-          lang: 'en',
-          shortcuts: [{
-            name: 'MATRIX',
-            short_name: 'MATRIX',
-            url: '/',
-            description: 'The future of the world.',
-            // icons: ['favicon.png'],
-          }],
-        },
-        // srcDir: '_nuxt',
-        filename: 'sw.js',
-        injectRegister: 'auto',
-        workbox: {
-          cleanupOutdatedCaches: true,
-        },
-      }),
       commonjsExternals({
         externals: ['path'],
       }),

@@ -21,3 +21,10 @@ logs
 .env
 .env.*
 !.env.example
+
+.claude
+.specstory
+server/*
+etc
+docs
+sql

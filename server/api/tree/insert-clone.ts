@@ -30,7 +30,7 @@ export default defineEventHandler(async (event) => {
     // Call PostgreSQL function to clone entire subtree (node + all descendants)
     const { data, error } = await supabase.rpc('clone_subtree_simple', {
       source_id: id,
-      target_parent_id: 'SiEBuCsBGkm/UUUe' // Default parent for clones
+      target_parent_id: '9FGOQhg2IodypRvq' // Default parent for clones
     })
 
     console.log('Clone response:', { data, error })

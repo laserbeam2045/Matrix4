@@ -11,6 +11,7 @@ $sql_1 = "
     sets
   SET
     txt = :txt,
+    text = :text,
     link = :link,
     opened = :opened,
     isGroup = :isGroup
@@ -32,6 +33,7 @@ try {
   try {
     $stmt_1->bindValue(':id', $_GET['id']);
     $stmt_1->bindValue(':txt', $_GET['txt']);
+    $stmt_1->bindValue(':text', $_GET['text']);
     $stmt_1->bindValue(':link', $_GET['link']);
     $stmt_1->bindValue(':opened', $_GET['opened']);
     $stmt_1->bindValue(':isGroup', $_GET['isGroup']);

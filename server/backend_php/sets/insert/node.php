@@ -12,9 +12,9 @@ $sql_1 = "
 
 $sql_2 = "
   INSERT INTO sets
-    (id, txt, link, lft, rgt, opened)
+    (id, txt, text, link, lft, rgt, opened)
   VALUES
-    (:id, :txt, :link, @L, @R, 1);
+    (:id, :txt, :text, :link, @L, @R, 1);
 ";
 
 $sql_3 = "
@@ -40,6 +40,7 @@ try {
     // データを挿入
     $stmt_2->bindValue(':id',   $id,           PDO::PARAM_STR);
     $stmt_2->bindValue(':txt',  $_GET['txt'],  PDO::PARAM_STR);
+    $stmt_2->bindValue(':text', $_GET['text'], PDO::PARAM_STR);
     $stmt_2->bindValue(':link', $_GET['link'], PDO::PARAM_STR);
     $stmt_2->execute();
 

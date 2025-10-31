@@ -29,8 +29,8 @@ $sql1 = "
   LEFT JOIN
     readings ON quizzes3.id = readings.quiz_id
   WHERE
-    quiz_id >= :minn AND
-    quiz_id < :maxx AND (
+    quizzes3.id >= :minn AND
+    quizzes3.id < :maxx AND (
       question LIKE :word1 OR
       answer LIKE :word2 OR
       reading LIKE :word3

@@ -8,6 +8,7 @@
 CREATE TABLE IF NOT EXISTS `sets` (
   `id` varchar(16) COLLATE utf8_bin NOT NULL,
   `txt` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `text` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
   `link` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
   `opened` tinyint(1) NOT NULL DEFAULT '1',
   `lft` decimal(40,30) NOT NULL,
@@ -24,9 +25,9 @@ CREATE TABLE IF NOT EXISTS `sets` (
 -- テーブル初期データ例
 --
 INSERT INTO `sets`
-(`id`, `txt`, `link`, `opened`, `lft`, `rgt`, `createdAt`, `updatedAt`) VALUES
-('+1PJqdqGklc83g7i', '3組', '', 1, '38.000000000000000000000000000000', '39.000000000000000000000000000000', '2021-12-09 21:54:26', '2021-12-29 18:43:25'),
-('+3DouI0S/y8gHcwQ', '肖像', '', 1, '341.000000000000000000000000000000', '342.000000000000000000000000000000', '2021-12-17 15:41:09', '2021-12-29 18:43:25');
+(`id`, `txt`, `text`, `link`, `opened`, `lft`, `rgt`, `createdAt`, `updatedAt`) VALUES
+('+1PJqdqGklc83g7i', '3組', '', '', 1, '38.000000000000000000000000000000', '39.000000000000000000000000000000', '2021-12-09 21:54:26', '2021-12-29 18:43:25'),
+('+3DouI0S/y8gHcwQ', '肖像', '', '', 1, '341.000000000000000000000000000000', '342.000000000000000000000000000000', '2021-12-17 15:41:09', '2021-12-29 18:43:25');
 
 
 -- とても参考になるサイト
@@ -525,7 +526,7 @@ BEGIN
       ( SELECT b.id FROM `sets` b WHERE b.lft = ( select min(c.lft) from `sets` c ) ) minid,
       ( SELECT b.id FROM `sets` b WHERE b.rgt = ( select max(c.rgt) from `sets` c ) ) maxid;
 
-    1b. root 検証その２  root つまり 親がいないノードは一つか
+    -- 1b. root 検証その２  root つまり 親がいないノードは一つか
     SELECT `id` AS root FROM `sets` c WHERE
       NOT EXISTS ( SELECT * FROM `sets` p WHERE c.lft > p.lft AND c.rgt < p.rgt );
 
@@ -560,10 +561,11 @@ BEGIN
     -- 実行前に 最大値、最小値、件数 をチェック
     SELECT COUNT(id) cnt, MIN(lft) AS min, MAX(rgt) AS max FROM sets;
 
-    REPLACE INTO sets (id, txt, link, opened, isGroup, lft, rgt, createdAt, updatedAt)
+    REPLACE INTO sets (id, txt, text, link, opened, isGroup, lft, rgt, createdAt, updatedAt)
     SELECT
       org.id,
       org.txt,
+      org.text,
       org.link,
       org.opened,
       org.isGroup,

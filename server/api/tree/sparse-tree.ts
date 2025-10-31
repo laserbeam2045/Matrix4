@@ -1,6 +1,6 @@
 // import { API_PATH } from '../../db'
 const config = useRuntimeConfig()
-const API_PATH = config.public.API_PATH
+const API_PATH = config.public.API_PATH_2
 
 const endpoint = `${API_PATH}/sets/update/sparse.php`
 
