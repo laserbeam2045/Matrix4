@@ -27,7 +27,7 @@ const showNavigation = useState('showNavigation') as Ref<boolean>
 
 showNavigation.value = false
 
-const dragMode = ref<DragMode>(DRAG_MODE.NODE)
+const dragMode = ref<DragMode>(DRAG_MODE.EDGE)
 
 const treeOptions: TreeOptions = reactive({ dragMode })
 
