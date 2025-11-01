@@ -1,14 +1,11 @@
-// import { API_PATH } from '../../db'
-const config = useRuntimeConfig()
-const API_PATH = config.public.API_PATH_2
-
-const endpoint = `${API_PATH}/sets/update/opened.php`
+import { createClient } from '@supabase/supabase-js'
 
 /**
  * リクエストに必要なパラメータ
  */
 export type UpdateOpenArguments = {
   id: string
+  opened: number
 }
 
 /**
@@ -20,14 +17,40 @@ export type UpdateOpenResponse = {
 
 export default defineEventHandler(async (event) => {
   try {
-    const id = encodeURIComponent(getQuery(event).id as string)
-    const query = `?id=${id}`
-    const response = await $fetch(endpoint + query)
-    
-    return JSON.parse(response as string) as UpdateOpenResponse
+    const config = useRuntimeConfig()
+    const supabase = createClient(
+      config.public.supabaseUrl,
+      config.public.supabaseAnonKey
+    )
+
+    const id = getQuery(event).id as string
+    const opened = parseInt(getQuery(event).opened as string)
+    const openedBool = opened === 1
+
+    // Update opened state
+    const { error: updateError } = await supabase
+      .from('sets')
+      .update({ opened: openedBool })
+      .eq('id', id)
+
+    if (updateError) {
+      throw updateError
+    }
+
+    // Call update_ancestors function with update_type 1 (opened state change)
+    const { error: ancestorsError } = await supabase.rpc('update_ancestors', {
+      target_id: id,
+      update_type: 1
+    })
+
+    if (ancestorsError) {
+      throw ancestorsError
+    }
+
+    return { result: 0 } as UpdateOpenResponse
+
   } catch (err) {
-    console.log(err)
-    
+    console.error('Update open error:', err)
     return { result: 1 }
   }
 })

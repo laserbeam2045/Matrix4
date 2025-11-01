@@ -254,7 +254,23 @@ export default function useTree(): {
     },
 
     updateOpen: async (params) => {
-      const { error } = await useFetch('/api/tree/update-open', { params })
+      // ローカル状態から現在のopened値を取得
+      const node = table.value.find((node) => node.id === params.id)
+      if (!node) {
+        return Promise.reject('Node not found')
+      }
+
+      const { error } = await useFetch('/api/tree/update-open', {
+        params: {
+          id: params.id,
+          opened: node.opened
+        }
+      })
+
+      if (!error.value) {
+        // 成功したらupdatedAtを現在時刻に更新してポーリングをスキップ
+        updatedAt.value = new Date().toISOString()
+      }
 
       return error.value
         ? Promise.reject(error.value)
