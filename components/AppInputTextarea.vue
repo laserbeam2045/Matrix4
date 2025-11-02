@@ -6,7 +6,7 @@
     <textarea
       ref="inputRef"
       v-model="modelValue"
-      v-quick-focus
+
       :type="type"
       :list="list"
       :required="required"

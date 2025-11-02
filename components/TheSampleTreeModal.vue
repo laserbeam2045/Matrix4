@@ -137,7 +137,6 @@
             <div>
               <AppInputTextarea
                 v-model:value="stateValues.update.text"
-                v-focus
                 height="86px"
                 placeholder="Text"
                 style="width: 260px;"
