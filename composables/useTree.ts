@@ -77,8 +77,6 @@ export interface TreeState {
     ],
     jumpTunnels: [
       boolean,
-      boolean,
-      boolean,
     ],
     sensors: 'lifeforms' | 'economy' | 'crime',
   },

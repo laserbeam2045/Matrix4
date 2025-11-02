@@ -426,9 +426,9 @@ const maxRight = computed(() => {
               </div>
 
               <div class="sm-route-sizes">
-                <label>Jump tunnels</label>
+                <label>Jump</label>
                 <ul>
-                  <li>
+                  <!-- <li>
                     <input
                       id="route-size-small"
                       v-model="treeState.display.jumpTunnels[0]"
@@ -453,11 +453,11 @@ const maxRight = computed(() => {
                     <label for="route-size-medium">
                       <span style="left: 34px;"> medium</span>
                     </label>
-                  </li>
+                  </li> -->
                   <li>
                     <input
                       id="route-size-large"
-                      v-model="treeState.display.jumpTunnels[2]"
+                      v-model="treeState.display.jumpTunnels[0]"
                       name="route_sizes"
                       type="checkbox"
                       value="large"

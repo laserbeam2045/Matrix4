@@ -73,7 +73,8 @@ const onMoveItem = (payload: MoveInfo) => {
 
 // アイテムのクリックイベントハンドラ
 const onTouchItem = async (payload: TreeData) => {
-  if (operationMode.value === 'TELEPORT' && payload.link.length === 16) {
+  // jumpTunnels[0]がtrueの時、リンク付きアイテムを押すとリンク先に移動
+  if (treeState.value.display.jumpTunnels[0] && payload.link.length === 16) {
     teleportInfo.value.destination = payload.link
     teleportInfo.value.state = 'SENDABLE'
     return

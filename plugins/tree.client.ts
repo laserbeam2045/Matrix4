@@ -24,9 +24,7 @@ export default defineNuxtPlugin(() => {
         true,
       ],
       jumpTunnels: [
-        true,
-        true,
-        true,
+        false,
       ],
       sensors: 'lifeforms',
     },
