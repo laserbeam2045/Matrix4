@@ -357,7 +357,7 @@ const maxRight = computed(() => {
                       <span style="left: 43px;"> UEE</span>
                     </label>
                   </li>
-                  <li>
+                  <!-- <li>
                     <input
                       id="affiliation-banu"
                       v-model="treeState.display.factions[1]"
@@ -421,7 +421,7 @@ const maxRight = computed(() => {
                     <label for="affiliation-unc" style="color: #f6851f;">
                       <span style="left: -157px;"> Unclaimed</span>
                     </label>
-                  </li>
+                  </li> -->
                 </ul>
               </div>
 
