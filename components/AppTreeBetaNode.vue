@@ -32,7 +32,7 @@
 
     <AppAccordion
       class="edge-container"
-      :appear="false"
+      :appear="!treeData.opened"
       :is-open="true"
     >
       <AppTreeBetaEdge

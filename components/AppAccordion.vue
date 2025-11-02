@@ -2,10 +2,11 @@
   <div ref="outerContainer" class="app-accordion">
     <transition
       :appear="props.appear"
-      @beforeLeave="open"
-      @leave="close"
-      @enter="open"
-      @afterEnter="after"
+      @beforeEnter="beforeEnter"
+      @enter="enter"
+      @afterEnter="afterEnter"
+      @beforeLeave="beforeLeave"
+      @leave="leave"
     >
       <div v-show="isOpen" ref="innerContainer">
         <slot />
@@ -29,23 +30,44 @@ const props = withDefaults(defineProps<{
 const outerContainer = ref() as Ref<HTMLElement>
 const innerContainer = ref() as Ref<HTMLElement>
 
-const open = (el: Element) => {
+const beforeEnter = (el: Element) => {
+  // 初期状態：サイズを0に設定
+  const htmlEl = el as HTMLElement
+  htmlEl.style.width = '0'
+  htmlEl.style.height = '0'
+  htmlEl.style.overflow = 'hidden'
+}
+
+const enter = (el: Element) => {
   if (document) {
     const { width, height } = getSize()
     setSize(el, width, height)
   } else {
     setSize(el, 'auto')
   }
-  // setTimeout(() => {
-  //   const { width, height } = getSize()
-  //   console.table({ width, height })
-  // }, 3000)
-  // const width = outerContainer.value.scrollWidth
-  // const height = outerContainer.value.scrollHeight
-  // setSize(el, `${width}px`, `${height}px`)
 }
-const close = (el: Element) => setSize(el, '0')
-const after = (el: Element) => setSize(el, 'auto')
+
+const afterEnter = (el: Element) => {
+  const htmlEl = el as HTMLElement
+  htmlEl.style.width = 'auto'
+  htmlEl.style.height = 'auto'
+  htmlEl.style.overflow = ''
+}
+
+const beforeLeave = (el: Element) => {
+  // 閉じる前に現在のサイズを設定（トランジションのため）
+  if (document) {
+    const { width, height } = getSize()
+    const htmlEl = el as HTMLElement
+    htmlEl.style.width = width
+    htmlEl.style.height = height
+    htmlEl.style.overflow = 'hidden'
+  }
+}
+
+const leave = (el: Element) => {
+  setSize(el, '0')
+}
 
 const setSize = (el: Element, width: string, height?: string) => {
   const { style } = el as HTMLElement

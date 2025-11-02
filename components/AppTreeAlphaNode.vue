@@ -32,7 +32,7 @@
 
     <AppAccordion
       class="toggle-container"
-      :appear="false"
+      :appear="!treeData.opened"
       :is-open="isParent && !isChildrenOpen"
     >
       <ToggleButton :is-open="isChildrenOpen" />
@@ -40,7 +40,7 @@
 
     <AppAccordion
       class="edge-container"
-      :appear="false"
+      :appear="!treeData.opened"
       :is-open="!isParent || isChildrenOpen"
     >
       <AppTreeAlphaEdge
