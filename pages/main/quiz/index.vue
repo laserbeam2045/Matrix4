@@ -10,10 +10,7 @@ import { Ref } from 'vue'
 
 import { useBreakpoints } from '@vueuse/core'
 
-import { default as useQuiz } from '@/composables/useQuiz'
 import type { SortItem, QuizData, CompleteQuizData } from '@/composables/useQuiz'
-import { default as useQuizFilters } from '@/composables/useQuizFilters'
-import { default as useQuizSorts } from '@/composables/useQuizSorts'
 
 // import {
 //   isNumeric,

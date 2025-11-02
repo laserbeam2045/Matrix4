@@ -227,11 +227,6 @@ import type {
   TreeMethods,
 } from '@/composables/useTree'
 
-import useEvent from '@/composables/useEvent'
-import useMatrix from '@/composables/useMatrix'
-import useTeleport from '@/composables/useTeleport'
-import useModalWindow from '@/composables/useModalWindow'
-import { useTreeModal } from '@/composables/useTreeModal'
 import { MAX_CLONEABLE_ITEMS } from '@/constants/ui'
 
 const props = defineProps<{

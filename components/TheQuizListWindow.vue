@@ -5,16 +5,13 @@ import { useBreakpoints } from '@vueuse/core'
 
 import type { SortItem, QuizData } from '@/composables/useQuiz'
 
-import type { TreeData, TreeOptions } from '@/composables/useTree'
+import type { TreeData, TreeOptions, TreeState } from '@/composables/useTree'
 import type { MovingNodeArguments } from '@/server/api/tree/moving-node'
 import type { MovingTreeArguments } from '@/server/api/tree/moving-tree'
 import { DRAG_MODE, DragMode } from '@/types/Draggable'
 import { TREE_LINK_ID_LENGTH } from '@/constants/validation'
 
 import AppItem from '@/components/AppItem.vue'
-
-import { default as useTree, TreeState } from '@/composables/useTree'
-import useTeleport from '@/composables/useTeleport'
 
 const props = defineProps<{
   quizData: QuizData[]

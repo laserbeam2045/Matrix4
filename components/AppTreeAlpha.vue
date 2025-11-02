@@ -50,8 +50,6 @@
 </template>
 
 <script lang="ts" setup>
-import useDraggableNext from '@/composables/useDraggableNext'
-
 import type Sortable from 'sortablejs'
 import type { TreeData, TreeOptions } from '@/composables/useTree'
 

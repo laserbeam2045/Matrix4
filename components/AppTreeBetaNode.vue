@@ -64,9 +64,6 @@ import type { TreeData } from '@/composables/useTree'
 import type { DragMode } from '@/types/Draggable'
 import type { DragEventListener, DragState } from '@/composables/useDraggableNext'
 
-import { useTreeNodeEvents } from '@/composables/useTreeNodeEvents'
-import { useTreeNodeLogic } from '@/composables/useTreeNodeLogic'
-
 const props = defineProps<{
   treeData: TreeData
   itemComponent: object

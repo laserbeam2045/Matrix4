@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import useEvent from '@/composables/useEvent'
 // import { useAudio, AUDIOS } from '@/composable/useAudio'
 
 export type CircularItem = {

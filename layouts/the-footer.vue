@@ -12,11 +12,7 @@ import type {
 } from '@/composables/useTree'
 import type { TreeOperationMode } from '@/types/modes'
 
-import useTeleport from '@/composables/useTeleport'
-
 // import { useAudio, AUDIOS } from '@/composables/useAudio'
-
-import useEvent from '@/composables/useEvent'
 
 const operationMode = useState('treeMode') as Ref<TreeOperationMode>
 

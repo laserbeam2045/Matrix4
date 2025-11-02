@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { DRAG_MODE, DragMode } from '@/types/Draggable'
-import { default as useTree, TreeOptions } from '@/composables/useTree'
+import type { TreeOptions } from '@/composables/useTree'
 
 import AppItem from '@/components/AppItem.vue'
 
