@@ -10,6 +10,7 @@ import type { TreeData, TreeOptions } from '@/composables/useTree'
 import type { MovingNodeArguments } from '@/server/api/tree/moving-node'
 import type { MovingTreeArguments } from '@/server/api/tree/moving-tree'
 import { DRAG_MODE, DragMode } from '@/types/Draggable'
+import { TREE_LINK_ID_LENGTH } from '@/constants/validation'
 
 import AppItem from '@/components/AppItem.vue'
 
@@ -74,7 +75,7 @@ const onMoveItem = (payload: MoveInfo) => {
 // アイテムのクリックイベントハンドラ
 const onTouchItem = async (payload: TreeData) => {
   // jumpTunnels[0]がtrueの時、リンク付きアイテムを押すとリンク先に移動
-  if (treeState.value.display.jumpTunnels[0] && payload.link.length === 16) {
+  if (treeState.value.display.jumpTunnels[0] && payload.link.length === TREE_LINK_ID_LENGTH) {
     teleportInfo.value.destination = payload.link
     teleportInfo.value.state = 'SENDABLE'
     return

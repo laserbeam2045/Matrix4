@@ -18,16 +18,7 @@ const state = reactive({
 
 const tabIndex = ref(0)
 
-const breakpoints = useBreakpoints({
-  tablet: 640,
-  laptop: 1024,
-  desktop: 1280,
-})
-
-const phone = breakpoints.smaller('tablet')
-const tablet = breakpoints.between('tablet', 'laptop')
-const laptop = breakpoints.between('laptop', 'desktop')
-const desktop = breakpoints.greater('desktop')
+const { phone, tablet, laptop, desktop } = useResponsiveBreakpoints()
 
 const windowWidth = computed(() => {
   if (phone.value) return '365px'

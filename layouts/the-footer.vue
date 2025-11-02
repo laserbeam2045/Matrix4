@@ -10,6 +10,7 @@ import type {
   TreeHistory,
   TreeState,
 } from '@/composables/useTree'
+import type { TreeOperationMode } from '@/types/modes'
 
 import useTeleport from '@/composables/useTeleport'
 
@@ -17,9 +18,7 @@ import useTeleport from '@/composables/useTeleport'
 
 import useEvent from '@/composables/useEvent'
 
-type OperationMode = 'SEARCH' | 'BOOKMARKS' | 'TELEPORT' | 'DISPLAY'
-
-const operationMode = useState('treeMode') as Ref<OperationMode>
+const operationMode = useState('treeMode') as Ref<TreeOperationMode>
 
 const {
   treeMethods,
@@ -93,7 +92,7 @@ const { mouseTouchEvent } = useEvent()
 
 const eventName = computed(() => `${mouseTouchEvent.value.START}`)
 
-const changeMode = (mode: OperationMode) => {
+const changeMode = (mode: TreeOperationMode) => {
   if (operationMode.value !== mode) {
     operationMode.value = mode
     if (mode === 'SEARCH' && treeState.value.search.result.length === 0) {

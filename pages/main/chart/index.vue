@@ -8,18 +8,12 @@ export default {
 import gsap from 'gsap'
 
 import { permutations } from '@/utilities/v_array_functions'
+import type { Spell, Word } from '@/types/game'
 
 const charA = ref('')
 const charB = ref('')
 const charC = ref('')
 const charD = ref('')
-
-type Spell = {
-  character: string
-  mode: 'none' | 'hit' | 'blow'
-}
-
-type Word = Spell[]
 
 const words = ref<Word[]>([])
 

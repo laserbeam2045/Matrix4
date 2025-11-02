@@ -10,11 +10,7 @@ const emit = defineEmits<{
   'update:tabIndex': [newValue: number]
 }>()
 
-const {
-  AUDIOS,
-  playAudio,
-  // stopAudio,
-} = useAudio()
+const { AUDIOS, playAudio } = useAudio()
 
 const count = computed(() => props.tabs.length)
 

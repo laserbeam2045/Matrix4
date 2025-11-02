@@ -75,6 +75,7 @@ import type { DragMode } from '@/types/Draggable'
 import type { DragEventListener, DragState } from '@/composables/useDraggableNext'
 
 import { useTreeNodeEvents } from '@/composables/useTreeNodeEvents'
+import { useTreeNodeLogic } from '@/composables/useTreeNodeLogic'
 
 const props = defineProps<{
   treeData: TreeData
@@ -110,26 +111,20 @@ const treeState = useState('treeState') as Ref<TreeState>
 
 const factions = computed(() => treeState.value.display.factions)
 
-const itemProps = computed(() => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { children, ...other } = props.treeData
-  return other
+const {
+  itemProps,
+  amIDragging,
+  isSomeDragging,
+  isLink,
+  isParent,
+  isChildrenOpen,
+  toggleOpen,
+} = useTreeNodeLogic({
+  treeData,
+  dragState,
+  isDragging,
+  emit,
 })
-
-const amIDragging = computed(() => dragState.value.draggingID === treeData.value.id)
-
-const isSomeDragging = computed(() => isDragging.value || amIDragging.value)
-
-const isLink = computed(() => treeData.value.link)
-
-const isParent = computed(() => 0 < treeData.value.children.length)
-
-const isChildrenOpen = computed({
-  get: () => !!treeData.value.opened,
-  set: () => emit('changeOpen', itemProps.value),
-})
-
-const toggleOpen = () => (isChildrenOpen.value = !isChildrenOpen.value)
 
 const { eventListeners } = useTreeNodeEvents({
   toggleOpen,

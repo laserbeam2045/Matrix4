@@ -9,6 +9,7 @@ import type { TreeData, TreeOptions } from '@/composables/useTree'
 import type { MovingNodeArguments } from '@/server/api/tree/moving-node'
 import type { MovingTreeArguments } from '@/server/api/tree/moving-tree'
 import { DRAG_MODE, DragMode } from '@/types/Draggable'
+import { TREE_LINK_ID_LENGTH } from '@/constants/validation'
 
 import AppItem from '@/components/AppItem.vue'
 
@@ -33,16 +34,7 @@ defineEmits<{
 
 // const eventName = computed(() => mouseTouchEvent.value.START + 'Passive')
 
-const breakpoints = useBreakpoints({
-  tablet: 640,
-  laptop: 1024,
-  desktop: 1280,
-})
-
-const phone = breakpoints.smaller('tablet')
-const tablet = breakpoints.between('tablet', 'laptop')
-const laptop = breakpoints.between('laptop', 'desktop')
-const desktop = breakpoints.greater('desktop')
+const { phone, tablet, laptop, desktop } = useResponsiveBreakpoints()
 
 const searchQuery = useState('searchQuery') as Ref<string>
 
@@ -129,7 +121,7 @@ const onMoveItem = (payload: MoveInfo) => {
 
 // アイテムのクリックイベントハンドラ
 const onTouchItem = async (payload: TreeData) => {
-  if (operationMode.value === 'TELEPORT' && payload.link.length === 16) {
+  if (operationMode.value === 'TELEPORT' && payload.link.length === TREE_LINK_ID_LENGTH) {
     teleportInfo.value.destination = payload.link
     teleportInfo.value.state = 'SENDABLE'
     return
