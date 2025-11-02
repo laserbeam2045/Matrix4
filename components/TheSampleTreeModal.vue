@@ -231,19 +231,16 @@ import useEvent from '@/composables/useEvent'
 import useMatrix from '@/composables/useMatrix'
 import useTeleport from '@/composables/useTeleport'
 import useModalWindow from '@/composables/useModalWindow'
+import { useTreeModal } from '@/composables/useTreeModal'
+import { MAX_CLONEABLE_ITEMS } from '@/constants/ui'
 
 const props = defineProps<{
   treeMethods: TreeMethods
 }>()
 
 const {
-  insertNode,
-  insertClone,
-  updateNode,
-  sparseTree,
   deleteNode,
   deleteTree,
-  movingTree,
   changeRoot,
 } = props.treeMethods
 
@@ -260,6 +257,14 @@ const { isSupportTouch } = useEvent()
 const { AUDIOS, playAudio } = useAudio()
 
 const { teleportInfo, resetTeleportInfo } = useTeleport()
+
+const {
+  handleInsert,
+  handleClone,
+  handleUpdate,
+  handleDelete,
+  handleTeleport,
+} = useTreeModal()
 
 const ROOT_ID = useState('TREE_ROOT_ID').value as string
 
@@ -644,58 +649,58 @@ const onClickItem = async () => {
 
         playAudio(AUDIOS.ETC.DECISION_22)
 
-        if (txt === 'root') {
-          askChangeRoot(ROOT_ID)
-          emit('finish')
-          return
-        }
-        if (txt === '秘密の部屋') {
-          const pID = ROOT_ID
-          const ok = ({ id }: { id: string }) => {
-            playAudio(AUDIOS.ETC.DECISION_30)
-            askChangeRoot(id)
+        const actualPID = txt === '秘密の部屋' ? ROOT_ID : pID
+
+        await handleInsert(
+          { pID: actualPID, txt, text, link },
+          props.treeMethods,
+          {
+            onSuccess: (result) => {
+              if (txt === '秘密の部屋') {
+                playAudio(AUDIOS.ETC.DECISION_30)
+                askChangeRoot(result.id)
+              } else if (txt !== 'sparse') {
+                ok()
+              } else {
+                okb()
+              }
+            },
+            onError: ng,
+            onChangeRoot: (id) => {
+              askChangeRoot(id)
+              emit('finish')
+            },
           }
-          // console.table({pID, txt, link})
-          insertNode({ pID, txt, text, link }).then(ok).catch(ng)
-        } else if (txt === 'sparse') {
-          sparseTree({}).then(okb).catch(ng)
-        } else {
-          insertNode({ pID, txt, text, link }).then(ok).catch(ng)
-        }
+        )
       }
       mainProcess()
     }
 
     // Create -> Clone
     const onClickClone = async () => {
-      // popWindow('Main')
-      // displayMessageDialog('Coming soon...')
-      if (about.value.progeniesCount > 150) {
+      if (about.value.progeniesCount > MAX_CLONEABLE_ITEMS) {
         playAudio(AUDIOS.ETC.WARNING_1)
         return displayMessageDialog('Too many items to clone.')
       }
 
       playAudio(AUDIOS.ETC.DECISION_22)
 
-      const { id } = about.value
-
-      try {
-        const response = await insertClone({ id })
-
-        if (response.id) {
-          await new Promise(resolve => setTimeout(resolve, 1000))
-          askChangeRoot(response.id)
-          await new Promise(resolve => setTimeout(resolve, 1000))
-          setInfo('Succeeded')
-          playAudio(AUDIOS.ETC.DECISION_30)
-        } else {
-          ng()
+      await handleClone(
+        about.value.id,
+        about.value.progeniesCount,
+        props.treeMethods,
+        {
+          onSuccess: () => {
+            setInfo('Succeeded')
+            playAudio(AUDIOS.ETC.DECISION_30)
+          },
+          onError: (message) => {
+            playAudio(AUDIOS.ETC.WARNING_1)
+            displayMessageDialog(message)
+          },
+          onChangeRoot: askChangeRoot,
         }
-      } catch (err) {
-        if (typeof err === 'string') {
-          setInfo(err)
-        }
-      }
+      )
     }
     mainProcess()
   }
@@ -722,11 +727,21 @@ const onClickItem = async () => {
     }
 
     // Update -> Update
-    const onClickUpdate = () => {
+    const onClickUpdate = async () => {
       const { id, opened } = about.value
       const { txt, text, link, isGroup } = stateValues.update
-      updateNode({ id, txt, text, link, opened, isGroup: Number(isGroup) }).then(ok).catch(ng)
+
       playAudio(AUDIOS.ETC.DECISION_22)
+
+      await handleUpdate(
+        { id, txt, text, link, opened, isGroup: Number(isGroup) },
+        props.treeMethods,
+        {
+          onSuccess: ok,
+          onError: ng,
+        }
+      )
+
       emit('finish')
     }
     mainProcess()
@@ -783,9 +798,17 @@ const onClickItem = async () => {
       }
 
       // Delete -> Only this -> OK
-      const onClickAccept = () => {
-        deleteSomething(deleteNode)
+      const onClickAccept = async () => {
         playAudio(AUDIOS.ETC.DECISION_22)
+
+        await handleDelete(
+          stateValues.delete.id,
+          deleteNode,
+          {
+            onSuccess: ok,
+            onError: ng,
+          }
+        )
       }
       mainProcess()
     }
@@ -853,9 +876,17 @@ const onClickItem = async () => {
           }
 
           // Delete -> With children -> OK -> OK -> OK
-          const onClickAccept = () => {
-            deleteSomething(deleteTree)
+          const onClickAccept = async () => {
             playAudio(AUDIOS.ETC.DECISION_22)
+
+            await handleDelete(
+              stateValues.delete.id,
+              deleteTree,
+              {
+                onSuccess: ok,
+                onError: ng,
+              }
+            )
           }
           mainProcess()
         }
@@ -889,15 +920,22 @@ const teleportItemWithDnD = ({ cID, pID, idx }) => {
       reject('Cancel')
     }
 
-    const onClickAccept = () => {
+    const onClickAccept = async () => {
       playAudio(AUDIOS.ETC.DECISION_22)
-      movingTree({ cID, pID, idx })
-        .then(() => {
-          resolve(ok())
-        })
-        .catch((err) => {
-          reject(ng(err))
-        })
+
+      try {
+        await handleTeleport(
+          { cID, pID, idx },
+          props.treeMethods,
+          {
+            onSuccess: () => resolve(ok()),
+            onError: (err) => reject(ng(err)),
+            onCancel: () => reject('Cancel'),
+          }
+        )
+      } catch (err) {
+        reject(ng(err))
+      }
     }
     mainProcess()
   })
@@ -910,12 +948,6 @@ const askChangeRoot = (id: string) => {
   changeRoot(id)
   return Promise.resolve()
   // displayMessageDialog('Invalid ID')
-}
-
-// Item または Branch を削除する関数
-const deleteSomething = (method: DeleteNode | DeleteTree) => {
-  const { id } = stateValues.delete
-  method({ id }).then(ok).catch(ng)
 }
 
 // アイテムクリック／アイテム開閉を監視
