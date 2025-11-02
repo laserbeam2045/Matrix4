@@ -423,41 +423,42 @@ export default function useTree(): {
 
   const intervalId = ref(null)
 
-  onMounted(async () => {
-    intervalId.value = setInterval(async () => {
-      if (!rootId.value) return
-      if (isTreeOldData.value || isTreeLoading.value || isTreeMoving.value) {
-        return
-      }
+  // ポーリング処理（一時的にコメントアウト）
+  // onMounted(async () => {
+  //   intervalId.value = setInterval(async () => {
+  //     if (!rootId.value) return
+  //     if (isTreeOldData.value || isTreeLoading.value || isTreeMoving.value) {
+  //       return
+  //     }
 
-      const response = await treeMethods.selectUpdated({ id: rootId.value })
-      if (typeof response?.updatedAt === 'string') {
-        console.log(`%c${response.updatedAt}`, 'color: green')
-        if (
-            updatedAt.value !== response.updatedAt
-          ) {
-          if (
-            response.updatedType !== 1 &&
-            response.updatedType !== 2
-          ) {
-            console.table({ response })
-            treeMethods.updateData()
-          } else {
-            console.table({ response })
-            treeMethods.updateData(false)
-          }
-          updatedAt.value = response.updatedAt
-          console.log('%cData has been Updated', 'color: blue')
-        }
-      }
-    }, 1000)
-  })
+  //     const response = await treeMethods.selectUpdated({ id: rootId.value })
+  //     if (typeof response?.updatedAt === 'string') {
+  //       console.log(`%c${response.updatedAt}`, 'color: green')
+  //       if (
+  //           updatedAt.value !== response.updatedAt
+  //         ) {
+  //         if (
+  //           response.updatedType !== 1 &&
+  //           response.updatedType !== 2
+  //         ) {
+  //           console.table({ response })
+  //           treeMethods.updateData()
+  //         } else {
+  //           console.table({ response })
+  //           treeMethods.updateData(false)
+  //         }
+  //         updatedAt.value = response.updatedAt
+  //         console.log('%cData has been Updated', 'color: blue')
+  //       }
+  //     }
+  //   }, 1000)
+  // })
 
-  onUnmounted(() => {
-    if (intervalId.value) {
-      clearInterval(intervalId.value)
-    }
-  })
+  // onUnmounted(() => {
+  //   if (intervalId.value) {
+  //     clearInterval(intervalId.value)
+  //   }
+  // })
 
   return {
     rootId,
