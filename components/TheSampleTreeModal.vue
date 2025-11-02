@@ -915,9 +915,9 @@ const teleportItemWithDnD = ({ cID, pID, idx }) => {
     }
 
     const onClickCancel = () => {
+      reject('Cancel')
       emit('cancel')
       emit('finish')
-      reject('Cancel')
     }
 
     const onClickAccept = async () => {
@@ -987,6 +987,7 @@ watch(() => teleportInfo.value.state, async (state) => {
     } catch (err) {
       teleportInfo.value.state = 'PRESEND'
       console.log(err)
+      // キャンセル時は親コンポーネントのonCanceledで処理されるため、ここでは何もしない
     }
   }
 })

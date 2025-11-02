@@ -108,9 +108,17 @@ const onFinished = () => {
   // resetTeleportInfo()
 }
 
-const onCanceled = () => {
+const onCanceled = async () => {
   canceledCount.value++
   console.log('canceled: ' + canceledCount.value)
+  // キャンセル時にツリーデータを再取得して元の状態に戻す
+  about.value = null
+  // 一旦ツリーを非表示にして再マウントさせる
+  isTreeOldData.value = true
+  await treeMethods.updateData()
+  // 次のティックで再表示
+  await nextTick()
+  isTreeOldData.value = false
 }
 
 watch(rootId, async (id) => {
