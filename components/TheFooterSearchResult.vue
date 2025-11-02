@@ -74,16 +74,14 @@
 </template>
 
 <script lang="ts" setup>
-import type { TreeMethods } from '@/composables/useTree'
-
-import { SetResponse } from '@/composables/useTree'
+import type { TreeMethods, SearchResult } from '@/composables/useTree'
 
 const {
   treeMethods,
   searchResult,
 } = defineProps<{
   isVisible: boolean
-  searchResult: SetResponse[]
+  searchResult: SearchResult[]
   treeMethods: TreeMethods
 }>()
 

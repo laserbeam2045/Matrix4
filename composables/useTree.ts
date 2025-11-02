@@ -55,6 +55,17 @@ export interface TreeOptions {
   draggableSelector?: string
 }
 
+/**
+ * 検索結果のデータ型
+ */
+export interface SearchResult {
+  id: string
+  txt: string
+  text: string
+  parent: string
+  parentTxt: string
+}
+
 // footer
 export interface TreeState {
   search: {
@@ -64,7 +75,7 @@ export interface TreeState {
       boolean,
     ],
     word: string,
-    result: SetResponse[],
+    result: SearchResult[],
   },
   display: {
     factions: [
@@ -85,11 +96,11 @@ export interface TreeState {
 export type SelectNode = (args: SelectNodeArguments) => Promise<SetResponse>
 export type SelectTree = (args: SelectTreeArguments) => Promise<SetResponse[]>
 export type SelectUpdated = (args: SelectUpdatedArguments) => Promise<{ updatedAt: string, updatedType }>
-export type SearchNodes = (args: SearchNodesArguments) => Promise<SetResponse[]>
+export type SearchNodes = (args: SearchNodesArguments) => Promise<SearchResult[]>
 export type InsertNode = (args: InsertNodeArguments) => Promise<{ id: string }>
 export type InsertClone = (args: InsertCloneArguments) => Promise<{ id: string }>
 export type UpdateNode = (args: UpdateNodeArguments) => Promise<void>
-export type UpdateOpen = (args: UpdateOpenArguments) => Promise<void>
+export type UpdateOpen = (args: { id: string }) => Promise<void>
 export type UpdateGroup = (args: UpdateGroupArguments) => Promise<void>
 export type SparseTree = (args: SparseTreeArguments) => Promise<void>
 export type DeleteNode = (args: DeleteNodeArguments) => Promise<void>
