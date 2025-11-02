@@ -74,7 +74,7 @@ import type { TreeData, TreeState } from '@/composables/useTree'
 import type { DragMode } from '@/types/Draggable'
 import type { DragEventListener, DragState } from '@/composables/useDraggableNext'
 
-import useEvent from '@/composables/useEvent'
+import { useTreeNodeEvents } from '@/composables/useTreeNodeEvents'
 
 const props = defineProps<{
   treeData: TreeData
@@ -131,46 +131,12 @@ const isChildrenOpen = computed({
 
 const toggleOpen = () => (isChildrenOpen.value = !isChildrenOpen.value)
 
-const { mouseTouchEvent } = useEvent()
-
-const eventListeners = computed(() => ({
-  list: {
-    [`${mouseTouchEvent.value.CLICK}Passive`](e: Event) {
-      e.stopPropagation()
-      const target = e.target as HTMLElement
-      const srcElement = e.srcElement as HTMLElement
-      if (
-        target === srcElement &&
-        !target.classList.contains('app-tree-item')
-      ) {
-        toggleOpen()
-      }
-    },
-    choose() {
-      console.log('move')
-    },
-  },
-  item: {
-    [`${mouseTouchEvent.value.CLICK}`](e: Event) {
-      e.stopPropagation()
-      e.preventDefault()
-      // emit('touchItem', props.treeData)
-    },
-    [`${mouseTouchEvent.value.START}Capture`](e: Event) {
-      e.stopPropagation
-      e.preventDefault
-    },
-    [`${mouseTouchEvent.value.MOVE}Capture`](e: Event) {
-      e.stopPropagation
-      e.preventDefault
-    },
-    [`${mouseTouchEvent.value.END}Capture`](e: Event) {
-      e.stopPropagation
-      if (amIDragging.value) return
-      emit('touchItem', props.treeData)
-    },
-  },
-}))
+const { eventListeners } = useTreeNodeEvents({
+  toggleOpen,
+  amIDragging,
+  onTouchItem: (data) => emit('touchItem', data),
+  treeData: props.treeData,
+})
 
 const isMounted = ref(false)
 

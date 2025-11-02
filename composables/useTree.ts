@@ -1,6 +1,10 @@
 import { Ref, ComputedRef } from 'vue'
 
 import type { DragMode } from '@/types/Draggable'
+import type { SearchResult } from '@/types/tree'
+
+// Re-export for backward compatibility
+export type { SearchResult }
 
 import type { SelectNodeArguments } from '@/server/api/tree/select-node'
 import type { SelectTreeArguments } from '@/server/api/tree/select-tree'
@@ -53,17 +57,6 @@ export interface TreeOptions {
   dragMode: DragMode
   handleSelector?: string
   draggableSelector?: string
-}
-
-/**
- * 検索結果のデータ型
- */
-export interface SearchResult {
-  id: string
-  txt: string
-  text: string
-  parent: string
-  parentTxt: string
 }
 
 // footer

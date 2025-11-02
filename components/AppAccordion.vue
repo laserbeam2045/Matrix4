@@ -19,6 +19,7 @@
 </template>
 
 <script lang="ts" setup>
+import { ACCORDION_TRANSITION_MS } from '@/constants/ui'
 
 const props = withDefaults(defineProps<{
   isOpen: boolean
@@ -75,38 +76,56 @@ const setSize = (el: Element, width: string, height?: string) => {
   style.height = height ?? width
 }
 
-// MEMO: enter時に取得されるscrollWidthがpadding-rightを含まないため、
-//   ->: 複製した要素で正確なscroll(Width/Height)を取得している。
+/**
+ * 要素の実際のサイズを取得
+ * MEMO: enter時に取得されるscrollWidthがpadding-rightを含まないため、
+ *       複製した要素で正確なscroll(Width/Height)を取得している。
+ */
 const getSize = (): { width: string, height: string } => {
-  if (!document) return { width: 'auto', height: 'auto' }
-  const clone = createClone()
-  const sandBox = createSandBox()
-
-  if (clone && sandBox) {
-    sandBox.appendChild(clone)
-    document.body.appendChild(sandBox)
-    const { scrollWidth, scrollHeight } = clone
-    document.body.removeChild(sandBox)
-
-    const width = Math.max(outerContainer.value.scrollWidth, scrollWidth)
-
-    return { width: width + 'px', height: scrollHeight + 'px' }
+  if (!document || !innerContainer.value) {
+    return { width: 'auto', height: 'auto' }
   }
 
-  return { width: 'auto', height: 'auto' }
+  const { width, height } = measureElementSize(innerContainer.value)
+  const maxWidth = Math.max(outerContainer.value?.scrollWidth || 0, width)
+
+  return {
+    width: `${maxWidth}px`,
+    height: `${height}px`
+  }
 }
 
-const createClone = () => {
-  const clone = innerContainer.value.cloneNode(true) as HTMLElement
-  setSize(clone, 'auto')
-  return clone
+/**
+ * サンドボックス内で要素のサイズを測定
+ */
+const measureElementSize = (element: HTMLElement): { width: number, height: number } => {
+  const clone = element.cloneNode(true) as HTMLElement
+  clone.style.width = 'auto'
+  clone.style.height = 'auto'
+
+  const sandbox = createSandbox()
+  sandbox.appendChild(clone)
+  document.body.appendChild(sandbox)
+
+  const { scrollWidth, scrollHeight } = clone
+
+  document.body.removeChild(sandbox)
+
+  return {
+    width: scrollWidth,
+    height: scrollHeight
+  }
 }
 
-const createSandBox = () => {
-  if (!document) return
-  const sandBox = document.createElement('div')
-  sandBox.style.position = 'absolute'
-  return sandBox
+/**
+ * サンドボックス要素を作成
+ */
+const createSandbox = (): HTMLElement => {
+  const sandbox = document.createElement('div')
+  sandbox.style.position = 'absolute'
+  sandbox.style.visibility = 'hidden'
+  sandbox.style.pointerEvents = 'none'
+  return sandbox
 }
 
 // // MEMO: enter時に取得されるscrollWidthがpadding-rightを含まないため、
@@ -155,7 +174,7 @@ const createSandBox = () => {
 
 .v-enter-active,
 .v-leave-active {
-  transition: all .5s ease-out !important;
+  transition: all calc(v-bind(ACCORDION_TRANSITION_MS) * 1ms) ease-out !important;
 }
 
 .v-leave-to,
