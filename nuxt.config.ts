@@ -38,7 +38,7 @@ export default defineNuxtConfig({
       name: 'MATRIX',
       short_name: 'MATRIX',
       description: 'The future of the world.',
-      theme_color: '#00FF41',
+      theme_color: '#000000',
       background_color: '#000000',
       display: 'standalone',
       start_url: '/',
