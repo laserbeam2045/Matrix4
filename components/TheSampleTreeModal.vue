@@ -35,6 +35,11 @@
           </div>
         </AppSlider>
       </div>
+      <div v-if="about.link && about.link.length === 16" class="buttons">
+        <AppButton class="button" @end.self="onClickJump">
+          Jump
+        </AppButton>
+      </div>
       <div class="buttons">
         <transition-group name="fade" mode="out-in">
           <AppButton
@@ -945,6 +950,14 @@ const askChangeRoot = (id: string) => {
   // displayMessageDialog('Invalid ID')
 }
 
+// Jumpボタンクリック時の処理
+const onClickJump = () => {
+  if (about.value.link && about.value.link.length === 16) {
+    askChangeRoot(about.value.link)
+    emit('finish')
+  }
+}
+
 // アイテムクリック／アイテム開閉を監視
 watch(about, (newValue) => {
   if (newValue) {
@@ -1068,7 +1081,7 @@ watch(() => modalWindows.value.length, (newValue) => {
   .buttons {
     display: flex;
     justify-content: space-evenly;
-    margin: 16px 0px 0px;
+    margin: 8px 0px 0px;
     transition: all .5s;
 
     .button {

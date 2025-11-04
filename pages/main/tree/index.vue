@@ -72,11 +72,11 @@ const onMoveItem = (payload: MoveInfo) => {
 // アイテムのクリックイベントハンドラ
 const onTouchItem = async (payload: TreeData) => {
   // jumpTunnels[0]がtrueの時、リンク付きアイテムを押すとリンク先に移動
-  if (treeState.value.display.jumpTunnels[0] && payload.link.length === TREE_LINK_ID_LENGTH) {
-    teleportInfo.value.destination = payload.link
-    teleportInfo.value.state = 'SENDABLE'
-    return
-  }
+  // if (treeState.value.display.jumpTunnels[0] && payload.link.length === TREE_LINK_ID_LENGTH) {
+  //   teleportInfo.value.destination = payload.link
+  //   teleportInfo.value.state = 'SENDABLE'
+  //   return
+  // }
   if (treeOptions.dragMode === DRAG_MODE.EDGE || 1) {
     about.value = payload
     console.log(about.value)

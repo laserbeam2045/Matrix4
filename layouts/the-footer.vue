@@ -420,10 +420,10 @@ const maxRight = computed(() => {
                 </ul>
               </div>
 
-              <div class="sm-route-sizes">
+              <!-- <div class="sm-route-sizes">
                 <label>Jump</label>
                 <ul>
-                  <!-- <li>
+                  <li>
                     <input
                       id="route-size-small"
                       v-model="treeState.display.jumpTunnels[0]"
@@ -448,7 +448,7 @@ const maxRight = computed(() => {
                     <label for="route-size-medium">
                       <span style="left: 34px;"> medium</span>
                     </label>
-                  </li> -->
+                  </li>
                   <li>
                     <input
                       id="route-size-large"
@@ -463,7 +463,7 @@ const maxRight = computed(() => {
                     </label>
                   </li>
                 </ul>
-              </div>
+              </div> -->
 
               <div class="sm-scanners">
                 <label>Sensors</label>
