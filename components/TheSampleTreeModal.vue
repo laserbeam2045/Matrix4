@@ -915,6 +915,7 @@ const teleportItemWithDnD = ({ cID, pID, idx }) => {
     }
 
     const onClickCancel = () => {
+      resetTeleportInfo()
       reject('Cancel')
       emit('cancel')
       emit('finish')
