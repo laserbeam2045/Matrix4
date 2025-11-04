@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useClipboard } from '@vueuse/core'
-
 const props = defineProps<{
   value: string | number
 }>()
@@ -8,8 +6,6 @@ const props = defineProps<{
 const emit = defineEmits<{
   copy: [payload: string]
 }>()
-
-const { copy } = useClipboard()
 
 const { AUDIOS, playAudio } = useAudio()
 
@@ -29,13 +25,50 @@ const execCopy = async () => {
     clearInterval(intervalId.value)
   }
   playAudio(AUDIOS.ETC.POP_1)
-  await copy(String(props.value))
-  await emit('copy', String(props.value))
-  copied.value = true
-  intervalId.value = setInterval(() => {
-    copied.value = false
-    intervalId.value = null
-  }, 1500)
+
+  try {
+    const textToCopy = String(props.value)
+
+    // モダンなClipboard APIを試す
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(textToCopy)
+    } else {
+      // フォールバック: レガシーな方法でコピー（画面の乱れを防ぐ）
+      const textArea = document.createElement('textarea')
+      textArea.value = textToCopy
+      textArea.style.position = 'fixed'
+      textArea.style.left = '-999999px'
+      textArea.style.top = '-999999px'
+      textArea.style.opacity = '0'
+      textArea.setAttribute('readonly', '')
+      textArea.style.pointerEvents = 'none'
+      document.body.appendChild(textArea)
+
+      // スクロールを保存
+      const scrollX = window.scrollX
+      const scrollY = window.scrollY
+
+      textArea.focus({ preventScroll: true })
+      textArea.select()
+
+      try {
+        document.execCommand('copy')
+      } finally {
+        document.body.removeChild(textArea)
+        // スクロール位置を復元
+        window.scrollTo(scrollX, scrollY)
+      }
+    }
+
+    await emit('copy', textToCopy)
+    copied.value = true
+    intervalId.value = setInterval(() => {
+      copied.value = false
+      intervalId.value = null
+    }, 1500)
+  } catch (error) {
+    console.error('Failed to copy:', error)
+  }
 }
 </script>
 
