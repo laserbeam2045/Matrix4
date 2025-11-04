@@ -25,7 +25,7 @@
                   <p class="head">{{ item.thText }}</p>
                 </th>
                 <td>
-                  <p class="text">{{ item.tdText }}</p>
+                  <p class="text" :class="{ 'monospace': key === 'ID' }">{{ item.tdText }}</p>
                 </td>
                 <td v-if="key === 'ID'">
                   <AppCopy :value="item.tdText" @copy="onCopy" />
@@ -1068,6 +1068,11 @@ watch(() => modalWindows.value.length, (newValue) => {
           font-size: 14px;
           font-family: $fontFamily9;
           @include textStyleC;
+
+          &.monospace {
+            font-family: $fontFamily7, $fontFamily3, monospace;
+            letter-spacing: 0.05em;
+          }
         }
 
         .icon {
