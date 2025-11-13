@@ -569,9 +569,16 @@ const displayMessageDialog = async (message: string) => {
   displayDialog(WINDOW_KIND.MESSAGE, { push: true, pop: true })
 }
 
-// 何らかの処理が成功した時のコールバック関数
+// 何らかの処理が成功した時のコールバック関数（updateDataを呼ぶ）
 const ok = (result?: any) => {
   emit('update')
+  setInfo('Succeeded')
+  playAudio(AUDIOS.ETC.DECISION_30)
+}
+
+// updateNodeの成功時のコールバック関数（updateDataを呼ばない）
+const okUpdate = (result?: any) => {
+  emit('finish')
   setInfo('Succeeded')
   playAudio(AUDIOS.ETC.DECISION_30)
 }
@@ -744,21 +751,22 @@ const onClickItem = async () => {
 
     // Update -> Update
     const onClickUpdate = async () => {
-      const { id, opened } = about.value
+      const { id } = about.value
       const { txt, text, link, isGroup } = stateValues.update
 
       playAudio(AUDIOS.ETC.DECISION_22)
 
+      // openedは渡さない（update-open APIが専用で管理）
       await handleUpdate(
-        { id, txt, text, link, opened, isGroup: Number(isGroup) },
+        { id, txt, text, link, isGroup: Number(isGroup) },
         props.treeMethods,
         {
-          onSuccess: ok,
+          onSuccess: okUpdate,
           onError: ng,
         }
       )
 
-      emit('finish')
+      emit('update')
     }
     mainProcess()
   }

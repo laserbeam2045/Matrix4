@@ -101,7 +101,6 @@ export function useTreeModal() {
       txt: string
       text: string
       link: string
-      opened: number
       isGroup: number
     },
     treeMethods: TreeMethods,

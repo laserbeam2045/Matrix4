@@ -92,15 +92,16 @@ const onChangeOpen = async (payload: TreeData) => {
   }
 }
 
-const onUpdated = (update = true) => {
-  console.table({ update })
+const onUpdated = async (update = true) => {
   onFinished()
-  setTimeout(() => {
-    treeMethods.updateData(update)
-  }, 100)
+  isTreeOldData.value = true
+  treeMethods.updateData()
+  await nextTick()
+  isTreeOldData.value = false
 }
 
-const onFinished = () => {
+const onFinished = async () => {
+  console.log(treeData.value)
   about.value = null
   // resetTeleportInfo()
 }

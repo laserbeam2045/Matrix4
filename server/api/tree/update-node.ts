@@ -8,7 +8,6 @@ export type UpdateNodeArguments = {
   txt: string
   text: string
   link: string
-  opened: number
   isGroup: number
 }
 
@@ -31,21 +30,18 @@ export default defineEventHandler(async (event) => {
     const txt = getQuery(event).txt as string
     const text = getQuery(event).text as string
     const link = getQuery(event).link as string
-    const opened = parseInt(getQuery(event).opened as string)
     const isGroup = parseInt(getQuery(event).isGroup as string)
-    
-    // Convert numbers to booleans
-    const openedBool = opened === 1
+
+    // Convert number to boolean
     const isGroupBool = isGroup === 1
 
-    // Update node properties
+    // Update node properties (opened is NOT updated here - it's managed by update-open API)
     const { error: updateError } = await supabase
       .from('sets')
       .update({
         txt,
         text,
         link,
-        opened: openedBool,
         isGroup: isGroupBool
       })
       .eq('id', id)

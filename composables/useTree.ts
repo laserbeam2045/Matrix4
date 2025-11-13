@@ -248,7 +248,32 @@ export default function useTree(): {
 
     updateNode: async (params) => {
       isTreeLoading.value = true
-      const { error } = await useFetch('/api/tree/update-node', { params })
+      console.log('[updateNode] 送信パラメータ:', params)
+      const { data, error } = await useFetch('/api/tree/update-node', { params })
+
+      console.log('[updateNode] レスポンス:', { data: data.value, error: error.value })
+
+      if (!error.value) {
+        // ローカルのtable配列も更新して即座に反映（openedは更新しない）
+        // リアクティビティを確実に発火させるため、配列を新しく作成
+        table.value = table.value.map((node) => {
+          if (node.id === params.id) {
+            const updated = {
+              ...node,
+              txt: params.txt,
+              text: params.text,
+              link: params.link,
+              isGroup: params.isGroup
+            }
+            return updated
+          }
+          return node
+        })
+      } else {
+        console.error('[updateNode] エラー:', error.value)
+      }
+
+      isTreeLoading.value = false
 
       return error.value
         ? Promise.reject(error.value)
@@ -349,6 +374,7 @@ export default function useTree(): {
     },
 
     updateData: async function(loading = true) {
+      console.log('[updateData] 開始 loading:', loading, 'rootId:', rootId.value)
       if (!rootId.value) {
         return Promise.reject('No tree data')
       }
@@ -356,12 +382,17 @@ export default function useTree(): {
         isTreeLoading.value = true
       }
       const params = { id: rootId.value }
+      console.log('[updateData] select-tree APIに送信:', params)
       const { data, error } = await useFetch('/api/tree/select-tree', { params })
 
       if (error.value) {
         isTreeLoading.value = false
         return Promise.reject(error.value)
       }
+
+      console.log('[updateData] DBから取得したデータ件数:', data.value?.result?.length)
+      const targetNode = data.value?.result?.find(n => n.id === 'cKt7FJsbQl0u4HWY')
+      console.log('[updateData] 該当ノード(cKt7FJsbQl0u4HWY)のlink:', targetNode?.link)
 
       table.value = data.value?.result ?? []
       isTreeLoading.value = false
