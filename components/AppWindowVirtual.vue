@@ -127,8 +127,8 @@ $box-shadow:
     // box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 8px;
     //border: 1px rgba(255,255,255,0.4) solid;
 
-    //$color-svg: rgba(255,255,255,0.4);
-    $color-svg: rgba(30,206,116,0.9);
+    $color-svg: rgba(255,255,255,0.4);
+    //$color-svg: rgba(30,206,116,0.9);
 
     > svg {
       z-index: -1;
@@ -137,7 +137,7 @@ $box-shadow:
 
       path {
         stroke: darken($color-svg, 10%);
-        fill: rgba(34,198,213, 0.35);
+        fill: rgba(34,198,213, 0.20);
         stroke-width: 2px;
       }
     }
