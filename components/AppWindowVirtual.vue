@@ -29,6 +29,9 @@ withDefaults(defineProps<{
     :style="{ width, height }"
     v-bind="$attrs"
   >
+    <svg width="100%" height="100%" viewBox="0 0 300 600" preserveAspectRatio="none">
+      <path d="M0,10 L15,0 L105,0 L120,10 L180,10 L195,0 L 285,0 L300,10 L300,70 L290,85 L290,145 L300,160 L300,410 L290,425 L290,485 L300,500 L300,590 L285,600 L15,600 L0,590 L0,500 L10,485 L10,425 L0,410 L0,160 L10,145 L10,85 L0,70 z" vector-effect="non-scaling-stroke" />
+    </svg>
     <div class="buttons">
       <slot name="buttons" />
     </div>
@@ -107,22 +110,39 @@ $box-shadow:
   max-height: 100vh;
   text-align: center;
   // border: 1px solid $blueLikeColor6;
-  border-radius: 8px;
+  //border-radius: 8px;
   // box-shadow: $windowBoxShadow;
-  box-shadow: $box-shadow;
+  //box-shadow: $box-shadow;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font: 15px/25px 'Roboto Mono', 'Inconsolata', monospace, sans-serif;
-  border: 1px solid $color1;
-  background: $color2;
+  //border: 1px solid $color1;
+  //background: $color2;
   color: $color1;
   overflow: hidden;
 
-    border-radius: 12px;
-    backdrop-filter: blur(3px);
-    background-color: rgba(34,198,213, 0.15);
+    //border-radius: 12px;
+    //backdrop-filter: blur(7px);
+    //background-color: rgba(34,198,213, 0.15);
     // box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 8px;
-    border: 1px rgba(255,255,255,0.4) solid;
+    //border: 1px rgba(255,255,255,0.4) solid;
+
+    //$color-svg: rgba(255,255,255,0.4);
+    $color-svg: rgba(30,206,116,0.9);
+
+    > svg {
+      z-index: -1;
+      position: absolute;
+      display: block;
+
+      path {
+        stroke: darken($color-svg, 10%);
+        fill: rgba(34,198,213, 0.35);
+        stroke-width: 2px;
+      }
+    }
+
+    //clip-path: path("M 0,10 L 15,0 L 110,0 L 125,10 L 185,10 L200,0 L 295,0 L310,10 L310,30 L300,45 L300,75 L310,90 L 310,352 L 0,352 z");
 
   .buttons {
     position: absolute;

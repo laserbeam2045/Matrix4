@@ -76,7 +76,7 @@ const on = { open, close, toggle }
   bottom: 0;
   // background: rgb(0, 0, 0);
   // background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(3px);
   background-color: rgba(0,61,125, 0.33);
   transition: all 0.33s ease-out;
 
