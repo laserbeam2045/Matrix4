@@ -6,6 +6,12 @@ import useWindow from './useWindow'
 
 import useEvent from '@/composables/useEvent'
 
+import type * as CSS from 'csstype';
+
+import { Dict } from '@/types/types'
+
+interface Style extends CSS.Properties, CSS.PropertiesHyphen {}
+
 const WEIGHT = '11px'       // 通常時の太さ
 const LENGTH = '100%'       // 通常時の長さ
 const OFFSET = '-6px'       // 通常時の太さに応じた位置調整
@@ -26,25 +32,14 @@ type State = {
 }
 
 // 全リサイザーの設定(型定義)
-type ResizerSettings = {
-  [key: string]: {
-    style: {
-      [key: string]: string
-    }
-    eventHandler: EventHandler
-  }
-}
+type ResizerSettings = Dict<{style: Style; eventHandler: EventHandler}>
 
 // 全リサイザー(型定義)
-type Resizers = {
-  [key: string]: Resizer
-}
+type Resizers = Dict<Resizer>
 
 // リサイザー(型定義)
-type Resizer = HTMLDivElement & {
-  style: {
-    [key: string]: any
-  }
+interface Resizer extends HTMLDivElement {
+  style: Style
 }
 
 /**

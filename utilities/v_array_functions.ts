@@ -29,19 +29,19 @@ export const permutations = (arrA, arrB = []) => {
 }
 
 // // 配列に要素を追加する関数
-// export const addToArray = (arr: any[], val: any) => {
+// export const addToArray = (arr: unknown[], val: unknown) => {
 //   const length = arr.length
 //   arr.splice(length, 0, val)
 // }
 
 // // 配列から要素を削除する関数
-// export const delFromArray = (arr: any[], val: any) => {
+// export const delFromArray = (arr: unknown[], val: unknown) => {
 //   const index = arr.indexOf(val)
 //   arr.splice(index, 1)
 // }
 
 // // 配列をディープコピーする関数
-// export const deepCopy = (array: any[]): any => {
+// export const deepCopy = (array: unknown[]): unknown => {
 //   const newArray = []
 //   for (const item of array) {
 //     if (Array.isArray(item))

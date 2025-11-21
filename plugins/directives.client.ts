@@ -163,7 +163,7 @@ export default defineNuxtPlugin(nuxtApp => {
       if (focusable(el)) {
         el.focus()
       } else if (el.childNodes.length) {
-        el.childNodes.forEach((child: any) => {
+        el.childNodes.forEach((child: unknown) => {
           if (focusable(child)) {
             (child as HTMLElement).focus()
           }

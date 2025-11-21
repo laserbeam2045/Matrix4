@@ -7,6 +7,6 @@ export type MouseTouch = (MouseEvent | TouchEvent) & {
   screenY: number
   clientX: number
   clientY: number
-  touches: any
+  touches: unknown
   }
 // }

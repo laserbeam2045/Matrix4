@@ -32,6 +32,6 @@
 //  * @param emit
 //  */
 // declare function useVModel<P extends object, K extends keyof P, Name extends string>(
-//   props: P, key?: K, emit?: (name: Name, ...args: any[]) => void, options?: VModelOptions
+//   props: P, key?: K, emit?: (name: Name, ...args: unknown[]) => void, options?: VModelOptions
 // )
 // : vueDemi.Ref<UnwrapRef<P[K]>> | vueDemi.WritableComputedRef<P[K]>

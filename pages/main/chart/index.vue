@@ -1,189 +1,234 @@
 <script lang="ts">
 export default {
-  layout: 'the-matrix',
-}
+  layout: "the-matrix",
+};
 </script>
 
 <script setup lang="ts">
-import gsap from 'gsap'
+import gsap from "gsap";
 
-import { permutations } from '@/utilities/v_array_functions'
-import type { Spell, Word } from '@/types/game'
+import { permutations } from "@/utilities/v_array_functions";
+import type { Spell, Word } from "@/types/game";
 
-const charA = ref('')
-const charB = ref('')
-const charC = ref('')
-const charD = ref('')
+const charA = ref("");
+const charB = ref("");
+const charC = ref("");
+const charD = ref("");
 
-const words = ref<Word[]>([])
+const words = ref<Word[]>([]);
 
 const clear = () => {
-  charA.value = ''
-  charB.value = ''
-  charC.value = ''
-  charD.value = ''
-  words.value = []
-  wordLength.value = 2
-}
+  charA.value = "";
+  charB.value = "";
+  charC.value = "";
+  charD.value = "";
+  words.value = [];
+  wordLength.value = 2;
+};
 
 const appendWord = () => {
   if (charC.value.length === wordLength.value) {
-    charD.value = charC.value
+    charD.value = charC.value;
     const word = charC.value
-      .split('')
+      .split("")
       .map((c) => c.toUpperCase())
-      .map((c) => ({ character: c, mode: 'none' } as Spell))
-    words.value.push(word)
-    charC.value = ''
+      .map((c) => ({ character: c, mode: "none" } as Spell));
+    words.value.push(word);
+    charC.value = "";
   } else if (words.value.length === 0) {
-    wordLength.value = charC.value.length
+    wordLength.value = charC.value.length;
     const word = charC.value
-      .split('')
+      .split("")
       .map((c) => c.toUpperCase())
-      .map((c) => ({ character: c, mode: 'none' } as Spell))
-    words.value.push(word)
-    charC.value = ''
+      .map((c) => ({ character: c, mode: "none" } as Spell));
+    words.value.push(word);
+    charC.value = "";
   } else {
-    alert('Invalid word length.')
+    alert("Invalid word length.");
   }
-}
+};
 
 const updateMode = (indexOne: number, indexTwo: number) => {
-  const { mode } = words.value[indexOne][indexTwo]
-  const newMode = mode === 'none' ? 'blow' : (mode === 'blow' ? 'hit' : 'none')
-  words.value[indexOne][indexTwo].mode = newMode
-}
+  const { mode } = words.value[indexOne][indexTwo];
+  const newMode = mode === "none" ? "blow" : mode === "blow" ? "hit" : "none";
+  words.value[indexOne][indexTwo].mode = newMode;
+};
 
-const double = ref(false)
-const expert = ref(false)
-const anagram = ref(false)
+const double = ref(false);
+const expert = ref(false);
+const anagram = ref(false);
 
-const wordLength = ref(2)
+const wordLength = ref(2);
 
-const { data: allList }: { data: any } = await useFetch('/api/chart/select')
+const { data: allList }: { data: unknown } = await useFetch(
+  "/api/chart/select"
+);
 
 // 全ての単語を文字数別に二次元配列にしたもの
 const list1 = computed(() => {
-  const list = allList.value.map(word => word.toLowerCase())
+  const list = allList.value.map((word) => word.toLowerCase());
 
-  return Array(46).fill(0).map((n, i) => (
-    list.filter(word => word.length === i)
-  ))
-})
+  return Array(46)
+    .fill(0)
+    .map((n, i) => list.filter((word) => word.length === i));
+});
 
 // 全ての単語のうち、文字数がwordLengthと等しいものの配列
 const list2 = computed(() => {
-  const length = Math.max(0, Math.min(45, wordLength.value))
-  return list1.value[length]
-})
+  const length = Math.max(0, Math.min(45, wordLength.value));
+  return list1.value[length];
+});
 
 // Doubleがfalseである場合に、文字が重複する単語を取り除いたもの
 const list3 = computed(() => {
-  let list = list2.value.concat()
+  let list = list2.value.concat();
 
   if (double.value === false) {
-    list = list.filter(word => {
+    list = list.filter((word) => {
       for (let i = 0, len = word.length; i < len; i++) {
-        const a = word[i]
+        const a = word[i];
         for (let j = i + 1; j < len; j++) {
-          const b = word[j]
-          if (a === b) return false
+          const b = word[j];
+          if (a === b) return false;
         }
       }
-      return true
-    })
+      return true;
+    });
   }
 
-  return list
-})
+  return list;
+});
 
 // charAの指定がある場合に、それら全ての文字を含む単語のみに絞ったもの
 const list4 = computed(() => {
-  let list = list3.value.concat()
-  
-  // 必要に応じてコメントアウト
-  const exp = new RegExp("[0-9\&\'\-\.\"\,]+", 'g')
-  list = list.filter(w => !w.match(exp))
+  let list = list3.value.concat();
 
-  if (!(charA.value)) {
-    return list
+  // 必要に応じてコメントアウト
+  const exp = new RegExp("[0-9\&'\-\.\"\,]+", "g");
+  list = list.filter((w) => !w.match(exp));
+
+  if (!charA.value) {
+    return list;
   }
 
   charA.value
     .trim()
-    .split(' ')
-    .map(c => c.toLowerCase())
-    .filter(c => !(/\s/).test(c))
-    .forEach(c => list = list.filter(word => word.includes(c)))
+    .split(" ")
+    .map((c) => c.toLowerCase())
+    .filter((c) => !/\s/.test(c))
+    .forEach((c) => (list = list.filter((word) => word.includes(c))));
 
-  return list
-})
+  return list;
+});
 
 // charBの指定がある場合に、それら全ての文字を含まない単語のみに絞ったもの
 const list5 = computed(() => {
-  let list = list4.value
+  let list = list4.value;
 
   if (!charB.value) {
-    return list.concat()
+    return list.concat();
   }
 
   charB.value
     .trim()
-    .split(' ')
-    .map(c => c.toLowerCase())
-    .filter(c => !(/\s/).test(c))
-    .forEach(c => list = list.filter(word => !word.includes(c)))
+    .split(" ")
+    .map((c) => c.toLowerCase())
+    .filter((c) => !/\s/.test(c))
+    .forEach((c) => (list = list.filter((word) => !word.includes(c))));
 
-  return list
-})
+  return list;
+});
 
 const list6 = computed(() => {
-  let list = list5.value
+  let list = list5.value;
 
   if (!words.value.length) {
-    return list.concat()
+    return list.concat();
   }
 
   if (anagram.value) {
-    const set = new Set()
-    permutations(charD.value.split('')).map(ar => ar.join('')).forEach(w => set.add(w))
+    const set = new Set();
+    permutations(charD.value.split(""))
+      .map((ar) => ar.join(""))
+      .forEach((w) => set.add(w));
     // return list5.value
-    return ([...set]).filter((w, i) => list3.value.includes(w))
+    return [...set].filter((w, i) => list3.value.includes(w));
   }
 
-  let expWord = []
-  let noneWords = '[^'
+  let expWord = [];
+  let noneWords = "[^";
 
-  const notUsableCharacters = []
-  const usableCharacters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+  const notUsableCharacters = [];
+  const usableCharacters = [
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g",
+    "h",
+    "i",
+    "j",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o",
+    "p",
+    "q",
+    "r",
+    "s",
+    "t",
+    "u",
+    "v",
+    "w",
+    "x",
+    "y",
+    "z",
+  ];
 
   words.value.forEach((word) => {
-    const WORD = word.map(W => W.character.toLowerCase()).join('')
+    const WORD = word.map((W) => W.character.toLowerCase()).join("");
     word.forEach((spell, i) => {
-      const { character: C, mode } = spell
-      const c = C.toLowerCase()
-      const exp = new RegExp(c, 'g')
-      const len2 = (WORD.match(exp) ?? '').length
+      const { character: C, mode } = spell;
+      const c = C.toLowerCase();
+      const exp = new RegExp(c, "g");
+      const len2 = (WORD.match(exp) ?? "").length;
       // if (mode === 'blow') {
       //   console.log(word.map(W => W.character.toLowerCase()).join(''))
       // }
 
       switch (mode) {
-        case 'none': usableCharacters.splice(usableCharacters.indexOf(c), 1); break
-        case 'blow': break
-        case 'hit' : break
+        case "none":
+          usableCharacters.splice(usableCharacters.indexOf(c), 1);
+          break;
+        case "blow":
+          break;
+        case "hit":
+          break;
       }
 
       switch (mode) {
-        case 'none': list = list.filter((w) => w.includes(c) && (((w.match(exp) ?? '').length) === len2) ? false : true); break
-        case 'blow': list = list.filter((w) => (((w.match(exp) ?? '').length) === len2 || w[i] === c) ? false : true); break
-        case 'hit' : list = list.filter((w) => w[i] === c); break
+        case "none":
+          list = list.filter((w) =>
+            w.includes(c) && (w.match(exp) ?? "").length === len2 ? false : true
+          );
+          break;
+        case "blow":
+          list = list.filter((w) =>
+            (w.match(exp) ?? "").length === len2 || w[i] === c ? false : true
+          );
+          break;
+        case "hit":
+          list = list.filter((w) => w[i] === c);
+          break;
       }
-    })
-  })
+    });
+  });
 
-  return list
-})
+  return list;
+});
 
 const hashTable = {
   a: 1,
@@ -212,37 +257,37 @@ const hashTable = {
   x: 8388608,
   y: 16777216,
   z: 33554432,
-}
+};
 
 const list7 = computed(() => {
-  let list = list6.value
+  let list = list6.value;
 
-  list.sort((a, b) => a > b ? 1 : -1)
+  list.sort((a, b) => (a > b ? 1 : -1));
 
-  let hashBox = {}
+  let hashBox = {};
 
   list.forEach((item, index) => {
-    let hash = 0
-    let item2 = item.split('')
-    item2.sort((a, b) => a > b ? 1 : -1)
-    item2 = item2.join('')
+    let hash = 0;
+    let item2 = item.split("");
+    item2.sort((a, b) => (a > b ? 1 : -1));
+    item2 = item2.join("");
 
     if (hashBox[item2] === undefined) {
-      hashBox[item2] = []
+      hashBox[item2] = [];
     }
 
-    hashBox[item2].push(item)
-  })
+    hashBox[item2].push(item);
+  });
 
   Object.keys(hashBox).forEach((key: string) => {
-    const first = hashBox[key][0]
+    const first = hashBox[key][0];
     // hashBox[key] = hashBox[key].filter((word, index) => !(index && (word[5] + word[6] === first[5] + first[6])))
     // hashBox[key] = hashBox[key].filter((word, index) => !((word[5] + word[6] === 'ed')))
     // hashBox[key] = hashBox[key].filter((word, index) => !(index && (word[0] === first[0])))
     // if (hashBox[key].length < 2) {
     //   delete hashBox[key]
     // }
-  })
+  });
 
   // 1 2 3 4 5 6 7 8 9 0
   // Q W E R T Y U I O P
@@ -341,44 +386,44 @@ const list7 = computed(() => {
   // flag
   // half
 
-  return hashBox
+  return hashBox;
   // return list.splice(0, 200)
-})
+});
 
 const beforeEnter = (el) => {
-  el.style.opacity = 0
-  el.style.height = 0
-}
+  el.style.opacity = 0;
+  el.style.height = 0;
+};
 
 const enter = (el, done) => {
   gsap.to(el, {
     opacity: 1,
-    height: '1.6em',
-    delay: Math.min(3, el.dataset.index * .15),
+    height: "1.6em",
+    delay: Math.min(3, el.dataset.index * 0.15),
     onComplete: done,
-  })
-}
+  });
+};
 
 const leave = (el, done) => {
   gsap.to(el, {
     opacity: 0,
     height: 0,
-    delay: Math.min(3, el.dataset.index * .15),
+    delay: Math.min(3, el.dataset.index * 0.15),
     onComplete: done,
-  })
-}
+  });
+};
 
-const mounted = ref(false)
+const mounted = ref(false);
 
 onMounted(() => {
-  const { setInfo } = useMatrix()
+  const { setInfo } = useMatrix();
 
-  setInfo('')
+  setInfo("");
 
   setTimeout(() => {
-    mounted.value = true
-  }, 2100)
-})
+    mounted.value = true;
+  }, 2100);
+});
 
 // setTimeout(async () => {
 //   function a(e) {
@@ -437,7 +482,6 @@ onMounted(() => {
 //     }
 //   }
 // }, 50)
-
 </script>
 
 <template>
@@ -445,11 +489,7 @@ onMounted(() => {
   <div class="chart pt-16 pb-8 px-8" :class="{ mounted }">
     <div class="box px-4 pt-2 pb-1 mb-6">
       <div v-if="expert" class="expert">
-        <div
-          v-for="(word, index) in words"
-          :key="index"
-          class="word flex"
-        >
+        <div v-for="(word, index) in words" :key="index" class="word flex">
           <div
             v-for="(spell, index2) in word"
             :key="`${index}-${index2}-${spell.character}`"
@@ -464,7 +504,12 @@ onMounted(() => {
           :activate="true"
           placeholder="Word"
           class="my-6"
-          @keydown.enter="() => { wordLength = charC.length; appendWord(); }"
+          @keydown.enter="
+            () => {
+              wordLength = charC.length;
+              appendWord();
+            }
+          "
         />
       </div>
       <div v-else>
@@ -515,11 +560,7 @@ onMounted(() => {
       @enter="enter"
       @leave="leave"
     > -->
-    <li
-      v-for="item in list7"
-      :key="item"
-      :data-index="item"
-    >
+    <li v-for="item in list7" :key="item" :data-index="item">
       {{ item }}
     </li>
     <!-- </transition-group> -->
@@ -547,11 +588,15 @@ onMounted(() => {
   // background-repeat: no-repeat;
   // background-position: 0% 0%;
   background-color: rgb(4, 20, 82);
-  background-image: linear-gradient(rgb(0, 210, 255) 0%, rgb(24, 80, 153) 32%, rgb(4, 20, 82) 74%);
+  background-image: linear-gradient(
+    rgb(0, 210, 255) 0%,
+    rgb(24, 80, 153) 32%,
+    rgb(4, 20, 82) 74%
+  );
   @include overflowScrollingY;
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -574,15 +619,14 @@ onMounted(() => {
   .box {
     border-radius: 12px;
     backdrop-filter: blur(2px);
-    background-color: rgba(34,198,213, 0.15);
+    background-color: rgba(34, 198, 213, 0.15);
     // box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 8px;
-    border: 1px rgba(255,255,255,0.4) solid;
+    border: 1px rgba(255, 255, 255, 0.4) solid;
     // color: $textColor1;
     color: #fff;
     @include textStyleC;
 
     .expert {
-
       .word {
         margin-top: 8px;
         @include unSelectable;
@@ -606,7 +650,7 @@ onMounted(() => {
           }
 
           &.none {
-            background: rgb(0,30,100);
+            background: rgb(0, 30, 100);
           }
           &.blow {
             background: orange;
