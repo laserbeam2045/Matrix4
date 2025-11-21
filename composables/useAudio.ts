@@ -1,5 +1,5 @@
 // DBから取得したレコードの型定義
-type Record = {
+type DBRecord = {
   path: string
   fileName: string
   extension: string
@@ -74,7 +74,7 @@ export default function useAudio() {
    * @param audioData DBから取得したレコード
    * @return          Audioインスタンス
    */
-  const createAudio = (audioData: Record) => {
+  const createAudio = (audioData: DBRecord) => {
     const { path, fileName, extension, volume } = audioData
     if (fileName === 'AlanWalker') {
       const paths = `${ASSETS_PATH}/audios/etc/AlanWalker.mp3`
@@ -120,7 +120,7 @@ export default function useAudio() {
         const url = `${API_PATH}/audios/select/index.php`
         const option = { audioLabels }
         const result = await useFetch(url, { params: option })
-        JSON.parse(result.data.value as string).forEach((record: Record) => {
+        JSON.parse(result.data.value as string).forEach((record: DBRecord) => {
           const audio = createAudio(record)
           data.value[record.label] = { audio, record }
         })
@@ -149,7 +149,7 @@ export default function useAudio() {
           audio.muted = false
           audio.play()
           // const { record } = data.value[label]
-          // const nextAudio = createAudio(record as Record)
+          // const nextAudio = createAudio(record as DBRecord)
           // data.value[label] = {
           //   record,
           //   audio: nextAudio,
@@ -164,7 +164,7 @@ export default function useAudio() {
             audio.muted = false
             audio.play()
             // const { record } = data.value[label]
-            // const nextAudio = createAudio(record as Record)
+            // const nextAudio = createAudio(record as DBRecord)
             // data.value[label] = {
             //   record,
             //   audio: nextAudio,

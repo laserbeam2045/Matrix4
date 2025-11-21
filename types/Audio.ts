@@ -2,7 +2,7 @@
 /**
  * DBから取得したレコードの型定義
 */
-export interface Record {
+export interface DBRecord {
   path: string
   fileName: string
   extension: string
@@ -15,5 +15,5 @@ export interface Record {
 */
 export interface ResponseData {
   status: number
-  data: Record[]
+  data: DBRecord[]
 }
