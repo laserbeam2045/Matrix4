@@ -57,16 +57,16 @@ export default function useAudio() {
       // まだ引数(=ラベル)のデータが存在しなければ、引数をそのまま返す
       return isNotExists(input) ? input : null
     } else
-    if (Array.isArray(input)) {
+      if (Array.isArray(input)) {
       // データが存在しないラベルに絞った文字列(csv)または、空文字を返す
-      return input.filter(label => isNotExists(label)).join(',')
-    } else
-    if (typeof(input) === 'object') {
-      // データが存在しないラベルに絞った文字列(csv)または、空文字を返す
-      return Object.values(input).filter(label => isNotExists(label)).join(',')
-    } else {
-      state.error = Error('Unexpected argument.')
-    }
+        return input.filter(label => isNotExists(label)).join(',')
+      } else
+        if (typeof(input) === 'object') {
+          // データが存在しないラベルに絞った文字列(csv)または、空文字を返す
+          return Object.values(input).filter(label => isNotExists(label)).join(',')
+        } else {
+          state.error = Error('Unexpected argument.')
+        }
   }
 
   /**

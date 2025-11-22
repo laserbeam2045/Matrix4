@@ -1,91 +1,103 @@
 <script lang="ts" setup>
-const { mouseTouchEvent } = useEvent();
-const { AUDIOS, loadAudio, playAudio, stopAudio } = useAudio();
+const { mouseTouchEvent } = useEvent()
+const { AUDIOS, loadAudio, playAudio } = useAudio()
 
-const { $router } = useNuxtApp();
-const applicationMode = useState("applicationMode");
+const router = useRouter()
+const applicationMode = useState<number | null>('applicationMode')
 
-watch(applicationMode, (mode: number) => {
+watch(applicationMode, (mode) => {
+  if (!mode) return
   setTimeout(() => {
     switch (mode) {
-      case 1:
-        $router.push("/main/conf");
-        break;
-      case 2:
-        $router.push("/main/tree");
-        break;
-      case 3:
-        $router.push("/main/quiz");
-        break;
-      case 4:
-        $router.push("/main/cube");
-        break;
-      case 5:
-        $router.push("/main/chart");
-        break;
-      case 6:
-        $router.push("/main/prof");
-        break;
+    case 1:
+      router.push('/main/conf')
+      break
+    case 2:
+      router.push('/main/tree')
+      break
+    case 3:
+      router.push('/main/quiz')
+      break
+    case 4:
+      router.push('/main/cube')
+      break
+    case 5:
+      router.push('/main/chart')
+      break
+    case 6:
+      router.push('/main/prof')
+      break
     }
-  }, 1800);
-});
+  }, 1800)
+})
 
-const eventName = computed(() => mouseTouchEvent.value.END + "Passive");
+const eventName = computed(() => mouseTouchEvent.value.END + 'Passive')
 
-const isSearchOn = useState("isSearchOn") as Ref<boolean>;
-const isSoundOn = useState("isSoundOn") as Ref<boolean>;
-const isSettingsOn = useState("isSettingsOn") as Ref<boolean>;
+const isSearchOn = useState('isSearchOn') as Ref<boolean>
+const isSoundOn = useState('isSoundOn') as Ref<boolean>
+const isSettingsOn = useState('isSettingsOn') as Ref<boolean>
 
-const {
-  $isOuterActive,
-  $showNavigation,
-  $toggleNavigation,
-  $activateNavigation,
-} = useNuxtApp();
+const isOuterActive = useState<boolean>('isOuterActive')
+const showNavigation = useState<boolean>('showNavigation')
+const isCircleActive = useState<boolean>('isCircleActive')
+
+const activateNavigation = () => {
+  showNavigation.value = true
+  setTimeout(() => isCircleActive.value = true, 500)
+}
+
+const deactivateNavigation = () => {
+  isCircleActive.value = false
+  setTimeout(() => showNavigation.value = false, 1000)
+}
+
+const toggleNavigationFunc = () => {
+  isCircleActive.value ? deactivateNavigation() : activateNavigation()
+}
 
 const toggleNavigation = () => {
-  if ($showNavigation.value) {
-    playAudio(AUDIOS.ETC.CYBER_18_1);
+  if (showNavigation.value) {
+    playAudio(AUDIOS.ETC.CYBER_18_1)
   } else {
-    playAudio(AUDIOS.ETC.CYBER_17_1);
+    playAudio(AUDIOS.ETC.CYBER_17_1)
   }
-  $toggleNavigation();
-};
+  toggleNavigationFunc()
+}
 const toggleSearch = async () => {
   if (isSearchOn.value && isSoundOn.value) {
-    isSearchOn.value = false;
-    playAudio(AUDIOS.ETC.CYBER_18_1);
+    isSearchOn.value = false
+    playAudio(AUDIOS.ETC.CYBER_18_1)
   } else {
-    isSearchOn.value = true;
-    playAudio(AUDIOS.ETC.CYBER_17_1);
+    isSearchOn.value = true
+    playAudio(AUDIOS.ETC.CYBER_17_1)
   }
-};
+}
 const toggleSound = async () => {
   if (isSoundOn.value) {
-    isSoundOn.value = false;
+    isSoundOn.value = false
   } else {
-    isSoundOn.value = true;
-    await loadAudio(AUDIOS.ETC);
-    playAudio(AUDIOS.ETC.CYBER_17_1);
+    isSoundOn.value = true
+    await loadAudio(AUDIOS.ETC)
+    playAudio(AUDIOS.ETC.CYBER_17_1)
   }
-};
+}
 const toggleSettings = async () => {
   if (isSettingsOn.value && isSoundOn.value) {
-    isSettingsOn.value = false;
-    playAudio(AUDIOS.ETC.CYBER_18_1);
+    isSettingsOn.value = false
+    playAudio(AUDIOS.ETC.CYBER_18_1)
   } else {
-    isSettingsOn.value = true;
-    playAudio(AUDIOS.ETC.CYBER_17_1);
+    isSettingsOn.value = true
+    playAudio(AUDIOS.ETC.CYBER_17_1)
   }
-};
+}
 
 onMounted(async () => {
   setTimeout(async () => {
-    // if (!$showNavigation.value) return
-    $isOuterActive.value = true;
-    setTimeout($activateNavigation, 10);
-  }, 1500);
-});
+    // if (!showNavigation.value) return
+    isOuterActive.value = true
+    setTimeout(activateNavigation, 10)
+  }, 1500)
+})
 </script>
 
 <template>
@@ -95,26 +107,26 @@ onMounted(async () => {
         <label>
           <input
             type="checkbox"
-            :checked="$isOuterActive"
+            :checked="isOuterActive"
             @[eventName]="toggleNavigation"
-          />
-          <span></span>
-          <i class="fa-solid fa-house"></i>
+          >
+          <span />
+          <i class="fa-solid fa-house" />
         </label>
         <label>
-          <input type="checkbox" @[eventName]="toggleSearch" />
-          <span></span>
-          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="checkbox" @[eventName]="toggleSearch">
+          <span />
+          <i class="fa-solid fa-magnifying-glass" />
         </label>
         <label>
-          <input type="checkbox" @[eventName]="toggleSound" />
-          <span></span>
-          <i :class="`fa-solid fa-volume-${isSoundOn ? 'high' : 'xmark'}`"></i>
+          <input type="checkbox" @[eventName]="toggleSound">
+          <span />
+          <i :class="`fa-solid fa-volume-${isSoundOn ? 'high' : 'xmark'}`" />
         </label>
         <label>
-          <input type="checkbox" @[eventName]="toggleSettings" />
-          <span></span>
-          <i class="fa-solid fa-gear"></i>
+          <input type="checkbox" @[eventName]="toggleSettings">
+          <span />
+          <i class="fa-solid fa-gear" />
         </label>
       </div>
     </teleport>

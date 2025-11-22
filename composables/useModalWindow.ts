@@ -6,7 +6,7 @@ export default function useModalWindow() {
 
   const pushWindow = (name: string) => modalWindows.value.push(name)
 
-  const popWindow = (name?: string) => modalWindows.value.pop()
+  const popWindow = () => modalWindows.value.pop()
 
   return {
     modalWindows,

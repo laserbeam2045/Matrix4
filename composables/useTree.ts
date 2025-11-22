@@ -263,7 +263,7 @@ export default function useTree(): {
               txt: params.txt,
               text: params.text,
               link: params.link,
-              isGroup: params.isGroup
+              isGroup: params.isGroup,
             }
             return updated
           }
@@ -290,8 +290,8 @@ export default function useTree(): {
       const { error } = await useFetch('/api/tree/update-open', {
         params: {
           id: params.id,
-          opened: node.opened
-        }
+          opened: node.opened,
+        },
       })
 
       if (!error.value) {

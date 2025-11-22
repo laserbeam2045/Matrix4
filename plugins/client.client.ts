@@ -1,5 +1,4 @@
-import { defineNuxtPlugin } from '#app'
-
+// import { defineNuxtPlugin } from '#app'
 // import attachFastClick from 'fastclick'
 
 export default defineNuxtPlugin(() => {
@@ -18,17 +17,17 @@ export default defineNuxtPlugin(() => {
   const showNavigation = useState('showNavigation', () => false)
   const isCircleActive = useState('isCircleActive', () => false)
 
-  const activateNavigation = () => {
+  const activateNavigation: () => void = () => {
     showNavigation.value = true
     setTimeout(() => isCircleActive.value = true, 500)
   }
-  
-  const deactivateNavigation = () => {
+
+  const deactivateNavigation: () => void = () => {
     isCircleActive.value = false
     setTimeout(() => showNavigation.value = false, 1000)
   }
 
-  const toggleNavigation = () => {
+  const toggleNavigation: () => void = () => {
     isCircleActive.value ? deactivateNavigation() : activateNavigation()
   }
 

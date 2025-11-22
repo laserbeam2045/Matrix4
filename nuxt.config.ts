@@ -1,12 +1,13 @@
 /* eslint-disable camelcase */
 // import { defineConfig } from 'vite'
-import { VitePWA } from 'vite-plugin-pwa'
 import commonjsExternals from 'vite-plugin-commonjs-externals'
 // import vue from '@vitejs/plugin-vue'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
 import { resolve } from 'pathe'
+
+const __dirname = fileURLToPath(new URL('.', import.meta.url))
 
 // import vue from '@vitejs/plugin-vue'
 
@@ -30,6 +31,7 @@ const firebaseConfig = {
 // https://v3.nuxtjs.org/docs/directory-structure/nuxt.config
 export default defineNuxtConfig({
   ssr: true,
+  compatibilityDate: '2025-11-22',
 
   // PWA Configuration for @vite-pwa/nuxt
   pwa: {
@@ -47,26 +49,26 @@ export default defineNuxtConfig({
         {
           src: '/pwa-64x64.png?v=2',
           sizes: '64x64',
-          type: 'image/png'
+          type: 'image/png',
         },
         {
           src: '/pwa-192x192.png?v=2',
           sizes: '192x192',
-          type: 'image/png'
+          type: 'image/png',
         },
         {
           src: '/pwa-512x512.png?v=2',
           sizes: '512x512',
           type: 'image/png',
-          purpose: 'any'
+          purpose: 'any',
         },
         {
           src: '/maskable-icon-512x512.png?v=2',
           sizes: '512x512',
           type: 'image/png',
-          purpose: 'maskable'
-        }
-      ]
+          purpose: 'maskable',
+        },
+      ],
     },
     workbox: {
       navigateFallback: '/',
@@ -80,12 +82,12 @@ export default defineNuxtConfig({
             cacheName: 'google-fonts-cache',
             expiration: {
               maxEntries: 10,
-              maxAgeSeconds: 60 * 60 * 24 * 365 // 1 year
+              maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
             },
             cacheableResponse: {
-              statuses: [0, 200]
-            }
-          }
+              statuses: [0, 200],
+            },
+          },
         },
         {
           urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
@@ -94,24 +96,24 @@ export default defineNuxtConfig({
             cacheName: 'gstatic-fonts-cache',
             expiration: {
               maxEntries: 10,
-              maxAgeSeconds: 60 * 60 * 24 * 365 // 1 year
+              maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
             },
             cacheableResponse: {
-              statuses: [0, 200]
-            }
-          }
-        }
-      ]
+              statuses: [0, 200],
+            },
+          },
+        },
+      ],
     },
     client: {
       installPrompt: true,
       // Automatically register service worker after 60 seconds of inactivity
-      periodicSyncForUpdates: 3600
+      periodicSyncForUpdates: 3600,
     },
     devOptions: {
       enabled: true,
-      type: 'module'
-    }
+      type: 'module',
+    },
   },
 
   // nitro: {
@@ -127,8 +129,8 @@ export default defineNuxtConfig({
   vite: {
     resolve: {
       alias: {
-        '@': fileURLToPath(new URL('./', import.meta.url))
-      }
+        '@': fileURLToPath(new URL('./', import.meta.url)),
+      },
     },
     css: {
       preprocessorOptions: {
@@ -151,12 +153,12 @@ export default defineNuxtConfig({
         externals: ['path'],
       }),
       // [
-        // vue({
-        //   script: {
-        //     defineModel: true,
-        //     propsDestructure: true,
-        //   }
-        // })
+      // vue({
+      //   script: {
+      //     defineModel: true,
+      //     propsDestructure: true,
+      //   }
+      // })
       // ]
     ],
   },
@@ -298,7 +300,7 @@ export default defineNuxtConfig({
     // '@vitejs/plugin-vue',
     // '@nuxtjs/pwa',
     '@vite-pwa/nuxt',
-    '@nuxt/ui'
+    '@nuxt/ui',
   ],
 
   css: [

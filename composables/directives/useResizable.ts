@@ -6,7 +6,7 @@ import useWindow from './useWindow'
 
 import useEvent from '@/composables/useEvent'
 
-import type * as CSS from 'csstype';
+import type * as CSS from 'csstype'
 
 import { Dict } from '@/types/types'
 
@@ -35,12 +35,7 @@ type State = {
 type ResizerSettings = Dict<{style: Style; eventHandler: EventHandler}>
 
 // 全リサイザー(型定義)
-type Resizers = Dict<Resizer>
-
-// リサイザー(型定義)
-interface Resizer extends HTMLDivElement {
-  style: Style
-}
+type Resizers = Dict<HTMLDivElement>
 
 /**
  * // リサイズを可能にするハンドル要素を返す
@@ -251,11 +246,11 @@ export default function useResizable({ el, minWidth = 0, minHeight = 0 }: Argume
   for (const name of Object.keys(resizerSettings)) {
     const { style, eventHandler } = resizerSettings[name]
 
-    const resizer: Resizer = document.createElement('div')
+    const resizer = document.createElement('div')
 
     // リサイザーのスタイルを設定する
     for (const prop of Object.keys(style)) {
-      resizer.style[prop] = style[prop]
+      (resizer.style as any)[prop] = style[prop]
       resizer.style.position = 'absolute'
       // resizer.style.background = 'rgba(100,100,255,0.5)' // デバッグ用
     }

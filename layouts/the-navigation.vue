@@ -108,7 +108,7 @@ const reset = () => {
 }
 
 const {
-  $activateNavigation,
+  // $activateNavigation,
   $deactivateNavigation,
   $toggleNavigation,
 } = useNuxtApp()
@@ -161,7 +161,7 @@ const foo = async (item: CircularItem) => {
               v-bind="$attrs"
               @touchmove.prevent
               @wheel.stop.prevent
-              >
+            >
               <!-- @click.self="$toggleNavigation" -->
               <div
                 v-center="{ offset: 1.5 }"

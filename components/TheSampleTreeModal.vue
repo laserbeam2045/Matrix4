@@ -253,13 +253,10 @@
 
 <script lang="ts" setup>
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-unknown */
 import { Ref } from 'vue'
 
 import type {
   TreeData,
-  DeleteNode,
-  DeleteTree,
   TreeMethods,
 } from '@/composables/useTree'
 

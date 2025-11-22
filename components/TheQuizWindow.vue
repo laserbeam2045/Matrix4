@@ -20,8 +20,7 @@ import { shuffle } from '@/utilities/v_array_functions'
 // } from '@/utilities/v_string_functions'
 
 const props = defineProps<{
-  // quizData: CompleteQuizData[]
-  quizData: QuizData[]
+  quizData: CompleteQuizData[]
 }>()
 
 const emit = defineEmits<{

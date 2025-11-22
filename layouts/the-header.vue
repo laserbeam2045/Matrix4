@@ -6,10 +6,23 @@ const { AUDIOS, loadAudio, playAudio, stopAudio } = useAudio()
 
 const eventName = computed(() => mouseTouchEvent.value.END + 'Passive')
 
-const { $toggleNavigation } = useNuxtApp()
-
 const isSoundOn = useState('isSoundOn') as Ref<boolean>
-const showNavigation = useState('showNavigation') as Ref<boolean>
+const showNavigation = useState<boolean>('showNavigation')
+const isCircleActive = useState<boolean>('isCircleActive')
+
+const activateNavigation = () => {
+  showNavigation.value = true
+  setTimeout(() => isCircleActive.value = true, 500)
+}
+
+const deactivateNavigation = () => {
+  isCircleActive.value = false
+  setTimeout(() => showNavigation.value = false, 1000)
+}
+
+const toggleNavigationFunc = () => {
+  isCircleActive.value ? deactivateNavigation() : activateNavigation()
+}
 
 const toggleSound = async () => {
   if (isSoundOn.value) {
@@ -27,13 +40,10 @@ const toggleSound = async () => {
 const toggleNavigation = () => {
   if (showNavigation.value) {
     playAudio(AUDIOS.ETC.CYBER_18_1)
-    showNavigation.value = false
   } else {
     playAudio(AUDIOS.ETC.CYBER_17_1)
-    showNavigation.value = true
   }
-
-  $toggleNavigation()
+  toggleNavigationFunc()
 }
 
 const displayInfo = ref('')
@@ -54,22 +64,22 @@ watch(matrixTime, () => {
 
 // aaaaaaaaaaaa
 
-const { $router } = useNuxtApp()
-const applicationMode = useState('applicationMode')
+const router = useRouter()
+const applicationMode = useState<number | null>('applicationMode')
 
-watch(applicationMode, (mode: number) => {
+watch(applicationMode, (mode) => {
+  if (!mode) return
   setTimeout(() => {
     switch (mode) {
-      case 1: $router.push('/main/prof'); break
-      case 2: $router.push('/main/tree'); break
-      case 3: $router.push('/main/quiz'); break
-      case 4: $router.push('/main/cube'); break
-      case 5: $router.push('/main/chart'); break
-      case 6: $router.push('/main/conf'); break
+    case 1: router.push('/main/prof'); break
+    case 2: router.push('/main/tree'); break
+    case 3: router.push('/main/quiz'); break
+    case 4: router.push('/main/cube'); break
+    case 5: router.push('/main/chart'); break
+    case 6: router.push('/main/conf'); break
     }
   }, 1800)
 })
-
 
 const isSettingsOn = useState('isSettingsOn') as Ref<boolean>
 
@@ -82,7 +92,6 @@ const toggleSettings = async () => {
     playAudio(AUDIOS.ETC.CYBER_17_1)
   }
 }
-
 
 </script>
 
