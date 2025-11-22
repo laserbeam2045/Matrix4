@@ -2,8 +2,8 @@
   <div>
     <TransitionGroup
       v-if="treeData && displayRoot"
-      tag="ul"
       :key="treeData.id"
+      tag="ul"
       class="app-tree"
     >
       <AppTreeAlphaNode
@@ -24,8 +24,8 @@
     </TransitionGroup>
     <TransitionGroup
       v-else-if="treeData"
-      tag="ul"
       :key="treeData.id + 'foo'"
+      tag="ul"
       class="app-tree"
     >
       <AppTreeAlphaNode
@@ -55,26 +55,29 @@ import type { TreeData, TreeOptions } from '@/composables/useTree'
 
 import { DRAG_MODE } from '@/types/Draggable'
 
-const props = withDefaults(defineProps<{
-  treeData: TreeData | null
-  treeOptions: TreeOptions
-  itemComponent: object
-  displayRoot?: boolean
-}>(), {
-  displayRoot: true,
-  displayMode: 'alpha',
-})
+const props = withDefaults(
+  defineProps<{
+    treeData: TreeData | null;
+    treeOptions: TreeOptions;
+    itemComponent: object;
+    displayRoot?: boolean;
+  }>(),
+  {
+    displayRoot: true,
+    displayMode: 'alpha',
+  }
+)
 
 type MoveProps = {
-  cID: string
-  pID: string
-  idx: number
-}
+  cID: string;
+  pID: string;
+  idx: number;
+};
 
 defineEmits<{
-  'moveItem': [payload: MoveProps]
-  'touchItem': [treeData: TreeData]
-  'changeOpen': [payload: TreeData]
+  moveItem: [payload: MoveProps];
+  touchItem: [treeData: TreeData];
+  changeOpen: [payload: TreeData];
 }>()
 
 // DnDに関する設定
@@ -84,7 +87,7 @@ const { dragMode: propDragMode } = toRefs(props.treeOptions)
 const dragMode = computed(() => propDragMode?.value ?? DRAG_MODE.LOCK)
 
 // ノード単位のDnDに関する設定
-const dragNodeSettings = computed<Sortable.SortableOptions>(() => (
+const dragNodeSettings = computed<Sortable.SortableOptions>(() =>
   dragMode.value === DRAG_MODE.NODE
     ? {
       group: {
@@ -95,10 +98,10 @@ const dragNodeSettings = computed<Sortable.SortableOptions>(() => (
       sort: false,
     }
     : { disabled: true }
-))
+)
 
 // ブランチ単位のDnDに関する設定
-const dragEdgeSettings = computed<Sortable.SortableOptions>(() => (
+const dragEdgeSettings = computed<Sortable.SortableOptions>(() =>
   dragMode.value === DRAG_MODE.EDGE
     ? {
       group: {
@@ -110,12 +113,11 @@ const dragEdgeSettings = computed<Sortable.SortableOptions>(() => (
       handle: '.app-tree-item',
     }
     : { disabled: true }
-))
+)
 
 // VueDraggableNextに渡す設定
-const {
-  draggableOptions: dragNodeOptions,
-} = useDraggableNext(dragNodeSettings)
+const { draggableOptions: dragNodeOptions } =
+  useDraggableNext(dragNodeSettings)
 
 const {
   draggableOptions: dragEdgeOptions,

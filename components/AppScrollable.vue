@@ -20,19 +20,17 @@ import useScrollable from '@/composables/directives/useScrollable'
 export default defineComponent({
   props: {
     width: {
-      type   : String,
+      type: String,
       default: '100%',
     },
     height: {
-      type   : String,
+      type: String,
       default: '100%',
     },
     position: {
-      type     : String,
-      default  : 'right',
-      validator: value => (
-        ['top', 'left', 'right', 'bottom'].includes(value)
-      ),
+      type: String,
+      default: 'right',
+      validator: (value) => ['top', 'left', 'right', 'bottom'].includes(value),
     },
   },
   setup(props) {
@@ -63,7 +61,8 @@ export default defineComponent({
 }
 
 @keyframes animate {
-  0%, 100% {
+  0%,
+  100% {
     filter: hue-rotate(0deg);
   }
   50% {
@@ -77,7 +76,9 @@ export default defineComponent({
   .scrollable {
     @extend %size100p;
     @include overflowScrolling;
-    &::-webkit-scrollbar { display: none; }
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   .scrollbar {
@@ -86,21 +87,21 @@ export default defineComponent({
     border-radius: 0 0 8px 0;
 
     .progress {
-      transition: all .1s;
+      transition: all 0.1s;
       animation: animate 5s linear infinite;
       @extend %size100p;
       @extend %gradient;
 
       &::before {
         position: absolute;
-        content: '';
+        content: "";
         filter: blur(10px);
         @extend %size100p;
         @extend %gradient;
       }
       &::after {
         position: absolute;
-        content: '';
+        content: "";
         filter: blur(30px);
         @extend %size100p;
         @extend %gradient;

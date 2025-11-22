@@ -1,18 +1,21 @@
 <script setup lang="ts">
-withDefaults(defineProps<{
-  icon: string
-  color?: string
-  width?: number | string
-  height?: number | string
-  viewBox?: string
-  active?: boolean
-}>(), {
-  color: null,
-  width: 64,
-  height: 64,
-  viewBox: '0 0 512 512',
-  active: true,
-})
+withDefaults(
+  defineProps<{
+    icon: string;
+    color?: string;
+    width?: number | string;
+    height?: number | string;
+    viewBox?: string;
+    active?: boolean;
+  }>(),
+  {
+    color: null,
+    width: 64,
+    height: 64,
+    viewBox: '0 0 512 512',
+    active: true,
+  }
+)
 </script>
 
 <template>
@@ -49,11 +52,8 @@ $color: var(--color);
   color: inherit;
 
   &.active {
-    filter:
-      drop-shadow(0 0 4px $color)
-      drop-shadow(0 0 8px $color)
-      drop-shadow(0 0 16px $color)
-      drop-shadow(0 0 32px $color);
+    filter: drop-shadow(0 0 4px $color) drop-shadow(0 0 8px $color)
+      drop-shadow(0 0 16px $color) drop-shadow(0 0 32px $color);
   }
 }
 </style>

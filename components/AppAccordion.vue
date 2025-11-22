@@ -21,12 +21,15 @@
 <script lang="ts" setup>
 import { ACCORDION_TRANSITION_MS } from '@/constants/ui'
 
-const props = withDefaults(defineProps<{
-  isOpen: boolean
-  appear?: boolean
-}>(), {
-  appear: false,
-})
+const props = withDefaults(
+  defineProps<{
+    isOpen: boolean;
+    appear?: boolean;
+  }>(),
+  {
+    appear: false,
+  }
+)
 
 const outerContainer = ref() as Ref<HTMLElement>
 const innerContainer = ref() as Ref<HTMLElement>
@@ -81,7 +84,7 @@ const setSize = (el: Element, width: string, height?: string) => {
  * MEMO: enter時に取得されるscrollWidthがpadding-rightを含まないため、
  *       複製した要素で正確なscroll(Width/Height)を取得している。
  */
-const getSize = (): { width: string, height: string } => {
+const getSize = (): { width: string; height: string } => {
   if (!document || !innerContainer.value) {
     return { width: 'auto', height: 'auto' }
   }
@@ -91,14 +94,16 @@ const getSize = (): { width: string, height: string } => {
 
   return {
     width: `${maxWidth}px`,
-    height: `${height}px`
+    height: `${height}px`,
   }
 }
 
 /**
  * サンドボックス内で要素のサイズを測定
  */
-const measureElementSize = (element: HTMLElement): { width: number, height: number } => {
+const measureElementSize = (
+  element: HTMLElement
+): { width: number; height: number } => {
   const clone = element.cloneNode(true) as HTMLElement
   clone.style.width = 'auto'
   clone.style.height = 'auto'
@@ -113,7 +118,7 @@ const measureElementSize = (element: HTMLElement): { width: number, height: numb
 
   return {
     width: scrollWidth,
-    height: scrollHeight
+    height: scrollHeight,
   }
 }
 

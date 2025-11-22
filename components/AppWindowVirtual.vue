@@ -29,7 +29,12 @@ withDefaults(defineProps<{
     :style="{ width, height }"
     v-bind="$attrs"
   >
-    <svg width="100%" height="100%" viewBox="0 0 300 600" preserveAspectRatio="none">
+    <svg
+      width="100%"
+      height="100%"
+      viewBox="0 0 300 600"
+      preserveAspectRatio="none"
+    >
       <path d="M0,10 L15,0 L105,0 L120,10 L180,10 L195,0 L 285,0 L300,10 L300,70 L290,85 L290,145 L300,160 L300,410 L290,425 L290,485 L300,500 L300,590 L285,600 L15,600 L0,590 L0,500 L10,485 L10,425 L0,410 L0,160 L10,145 L10,85 L0,70 z" vector-effect="non-scaling-stroke" />
     </svg>
     <div class="buttons">

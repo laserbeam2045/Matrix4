@@ -6,7 +6,6 @@
     <textarea
       ref="inputRef"
       v-model="modelValue"
-
       :type="type"
       :list="list"
       :required="required"
@@ -43,34 +42,37 @@ export default {
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useVModel } from '@vueuse/core'
 
-const props = withDefaults(defineProps<{
-  value: string | number
-  type?: string
-  list?: string
-  required?: boolean
-  readonly?: boolean
-  spellcheck?: boolean
-  placeholder?: string
-  autocomplete?: string
-  height?: string
-  dynamic?: boolean
-  outside?: boolean
-}>(), {
-  type: 'text',
-  list: '',
-  required: true,
-  readonly: false,
-  spellcheck: false,
-  placeholder: '',
-  autocomplete: 'off',
-  height: '38px',
-  dynamic: true,
-  outside: true,
-})
+const props = withDefaults(
+  defineProps<{
+    value: string | number;
+    type?: string;
+    list?: string;
+    required?: boolean;
+    readonly?: boolean;
+    spellcheck?: boolean;
+    placeholder?: string;
+    autocomplete?: string;
+    height?: string;
+    dynamic?: boolean;
+    outside?: boolean;
+  }>(),
+  {
+    type: 'text',
+    list: '',
+    required: true,
+    readonly: false,
+    spellcheck: false,
+    placeholder: '',
+    autocomplete: 'off',
+    height: '38px',
+    dynamic: true,
+    outside: true,
+  }
+)
 
 const emit = defineEmits<{
-  'update:value': [e: Event]
-  'keydown.enter': [e: Event]
+  'update:value': [e: Event];
+  'keydown.enter': [e: Event];
 }>()
 
 const modelValue = useVModel(props, 'value', emit)
@@ -108,7 +110,7 @@ const onKeydown = (e) => {
     // color: $matrix4;
     // color: $textColor2;
     color: $textColor5;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0, 0, 0, 0.4);
     z-index: 1;
     border: 1px transparent solid;
     transition: $neutral-transition;
@@ -117,7 +119,7 @@ const onKeydown = (e) => {
       text-shadow: $text-shadow;
       border: 1px solid $textColor2;
       color: $textColor2;
-      background: rgba(0,0,0,0.5);
+      background: rgba(0, 0, 0, 0.5);
       outline: none;
       text-shadow: none;
       // box-shadow :
@@ -125,7 +127,7 @@ const onKeydown = (e) => {
       //   $act-input-c4 -2px -2px 20px,
       //   $act-input-c4 -2px  2px 20px inset,
       //   $act-input-c4  2px -2px 20px inset;
-      transition : $focused-transition;
+      transition: $focused-transition;
     }
 
     &:disabled {

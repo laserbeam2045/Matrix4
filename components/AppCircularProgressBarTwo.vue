@@ -2,8 +2,8 @@
 import gsap from 'gsap'
 
 const props = defineProps<{
-  percentage: number
-  r: number
+  percentage: number;
+  r: number;
 }>()
 
 const data = reactive({
@@ -11,8 +11,8 @@ const data = reactive({
 })
 
 const circleStyle = computed(() => ({
-  width: (props.r * 2) + 'px',
-  height: (props.r * 2) + 'px',
+  width: props.r * 2 + 'px',
+  height: props.r * 2 + 'px',
 }))
 
 const svgAttributes = computed(() => ({
@@ -125,9 +125,7 @@ onMounted(() => updateNumber(props.percentage, 0))
     // clip-path: url("#donut");
     padding: 100px;
     overflow: visible;
-    filter:
-      drop-shadow(0px 0px 5px $matrix4)
-      drop-shadow(0px 0px 15px $matrix4);
+    filter: drop-shadow(0px 0px 5px $matrix4) drop-shadow(0px 0px 15px $matrix4);
   }
 
   .percentage {
@@ -135,9 +133,7 @@ onMounted(() => updateNumber(props.percentage, 0))
     margin: auto;
     font-family: $fontFamily9;
     color: #fff;
-    text-shadow:
-      0 0 5px $matrix4,
-      0 0 15px $matrix4;
+    text-shadow: 0 0 5px $matrix4, 0 0 15px $matrix4;
   }
 }
 </style>

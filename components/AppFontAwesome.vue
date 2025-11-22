@@ -4,8 +4,8 @@
 
 <script lang="ts" setup>
 const props = defineProps<{
-  prefix?: string
-  iconName: string
+  prefix?: string;
+  iconName: string;
 }>()
 
 const set = computed(() => {
@@ -28,10 +28,7 @@ const set = computed(() => {
   }
 })
 
-const icon = computed(() => ([
-  props.prefix || set.value,
-  props.iconName,
-]))
+const icon = computed(() => [props.prefix || set.value, props.iconName])
 </script>
 
 <style lang="scss" scoped>

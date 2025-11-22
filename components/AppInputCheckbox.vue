@@ -1,10 +1,10 @@
 <script setup lang="ts">
 defineProps<{
-  checked: boolean
+  checked: boolean;
 }>()
 
 const emit = defineEmits<{
-  'update:checked': [payload: boolean]
+  'update:checked': [payload: boolean];
 }>()
 
 const { AUDIOS, playAudio } = useAudio()
@@ -25,7 +25,9 @@ const deactivate = () => {
     <input
       type="checkbox"
       :checked="checked"
-      @change="($event.target as HTMLInputElement).checked ? activate() : deactivate()"
+      @change="
+        ($event.target as HTMLInputElement).checked ? activate() : deactivate()
+      "
     >
     <span>
       <i />
@@ -93,7 +95,7 @@ const deactivate = () => {
       transition: all 0.5s ease-out;
 
       &::before {
-        content: '';
+        content: "";
         position: absolute;
         top: 6px;
         left: 5px;
@@ -106,7 +108,7 @@ const deactivate = () => {
       }
 
       &::after {
-        content: '';
+        content: "";
         position: absolute;
         bottom: 5px;
         left: calc(50% - 5px);

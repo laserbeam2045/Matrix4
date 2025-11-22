@@ -1,10 +1,10 @@
 <script setup lang="ts">
 const props = defineProps<{
-  value: string | number
+  value: string | number;
 }>()
 
 const emit = defineEmits<{
-  copy: [payload: string]
+  copy: [payload: string];
 }>()
 
 const { AUDIOS, playAudio } = useAudio()
@@ -16,7 +16,7 @@ const { mouseTouchEvent } = useEvent()
 
 const eventName = computed(() => `${mouseTouchEvent.value.END}Passive`)
 
-const iconName = computed(() => copied.value ? 'check' : 'clone')
+const iconName = computed(() => (copied.value ? 'check' : 'clone'))
 
 const intervalId = ref(null)
 

@@ -1,26 +1,19 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue";
 
 export default defineComponent({
-  emits: [
-    'up',
-    'down',
-    'left',
-    'right',
-    'enter',
-    'delete',
-  ],
+  emits: ["up", "down", "left", "right", "enter", "delete"],
   setup() {
-    const inputRef = ref(null)
+    const inputRef = ref(null);
 
-    const focus = () => inputRef.value.focus()
+    const focus = () => inputRef.value.focus();
 
     return {
       inputRef,
       focus,
-    }
+    };
   },
-})
+});
 </script>
 
 <template>
@@ -35,7 +28,7 @@ export default defineComponent({
     @keydown.ctrl.right="$emit('right', $event)"
     @keydown.ctrl.enter="$emit('enter', $event)"
     @keydown.ctrl.delete="$emit('delete', $event)"
-  >
+  />
 </template>
 
 <style lang="scss" scoped>

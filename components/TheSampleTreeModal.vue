@@ -13,10 +13,9 @@
         <pre
           class="title mt-3 break-words whitespace-pre-wrap text-left"
           style="font-size: 0.9rem"
-          >{{ about.text }}</pre
-        >
+        >{{ about.text }}</pre>
         <AppSlider
-          v-model:tabIndex="tabIndexMain"
+          v-model:tab-index="tabIndexMain"
           :tabs="Object.keys(tableState)"
           class="mt-5"
         >
@@ -115,12 +114,18 @@
         </table>
       </div>
       <div class="buttons">
-        <AppButton class="button" @end.self="buttonEvent.press(1)"
-          >Cancel</AppButton
+        <AppButton
+          class="button"
+          @end.self="buttonEvent.press(1)"
         >
-        <AppButton class="button" @end.self="buttonEvent.press(2)"
-          >Insert</AppButton
+          Cancel
+        </AppButton>
+        <AppButton
+          class="button"
+          @end.self="buttonEvent.press(2)"
         >
+          Insert
+        </AppButton>
       </div>
     </div>
   </AppWindowModal>
@@ -134,7 +139,7 @@
     <div class="container">
       <div class="body -mt-5 mb-7">
         <AppSlider
-          v-model:tabIndex="tabIndexUpdate"
+          v-model:tab-index="tabIndexUpdate"
           :tabs="['MAIN', 'FLAG']"
           class="mt-6"
         >
@@ -175,19 +180,24 @@
               class="flex justify-center align-center"
               style="height: 24px; margin: 16px 0 0"
             >
-              <span style="line-height: 24px; margin: 0px 8px 0">Group:</span
-              ><AppInputCheckbox v-model:checked="stateValues.update.isGroup" />
+              <span style="line-height: 24px; margin: 0px 8px 0">Group:</span><AppInputCheckbox v-model:checked="stateValues.update.isGroup" />
             </div>
           </div>
         </AppSlider>
       </div>
       <div class="buttons">
-        <AppButton class="button" @end.self="buttonEvent.press(1)"
-          >Cancel</AppButton
+        <AppButton
+          class="button"
+          @end.self="buttonEvent.press(1)"
         >
-        <AppButton class="button" @end.self="buttonEvent.press(2)"
-          >Update</AppButton
+          Cancel
+        </AppButton>
+        <AppButton
+          class="button"
+          @end.self="buttonEvent.press(2)"
         >
+          Update
+        </AppButton>
       </div>
     </div>
   </AppWindowModal>
@@ -211,11 +221,14 @@
         <AppButton
           v-if="confirmState.buttonRefuse"
           @end.self="buttonEvent.press(1)"
-          >{{ confirmState.buttonRefuse }}</AppButton
         >
-        <AppButton @end.self="buttonEvent.press(2)">{{
-          confirmState.buttonAccept
-        }}</AppButton>
+          {{ confirmState.buttonRefuse }}
+        </AppButton>
+        <AppButton @end.self="buttonEvent.press(2)">
+          {{
+            confirmState.buttonAccept
+          }}
+        </AppButton>
       </div>
     </div>
   </AppWindowModal>
@@ -241,36 +254,36 @@
 <script lang="ts" setup>
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-unknown */
-import { Ref } from "vue";
+import { Ref } from 'vue'
 
 import type {
   TreeData,
   DeleteNode,
   DeleteTree,
   TreeMethods,
-} from "@/composables/useTree";
+} from '@/composables/useTree'
 
-import { MAX_CLONEABLE_ITEMS } from "@/constants/ui";
+import { MAX_CLONEABLE_ITEMS } from '@/constants/ui'
 
 const props = defineProps<{
   treeMethods: TreeMethods;
-}>();
+}>()
 
-const { deleteNode, deleteTree, changeRoot } = props.treeMethods;
+const { deleteNode, deleteTree, changeRoot } = props.treeMethods
 
 const emit = defineEmits<{
   update: [update?: boolean];
   finish: [];
   cancel: [];
-}>();
+}>()
 
-const { setInfo } = useMatrix();
+const { setInfo } = useMatrix()
 
-const { isSupportTouch } = useEvent();
+const { isSupportTouch } = useEvent()
 
-const { AUDIOS, playAudio } = useAudio();
+const { AUDIOS, playAudio } = useAudio()
 
-const { teleportInfo, resetTeleportInfo } = useTeleport();
+const { teleportInfo, resetTeleportInfo } = useTeleport()
 
 const {
   handleInsert,
@@ -278,82 +291,82 @@ const {
   handleUpdate,
   handleDelete,
   handleTeleport,
-} = useTreeModal();
+} = useTreeModal()
 
-const ROOT_ID = useState("TREE_ROOT_ID").value as string;
+const ROOT_ID = useState('TREE_ROOT_ID').value as string
 
-const about = useState("about") as Ref<TreeData | null>;
+const about = useState('about') as Ref<TreeData | null>
 
 // 親がrootではないときにtrue
 const isValidParent = computed(
   () => about.value.parent?.length === 16 && about.value.parent !== ROOT_ID
-);
+)
 
 const stateValues = reactive({
   insert: {
-    txt: "",
-    text: "",
-    link: "",
+    txt: '',
+    text: '',
+    link: '',
   },
   update: {
-    txt: "",
-    text: "",
-    link: "",
+    txt: '',
+    text: '',
+    link: '',
     isGroup: true,
   },
   delete: {
-    id: "",
+    id: '',
     progeniesCount: 0,
   },
-});
+})
 
 // 日時フォーマット関数 (YYYY-MM-DD hh:mm:ss)
 const formatDateTime = (dateTimeString: string): string => {
-  if (!dateTimeString) return "";
+  if (!dateTimeString) return ''
 
-  const date = new Date(dateTimeString);
+  const date = new Date(dateTimeString)
 
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  const hours = String(date.getHours()).padStart(2, "0");
-  const minutes = String(date.getMinutes()).padStart(2, "0");
-  const seconds = String(date.getSeconds()).padStart(2, "0");
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  const hours = String(date.getHours()).padStart(2, '0')
+  const minutes = String(date.getMinutes()).padStart(2, '0')
+  const seconds = String(date.getSeconds()).padStart(2, '0')
 
-  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-};
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
+}
 
 // メインウィンドウに表示するデータ
 const tableState = reactive({
   ID: [
     {
-      thText: "ID",
+      thText: 'ID',
       tdText: computed(() => about.value.id),
     },
     {
-      thText: "Link",
+      thText: 'Link',
       tdText: computed(() => about.value.link),
     },
     {
-      thText: "Parent",
-      tdText: computed(() => (isValidParent.value ? about.value.parent : "")),
+      thText: 'Parent',
+      tdText: computed(() => (isValidParent.value ? about.value.parent : '')),
     },
   ],
   META: [
     {
-      thText: "Children",
+      thText: 'Children',
       tdText: computed(() => about.value.childrenCount),
     },
     {
-      thText: "Progenies",
+      thText: 'Progenies',
       tdText: computed(() => about.value.progeniesCount),
     },
     {
-      thText: "NestLevel",
+      thText: 'NestLevel',
       tdText: computed(() => about.value.level),
     },
     {
-      thText: "Lft",
+      thText: 'Lft',
       tdText: computed(() =>
         about.value.lft % 1
           ? Math.floor(about.value.lft)
@@ -361,7 +374,7 @@ const tableState = reactive({
       ),
     },
     {
-      thText: "Rgt",
+      thText: 'Rgt',
       tdText: computed(() =>
         about.value.rgt % 1
           ? Math.floor(about.value.rgt)
@@ -371,143 +384,143 @@ const tableState = reactive({
   ],
   AUTH: [
     {
-      thText: "Author",
-      tdText: "May Satsuki",
+      thText: 'Author',
+      tdText: 'May Satsuki',
     },
     {
-      thText: "Created",
+      thText: 'Created',
       tdText: computed(() => formatDateTime(about.value.createdAt)),
     },
     {
-      thText: "Updated",
+      thText: 'Updated',
       tdText: computed(() => formatDateTime(about.value.updatedAt)),
     },
   ],
-});
+})
 
-const clipboardData = useState("clipboardData");
+const clipboardData = useState('clipboardData')
 
 // コピー時のイベントハンドラ
 const onCopy = (payload: string) => {
-  clipboardData.value = payload;
-};
+  clipboardData.value = payload
+}
 
-const tabIndexMain = ref(0);
-const tabIndexUpdate = ref(0);
+const tabIndexMain = ref(0)
+const tabIndexUpdate = ref(0)
 
 // Windowの種類
 const WINDOW_KIND = {
-  MAIN: "MAIN",
-  INSERT: "INSERT",
-  UPDATE: "UPDATE",
-  CONFIRM: "CONFIRM",
-  MESSAGE: "MESSAGE",
-} as const;
+  MAIN: 'MAIN',
+  INSERT: 'INSERT',
+  UPDATE: 'UPDATE',
+  CONFIRM: 'CONFIRM',
+  MESSAGE: 'MESSAGE',
+} as const
 
 // MainWindowの状態（こちらは型）
 type WindowKind = (typeof WINDOW_KIND)[keyof typeof WINDOW_KIND];
 
 // MainWindowの状態
 const WINDOW_MODE = {
-  EDIT: "EDIT",
-  CREATE: "CREATE",
-  UPDATE: "UPDATE",
-  DELETE: "DELETE",
-  DELETE_NODE: "DELETE_NODE",
-  DELETE_TREE: "DELETE_TREE",
-  DELETE_TREE_YES: "DELETE_TREE_YES",
-  DELETE_TREE_YES_YES: "DELETE_TREE_YES_YES",
-  TELEPORT_THIS: "TELEPORT_THIS",
-  TELEPORT_OTHER: "TELEPORT_OTHER",
-} as const;
+  EDIT: 'EDIT',
+  CREATE: 'CREATE',
+  UPDATE: 'UPDATE',
+  DELETE: 'DELETE',
+  DELETE_NODE: 'DELETE_NODE',
+  DELETE_TREE: 'DELETE_TREE',
+  DELETE_TREE_YES: 'DELETE_TREE_YES',
+  DELETE_TREE_YES_YES: 'DELETE_TREE_YES_YES',
+  TELEPORT_THIS: 'TELEPORT_THIS',
+  TELEPORT_OTHER: 'TELEPORT_OTHER',
+} as const
 
 // MainWindowの状態（こちらは型）
 type WindowMode = (typeof WINDOW_MODE)[keyof typeof WINDOW_MODE];
 
 // 新規作成時の入力情報を初期化する関数
 const resetInsertValues = () => {
-  stateValues.insert.txt = "";
-  stateValues.insert.text = "";
-  stateValues.insert.link = "";
-};
+  stateValues.insert.txt = ''
+  stateValues.insert.text = ''
+  stateValues.insert.link = ''
+}
 
 // 編集時の入力情報を初期化する関数
 const resetUpdateValues = () => {
-  stateValues.update.txt = about.value.txt;
-  stateValues.update.text = about.value.text;
-  stateValues.update.link = about.value.link;
-  stateValues.update.isGroup = !!about.value.isGroup;
-};
+  stateValues.update.txt = about.value.txt
+  stateValues.update.text = about.value.text
+  stateValues.update.link = about.value.link
+  stateValues.update.isGroup = !!about.value.isGroup
+}
 
 // 削除するための情報を記録する関数
 const resetDeleteValues = () => {
-  stateValues.delete.id = about.value?.id ?? "";
-  stateValues.delete.progeniesCount = about.value?.progeniesCount ?? 0;
-};
+  stateValues.delete.id = about.value?.id ?? ''
+  stateValues.delete.progeniesCount = about.value?.progeniesCount ?? 0
+}
 
 // モーダルのスタック
-const { modalWindows, pushWindow, popWindow } = useModalWindow();
+const { modalWindows, pushWindow, popWindow } = useModalWindow()
 
 // ウィンドウモード
-const windowMode = ref<WindowMode>(WINDOW_MODE.EDIT);
+const windowMode = ref<WindowMode>(WINDOW_MODE.EDIT)
 
 const mainButtons = computed(() => {
   if (windowMode.value === WINDOW_MODE.EDIT) {
     return [
-      { buttonId: 3, buttonText: "Create" },
-      { buttonId: 4, buttonText: "Update" },
-      { buttonId: 5, buttonText: "Delete" },
-    ];
+      { buttonId: 3, buttonText: 'Create' },
+      { buttonId: 4, buttonText: 'Update' },
+      { buttonId: 5, buttonText: 'Delete' },
+    ]
   }
   if (windowMode.value === WINDOW_MODE.CREATE) {
     return [
-      { buttonId: 6, buttonText: "Insert" },
-      { buttonId: 7, buttonText: "Clone" },
-    ];
+      { buttonId: 6, buttonText: 'Insert' },
+      { buttonId: 7, buttonText: 'Clone' },
+    ]
   }
   if (windowMode.value === WINDOW_MODE.DELETE) {
     return [
-      { buttonId: 8, buttonText: "Only this" },
-      { buttonId: 9, buttonText: "With children" },
-    ];
+      { buttonId: 8, buttonText: 'Only this' },
+      { buttonId: 9, buttonText: 'With children' },
+    ]
   }
-  return [];
-});
+  return []
+})
 
 // 確認ダイアログに表示する文言
 const confirmState = computed(() => {
   // Delete -> Only this
   if (windowMode.value === WINDOW_MODE.DELETE_NODE) {
     return {
-      legend: "Delete Item",
-      message: "Are you sure?",
-      buttonRefuse: "Cancel",
-      buttonAccept: "Yes",
-    };
+      legend: 'Delete Item',
+      message: 'Are you sure?',
+      buttonRefuse: 'Cancel',
+      buttonAccept: 'Yes',
+    }
     // Delete -> With children
   } else if (windowMode.value === WINDOW_MODE.DELETE_TREE) {
     return {
-      legend: "Warning",
+      legend: 'Warning',
       message: `This item contains ${stateValues.delete.progeniesCount} other items,\nso they will all be removed.\nDo you still do it?`,
-      buttonRefuse: "Cancel",
-      buttonAccept: "OK",
-    };
+      buttonRefuse: 'Cancel',
+      buttonAccept: 'OK',
+    }
     // Delete -> With children -> Accept
   } else if (windowMode.value === WINDOW_MODE.DELETE_TREE_YES) {
     return {
       legend: `Delete ${stateValues.delete.progeniesCount + 1} items`,
-      message: "...Are you sure ?",
-      buttonRefuse: "Cancel",
-      buttonAccept: "Yes",
-    };
+      message: '...Are you sure ?',
+      buttonRefuse: 'Cancel',
+      buttonAccept: 'Yes',
+    }
     // Delete -> With children -> Accept -> Accept
   } else if (windowMode.value === WINDOW_MODE.DELETE_TREE_YES_YES) {
     return {
-      legend: "Last Question",
-      message: "...final answer ??",
-      buttonRefuse: "Cancel",
-      buttonAccept: "Final answer",
-    };
+      legend: 'Last Question',
+      message: '...final answer ??',
+      buttonRefuse: 'Cancel',
+      buttonAccept: 'Final answer',
+    }
     // Teleport -> Item -> This item
   } else if (windowMode.value === WINDOW_MODE.TELEPORT_THIS) {
     // return {
@@ -517,31 +530,31 @@ const confirmState = computed(() => {
     //   buttonAccept: 'OK',
     // }
     return {
-      legend: "Confirm",
-      message: "Are you sure?",
-      buttonRefuse: "Cancel",
-      buttonAccept: "Yes",
-    };
+      legend: 'Confirm',
+      message: 'Are you sure?',
+      buttonRefuse: 'Cancel',
+      buttonAccept: 'Yes',
+    }
     // Teleport -> Item -> Other item
   } else if (windowMode.value === WINDOW_MODE.TELEPORT_OTHER) {
     return {
-      legend: "Teleport",
+      legend: 'Teleport',
       message:
-        "Item X\n will be teleport from item Y\n to this item Z. Is it OK?",
-      buttonRefuse: "Cancel",
-      buttonAccept: "OK",
-    };
+        'Item X\n will be teleport from item Y\n to this item Z. Is it OK?',
+      buttonRefuse: 'Cancel',
+      buttonAccept: 'OK',
+    }
   }
   return {
-    legend: "Confirm",
-    message: "Are you sure?",
-    buttonRefuse: "Cancel",
-    buttonAccept: "Yes",
-  };
-});
+    legend: 'Confirm',
+    message: 'Are you sure?',
+    buttonRefuse: 'Cancel',
+    buttonAccept: 'Yes',
+  }
+})
 
 // メッセージダイアログに表示する文言
-const messageState = ref("Succeeded");
+const messageState = ref('Succeeded')
 
 type Button = {
   press: (flag: number) => void;
@@ -551,20 +564,20 @@ type Button = {
 // モーダルウィンドウのボタンのイベントハンドラ
 const buttonEvent: Button = reactive({
   press: (flag: number) => {
-    Promise.resolve(flag);
+    Promise.resolve(flag)
   },
   knock: (reason?: unknown) => {
-    Promise.reject(reason);
+    Promise.reject(reason)
   },
-});
+})
 
 // WINDOWの状態を初期化する関数
 const initializeWindow = () => {
-  resetInsertValues();
-  resetUpdateValues();
-  resetDeleteValues();
-  windowMode.value = WINDOW_MODE.EDIT;
-};
+  resetInsertValues()
+  resetUpdateValues()
+  resetDeleteValues()
+  windowMode.value = WINDOW_MODE.EDIT
+}
 
 // ダイアログを表示させる関数
 const displayDialog = (
@@ -575,180 +588,180 @@ const displayDialog = (
   //   ->: ユーザーのアクション(ここではボタン押下)を待機する
   return new Promise((resolve, reject) => {
     buttonEvent.press = (value: number) => {
-      resolve(value);
-      if (option.pop) popWindow(dialogName);
-    };
+      resolve(value)
+      if (option.pop) popWindow(dialogName)
+    }
     buttonEvent.knock = (reason?: unknown) => {
-      reject(reason);
-      if (option.pop) popWindow(dialogName);
-    };
+      reject(reason)
+      if (option.pop) popWindow(dialogName)
+    }
     // pushフラグがtrueならウィンドウを追加
-    if (option.push) pushWindow(dialogName);
-  });
-};
+    if (option.push) pushWindow(dialogName)
+  })
+}
 
 // メッセージダイアログを表示させる関数
 const displayMessageDialog = async (message: string) => {
-  messageState.value = message;
-  displayDialog(WINDOW_KIND.MESSAGE, { push: true, pop: true });
-};
+  messageState.value = message
+  displayDialog(WINDOW_KIND.MESSAGE, { push: true, pop: true })
+}
 
 // 何らかの処理が成功した時のコールバック関数（updateDataを呼ぶ）
 const ok = (result?: unknown) => {
-  emit("update");
-  setInfo("Succeeded");
-  playAudio(AUDIOS.ETC.DECISION_30);
-};
+  emit('update')
+  setInfo('Succeeded')
+  playAudio(AUDIOS.ETC.DECISION_30)
+}
 
 // updateNodeの成功時のコールバック関数（updateDataを呼ばない）
 const okUpdate = (result?: unknown) => {
-  emit("finish");
-  setInfo("Succeeded");
-  playAudio(AUDIOS.ETC.DECISION_30);
-};
+  emit('finish')
+  setInfo('Succeeded')
+  playAudio(AUDIOS.ETC.DECISION_30)
+}
 
 // 何らかの処理が成功した時のコールバック関数
 const okb = (result?: unknown) => {
-  emit("update", false);
-  setInfo("Succeeded");
-  playAudio(AUDIOS.ETC.DECISION_30);
-};
+  emit('update', false)
+  setInfo('Succeeded')
+  playAudio(AUDIOS.ETC.DECISION_30)
+}
 
 // 何らかの処理が失敗した時のコールバック関数
 const ng = (err?: string) => {
-  playAudio(AUDIOS.ETC.CYBER_06_4);
-  emit("update");
-  emit("cancel");
-  if (typeof err === "string") {
-    setInfo(err);
+  playAudio(AUDIOS.ETC.CYBER_06_4)
+  emit('update')
+  emit('cancel')
+  if (typeof err === 'string') {
+    setInfo(err)
   } else {
-    displayMessageDialog("Failed");
+    displayMessageDialog('Failed')
   }
-};
+}
 
 // アイテムクリック時の処理
 const onClickItem = async () => {
   const mainProcess = async () => {
-    initializeWindow();
-    playAudio(AUDIOS.ETC.DECISION_33);
-    const option = { push: true, pop: false };
-    const buttonId = await displayDialog(WINDOW_KIND.MAIN, option);
+    initializeWindow()
+    playAudio(AUDIOS.ETC.DECISION_33)
+    const option = { push: true, pop: false }
+    const buttonId = await displayDialog(WINDOW_KIND.MAIN, option)
     switch (buttonId) {
-      case 0:
-      case 1:
-        onClickCancel();
-        break;
-      case 3:
-        onClickCreate();
-        break;
-      case 4:
-        onClickUpdate();
-        break;
-      case 5:
-        onClickDelete();
-        break;
+    case 0:
+    case 1:
+      onClickCancel()
+      break
+    case 3:
+      onClickCreate()
+      break
+    case 4:
+      onClickUpdate()
+      break
+    case 5:
+      onClickDelete()
+      break
     }
-  };
+  }
 
   // Cancel
   const onClickCancel = () => {
-    playAudio(AUDIOS.ETC.CYBER_04_1);
-    popWindow("Main");
-    emit("finish");
-  };
+    playAudio(AUDIOS.ETC.CYBER_04_1)
+    popWindow('Main')
+    emit('finish')
+  }
 
   // Create
   const onClickCreate = () => {
     const mainProcess = async () => {
-      playAudio(AUDIOS.ETC.DECISION_22);
-      windowMode.value = WINDOW_MODE.CREATE;
-      const option = { push: false, pop: true };
-      const buttonId = await displayDialog(windowMode.value, option);
+      playAudio(AUDIOS.ETC.DECISION_22)
+      windowMode.value = WINDOW_MODE.CREATE
+      const option = { push: false, pop: true }
+      const buttonId = await displayDialog(windowMode.value, option)
       switch (buttonId) {
-        case 0:
-        case 1:
-          onClickCancel();
-          break;
-        case 6:
-          onClickInsert();
-          break;
-        case 7:
-          onClickClone();
-          break;
+      case 0:
+      case 1:
+        onClickCancel()
+        break
+      case 6:
+        onClickInsert()
+        break
+      case 7:
+        onClickClone()
+        break
       }
-    };
+    }
 
     // Create -> Cancel
     const onClickCancel = () => {
-      playAudio(AUDIOS.ETC.CYBER_04_1);
-      emit("finish");
-    };
+      playAudio(AUDIOS.ETC.CYBER_04_1)
+      emit('finish')
+    }
 
     // Create -> Insert
     const onClickInsert = () => {
       const mainProcess = async () => {
-        playAudio(AUDIOS.ETC.DECISION_22);
-        const option = { push: true, pop: true };
-        const buttonId = await displayDialog(WINDOW_KIND.INSERT, option);
+        playAudio(AUDIOS.ETC.DECISION_22)
+        const option = { push: true, pop: true }
+        const buttonId = await displayDialog(WINDOW_KIND.INSERT, option)
         switch (buttonId) {
-          case 0:
-          case 1:
-            onClickCancel();
-            break;
-          case 2:
-            onClickInsert();
-            break;
+        case 0:
+        case 1:
+          onClickCancel()
+          break
+        case 2:
+          onClickInsert()
+          break
         }
-      };
+      }
 
       // Insert -> Cancel
       const onClickCancel = () => {
-        playAudio(AUDIOS.ETC.CYBER_04_1);
-        emit("finish");
-      };
+        playAudio(AUDIOS.ETC.CYBER_04_1)
+        emit('finish')
+      }
 
       // Insert -> Insert
       const onClickInsert = async () => {
-        const { id: pID } = about.value;
-        const { txt, text, link } = stateValues.insert;
+        const { id: pID } = about.value
+        const { txt, text, link } = stateValues.insert
 
-        playAudio(AUDIOS.ETC.DECISION_22);
+        playAudio(AUDIOS.ETC.DECISION_22)
 
-        const actualPID = txt === "秘密の部屋" ? ROOT_ID : pID;
+        const actualPID = txt === '秘密の部屋' ? ROOT_ID : pID
 
         await handleInsert(
           { pID: actualPID, txt, text, link },
           props.treeMethods,
           {
             onSuccess: (result) => {
-              if (txt === "秘密の部屋") {
-                playAudio(AUDIOS.ETC.DECISION_30);
-                askChangeRoot(result.id);
-              } else if (txt !== "sparse") {
-                ok();
+              if (txt === '秘密の部屋') {
+                playAudio(AUDIOS.ETC.DECISION_30)
+                askChangeRoot(result.id)
+              } else if (txt !== 'sparse') {
+                ok()
               } else {
-                okb();
+                okb()
               }
             },
             onError: ng,
             onChangeRoot: (id) => {
-              askChangeRoot(id);
-              emit("finish");
+              askChangeRoot(id)
+              emit('finish')
             },
           }
-        );
-      };
-      mainProcess();
-    };
+        )
+      }
+      mainProcess()
+    }
 
     // Create -> Clone
     const onClickClone = async () => {
       if (about.value.progeniesCount > MAX_CLONEABLE_ITEMS) {
-        playAudio(AUDIOS.ETC.WARNING_1);
-        return displayMessageDialog("Too many items to clone.");
+        playAudio(AUDIOS.ETC.WARNING_1)
+        return displayMessageDialog('Too many items to clone.')
       }
 
-      playAudio(AUDIOS.ETC.DECISION_22);
+      playAudio(AUDIOS.ETC.DECISION_22)
 
       await handleClone(
         about.value.id,
@@ -756,51 +769,51 @@ const onClickItem = async () => {
         props.treeMethods,
         {
           onSuccess: () => {
-            setInfo("Succeeded");
-            playAudio(AUDIOS.ETC.DECISION_30);
+            setInfo('Succeeded')
+            playAudio(AUDIOS.ETC.DECISION_30)
           },
           onError: (message) => {
-            playAudio(AUDIOS.ETC.WARNING_1);
-            displayMessageDialog(message);
+            playAudio(AUDIOS.ETC.WARNING_1)
+            displayMessageDialog(message)
           },
           onChangeRoot: askChangeRoot,
         }
-      );
-    };
-    mainProcess();
-  };
+      )
+    }
+    mainProcess()
+  }
 
   // Update
   const onClickUpdate = () => {
     const mainProcess = async () => {
-      playAudio(AUDIOS.ETC.DECISION_22);
-      popWindow("Main");
-      windowMode.value = WINDOW_MODE.UPDATE;
-      const option = { push: true, pop: true };
-      const buttonId = await displayDialog(WINDOW_KIND.UPDATE, option);
+      playAudio(AUDIOS.ETC.DECISION_22)
+      popWindow('Main')
+      windowMode.value = WINDOW_MODE.UPDATE
+      const option = { push: true, pop: true }
+      const buttonId = await displayDialog(WINDOW_KIND.UPDATE, option)
       switch (buttonId) {
-        case 0:
-        case 1:
-          onClickCancel();
-          break;
-        case 2:
-          onClickUpdate();
-          break;
+      case 0:
+      case 1:
+        onClickCancel()
+        break
+      case 2:
+        onClickUpdate()
+        break
       }
-    };
+    }
 
     // Update -> Cancel
     const onClickCancel = () => {
-      playAudio(AUDIOS.ETC.CYBER_04_1);
-      emit("finish");
-    };
+      playAudio(AUDIOS.ETC.CYBER_04_1)
+      emit('finish')
+    }
 
     // Update -> Update
     const onClickUpdate = async () => {
-      const { id } = about.value;
-      const { txt, text, link, isGroup } = stateValues.update;
+      const { id } = about.value
+      const { txt, text, link, isGroup } = stateValues.update
 
-      playAudio(AUDIOS.ETC.DECISION_22);
+      playAudio(AUDIOS.ETC.DECISION_22)
 
       // openedは渡さない（update-open APIが専用で管理）
       await handleUpdate(
@@ -810,289 +823,289 @@ const onClickItem = async () => {
           onSuccess: okUpdate,
           onError: ng,
         }
-      );
+      )
 
-      emit("update");
-    };
-    mainProcess();
-  };
+      emit('update')
+    }
+    mainProcess()
+  }
 
   // Delete
   const onClickDelete = () => {
     const mainProcess = async () => {
       // 内包するItemが存在しない場合
       if (about.value.progeniesCount === 0) {
-        playAudio(AUDIOS.ETC.DECISION_22);
-        popWindow("Main");
-        windowMode.value = WINDOW_MODE.DELETE_NODE;
-        onClickOnlyThisItem();
+        playAudio(AUDIOS.ETC.DECISION_22)
+        popWindow('Main')
+        windowMode.value = WINDOW_MODE.DELETE_NODE
+        onClickOnlyThisItem()
         // 内包するItemが存在する場合
       } else {
-        playAudio(AUDIOS.ETC.DECISION_22);
-        windowMode.value = WINDOW_MODE.DELETE;
-        const option = { push: false, pop: true };
-        const buttonId = await displayDialog(WINDOW_MODE.DELETE, option);
+        playAudio(AUDIOS.ETC.DECISION_22)
+        windowMode.value = WINDOW_MODE.DELETE
+        const option = { push: false, pop: true }
+        const buttonId = await displayDialog(WINDOW_MODE.DELETE, option)
         switch (buttonId) {
-          case 0:
-          case 1:
-            onClickCancel();
-            break;
-          case 8:
-            onClickOnlyThisItem();
-            break;
-          case 9:
-            onClickWithChildren();
-            break;
+        case 0:
+        case 1:
+          onClickCancel()
+          break
+        case 8:
+          onClickOnlyThisItem()
+          break
+        case 9:
+          onClickWithChildren()
+          break
         }
       }
-    };
+    }
 
     // Delete -> Cancel
     const onClickCancel = () => {
-      emit("finish");
-      playAudio(AUDIOS.ETC.CYBER_04_1);
-    };
+      emit('finish')
+      playAudio(AUDIOS.ETC.CYBER_04_1)
+    }
 
     // Delete -> Only this
     const onClickOnlyThisItem = () => {
       const mainProcess = async () => {
-        playAudio(AUDIOS.ETC.DECISION_22);
-        windowMode.value = WINDOW_MODE.DELETE_NODE;
-        const option = { push: true, pop: true };
-        const buttonId = await displayDialog(WINDOW_KIND.CONFIRM, option);
+        playAudio(AUDIOS.ETC.DECISION_22)
+        windowMode.value = WINDOW_MODE.DELETE_NODE
+        const option = { push: true, pop: true }
+        const buttonId = await displayDialog(WINDOW_KIND.CONFIRM, option)
         switch (buttonId) {
-          case 0:
-          case 1:
-            onClickCancel();
-            break;
-          case 2:
-            onClickAccept();
-            break;
+        case 0:
+        case 1:
+          onClickCancel()
+          break
+        case 2:
+          onClickAccept()
+          break
         }
-      };
+      }
 
       // Delete -> Only this -> Cancel
       const onClickCancel = () => {
-        emit("finish");
-        playAudio(AUDIOS.ETC.CYBER_04_1);
-      };
+        emit('finish')
+        playAudio(AUDIOS.ETC.CYBER_04_1)
+      }
 
       // Delete -> Only this -> OK
       const onClickAccept = async () => {
-        playAudio(AUDIOS.ETC.DECISION_22);
+        playAudio(AUDIOS.ETC.DECISION_22)
 
         await handleDelete(stateValues.delete.id, deleteNode, {
           onSuccess: ok,
           onError: ng,
-        });
-      };
-      mainProcess();
-    };
+        })
+      }
+      mainProcess()
+    }
 
     // Delete -> With children
     const onClickWithChildren = () => {
       const mainProcess = async () => {
-        playAudio(AUDIOS.ETC.DECISION_22);
-        windowMode.value = WINDOW_MODE.DELETE_TREE;
-        const option = { push: true, pop: true };
-        const buttonId = await displayDialog(WINDOW_KIND.CONFIRM, option);
+        playAudio(AUDIOS.ETC.DECISION_22)
+        windowMode.value = WINDOW_MODE.DELETE_TREE
+        const option = { push: true, pop: true }
+        const buttonId = await displayDialog(WINDOW_KIND.CONFIRM, option)
         switch (buttonId) {
-          case 0:
-          case 1:
-            onClickCancel();
-            break;
-          case 2:
-            onClickAccept();
-            break;
+        case 0:
+        case 1:
+          onClickCancel()
+          break
+        case 2:
+          onClickAccept()
+          break
         }
-      };
+      }
 
       // Delete -> With children -> Cancel
       const onClickCancel = () => {
-        emit("finish");
-        playAudio(AUDIOS.ETC.CYBER_04_1);
-      };
+        emit('finish')
+        playAudio(AUDIOS.ETC.CYBER_04_1)
+      }
 
       // Delete -> With children -> OK
       const onClickAccept = () => {
         const mainProcess = async () => {
-          playAudio(AUDIOS.ETC.DECISION_22);
-          windowMode.value = WINDOW_MODE.DELETE_TREE_YES;
-          const option = { push: true, pop: true };
-          await new Promise((resolve) => setTimeout(resolve, 200));
-          const buttonId = await displayDialog(WINDOW_KIND.CONFIRM, option);
+          playAudio(AUDIOS.ETC.DECISION_22)
+          windowMode.value = WINDOW_MODE.DELETE_TREE_YES
+          const option = { push: true, pop: true }
+          await new Promise((resolve) => setTimeout(resolve, 200))
+          const buttonId = await displayDialog(WINDOW_KIND.CONFIRM, option)
           switch (buttonId) {
-            case 0:
-            case 1:
-              onClickCancel();
-              break;
-            case 2:
-              onClickAccept();
-              break;
+          case 0:
+          case 1:
+            onClickCancel()
+            break
+          case 2:
+            onClickAccept()
+            break
           }
-        };
+        }
 
         // Delete -> With children -> OK -> Cancel
         const onClickCancel = () => {
-          emit("finish");
-          playAudio(AUDIOS.ETC.CYBER_04_1);
-        };
+          emit('finish')
+          playAudio(AUDIOS.ETC.CYBER_04_1)
+        }
 
         // Delete -> With children -> OK -> OK
         const onClickAccept = () => {
           const mainProcess = async () => {
-            playAudio(AUDIOS.ETC.DECISION_22);
-            windowMode.value = WINDOW_MODE.DELETE_TREE_YES_YES;
-            const option = { push: true, pop: true };
-            await new Promise((resolve) => setTimeout(resolve, 300));
-            const buttonId = await displayDialog(WINDOW_KIND.CONFIRM, option);
+            playAudio(AUDIOS.ETC.DECISION_22)
+            windowMode.value = WINDOW_MODE.DELETE_TREE_YES_YES
+            const option = { push: true, pop: true }
+            await new Promise((resolve) => setTimeout(resolve, 300))
+            const buttonId = await displayDialog(WINDOW_KIND.CONFIRM, option)
             switch (buttonId) {
-              case 0:
-              case 1:
-                onClickCancel();
-                break;
-              case 2:
-                onClickAccept();
-                break;
+            case 0:
+            case 1:
+              onClickCancel()
+              break
+            case 2:
+              onClickAccept()
+              break
             }
-          };
+          }
 
           // Delete -> With children -> OK -> OK -> Cancel
           const onClickCancel = () => {
-            emit("finish");
-            playAudio(AUDIOS.ETC.CYBER_04_1);
-          };
+            emit('finish')
+            playAudio(AUDIOS.ETC.CYBER_04_1)
+          }
 
           // Delete -> With children -> OK -> OK -> OK
           const onClickAccept = async () => {
-            playAudio(AUDIOS.ETC.DECISION_22);
+            playAudio(AUDIOS.ETC.DECISION_22)
 
             await handleDelete(stateValues.delete.id, deleteTree, {
               onSuccess: ok,
               onError: ng,
-            });
-          };
-          mainProcess();
-        };
-        mainProcess();
-      };
-      mainProcess();
-    };
-    mainProcess();
-  };
-  mainProcess();
-};
+            })
+          }
+          mainProcess()
+        }
+        mainProcess()
+      }
+      mainProcess()
+    }
+    mainProcess()
+  }
+  mainProcess()
+}
 
 // ドラッグ＆ドロップでItemをTeleportする関数
 const teleportItemWithDnD = ({ cID, pID, idx }) => {
   return new Promise((resolve, reject) => {
     const mainProcess = async () => {
-      playAudio(AUDIOS.ETC.DECISION_42);
-      const option = { push: true, pop: true };
-      const buttonId = await displayDialog(WINDOW_KIND.CONFIRM, option);
+      playAudio(AUDIOS.ETC.DECISION_42)
+      const option = { push: true, pop: true }
+      const buttonId = await displayDialog(WINDOW_KIND.CONFIRM, option)
       switch (buttonId) {
-        case 0:
-        case 1:
-          onClickCancel();
-          break;
-        case 2:
-          onClickAccept();
-          break;
+      case 0:
+      case 1:
+        onClickCancel()
+        break
+      case 2:
+        onClickAccept()
+        break
       }
-    };
+    }
 
     const onClickCancel = () => {
-      resetTeleportInfo();
-      reject("Cancel");
-      emit("cancel");
-      emit("finish");
-    };
+      resetTeleportInfo()
+      reject('Cancel')
+      emit('cancel')
+      emit('finish')
+    }
 
     const onClickAccept = async () => {
-      playAudio(AUDIOS.ETC.DECISION_22);
+      playAudio(AUDIOS.ETC.DECISION_22)
 
       try {
         await handleTeleport({ cID, pID, idx }, props.treeMethods, {
           onSuccess: () => resolve(ok()),
           onError: (err) => reject(ng(err)),
-          onCancel: () => reject("Cancel"),
-        });
+          onCancel: () => reject('Cancel'),
+        })
       } catch (err) {
-        reject(ng(err));
+        reject(ng(err))
       }
-    };
-    mainProcess();
-  });
-};
+    }
+    mainProcess()
+  })
+}
 
 // Rootを変更する関数
 const askChangeRoot = (id: string) => {
-  playAudio(AUDIOS.ETC.DECISION_43);
-  popWindow("some");
-  changeRoot(id);
-  return Promise.resolve();
+  playAudio(AUDIOS.ETC.DECISION_43)
+  popWindow('some')
+  changeRoot(id)
+  return Promise.resolve()
   // displayMessageDialog('Invalid ID')
-};
+}
 
 // Jumpボタンクリック時の処理
 const onClickJump = () => {
   if (about.value.link && about.value.link.length === 16) {
-    askChangeRoot(about.value.link);
-    emit("finish");
+    askChangeRoot(about.value.link)
+    emit('finish')
   }
-};
+}
 
 // アイテムクリック／アイテム開閉を監視
 watch(about, (newValue) => {
   if (newValue) {
     try {
-      onClickItem();
+      onClickItem()
     } catch (e) {
-      console.error(e);
-      popWindow("some");
-      popWindow("some");
-      popWindow("some");
-      displayMessageDialog("Error occurred");
+      console.error(e)
+      popWindow('some')
+      popWindow('some')
+      popWindow('some')
+      displayMessageDialog('Error occurred')
     }
   }
-});
+})
 
 // Teleportイベントを監視
 watch(
   () => teleportInfo.value.state,
   async (state) => {
-    if (state === "SENDABLE") {
-      teleportInfo.value.state = "SENDING";
+    if (state === 'SENDABLE') {
+      teleportInfo.value.state = 'SENDING'
 
       try {
-        const { index, departure, destination } = teleportInfo.value;
+        const { index, departure, destination } = teleportInfo.value
 
         if (departure.length === 16) {
-          const idx = index;
-          const cID = departure;
-          const pID = destination;
-          windowMode.value = WINDOW_MODE.TELEPORT_THIS;
-          await teleportItemWithDnD({ cID, pID, idx });
+          const idx = index
+          const cID = departure
+          const pID = destination
+          windowMode.value = WINDOW_MODE.TELEPORT_THIS
+          await teleportItemWithDnD({ cID, pID, idx })
           // await askChangeRoot(destination)
         } else {
-          await askChangeRoot(destination);
+          await askChangeRoot(destination)
         }
-        resetTeleportInfo();
+        resetTeleportInfo()
       } catch (err) {
-        teleportInfo.value.state = "PRESEND";
-        console.log(err);
+        teleportInfo.value.state = 'PRESEND'
+        console.log(err)
         // キャンセル時は親コンポーネントのonCanceledで処理されるため、ここでは何もしない
       }
     }
   }
-);
+)
 
 watch(
   () => modalWindows.value.length,
   (newValue) => {
-    if (newValue === 0) emit("finish");
+    if (newValue === 0) emit('finish')
   }
-);
+)
 </script>
 
 <style lang="scss" scoped>

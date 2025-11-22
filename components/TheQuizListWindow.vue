@@ -59,9 +59,6 @@ watch(totalQuizCount, () => {
 const mounted = ref(false)
 const countFlg = ref(false)
 
-
-
-
 type MoveInfo = (
   MovingNodeArguments |
   MovingTreeArguments
@@ -157,7 +154,7 @@ const onCanceled = () => {
 
 watch(rootId, async (id) => {
   // useNuxtApp().$router.push(`/main/tree/${encodeURIComponent(id)}`)
-  console.table({id})
+  console.table({ id })
   await treeMethods.changeRoot(id)
   await treeMethods.updateData()
 })
@@ -186,7 +183,6 @@ const treeComponent = computed(() => {
   case 'crime': return appTreeGamma
   }
 })
-
 
 onMounted(() => {
   mounted.value = true
@@ -234,32 +230,32 @@ onMounted(() => {
         <tbody style="position: relative;">
           <div style="width: 100%; position: absolute; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; flex-wrap: wrap;">
             <!-- <AppScrollable height="80vh"> -->
-              <transition-group name="list-complete">
-                <tr
+            <transition-group name="list-complete">
+              <tr
                 v-for="(quiz, index) in slicedQuizData"
                 :key="quiz.quiz_id"
                 :style="`--delay: ${Math.min(1.0, index * 0.15)}s`"
                 class="list_complete_item"
-                >
+              >
                 <td
-                :class="{
-                  failed: failedIds.includes(quiz.quiz_id),
-                  cleared: clearedIds.includes(quiz.quiz_id),
-                }"
+                  :class="{
+                    failed: failedIds.includes(quiz.quiz_id),
+                    cleared: clearedIds.includes(quiz.quiz_id),
+                  }"
                   @click="$emit('open', quiz)"
-                  >
+                >
                   <span class="number">{{ index + 1 }}</span>
                   <TheSampleQuizListItem
                     :question="quiz.question"
                     :press-point="quiz?.push_point ?? 0"
                     @in="onVisible(index)"
-                    />
-                  </td>
-                </tr>
-              </transition-group>
+                  />
+                </td>
+              </tr>
+            </transition-group>
             <!-- </AppScrollable> -->
           </div>
-          
+
           <!-- <div id="the-sample-tree" style="position: absolute; left: 45%;">
               <AppScrollable height="80vh">
                 <div id="tree-container" :class="{ lifeforms: sensor === 'lifeforms', economy: sensor === 'economy', crime: sensor === 'crime' }">

@@ -1,30 +1,28 @@
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <ul>
-    <li style="--clr: #1877f2;">
+    <li style="--clr: #1877f2">
       <a href="#">
         <AppFontAwesome icon-name="google" />
       </a>
     </li>
-    <li style="--clr: #ff0000;">
+    <li style="--clr: #ff0000">
       <a href="#">
         <AppFontAwesome icon-name="google" />
       </a>
     </li>
-    <li style="--clr: #1da1f2;">
+    <li style="--clr: #1da1f2">
       <a href="#">
         <AppFontAwesome icon-name="google" />
       </a>
     </li>
-    <li style="--clr: #c32aa3;">
+    <li style="--clr: #c32aa3">
       <a href="#">
         <AppFontAwesome icon-name="google" />
       </a>
     </li>
-    <li style="--clr: #25d366;">
+    <li style="--clr: #25d366">
       <a href="#">
         <AppFontAwesome icon-name="google" />
       </a>
@@ -55,18 +53,16 @@ ul {
     transition: 0.5s;
 
     &::before {
-      content: '';
+      content: "";
       position: absolute;
       inset: 30px;
-      box-shadow:
-        0 0 0 10px var(--clr),
-        0 0 0 20px var(--bg),
+      box-shadow: 0 0 0 10px var(--clr), 0 0 0 20px var(--bg),
         0 0 0 22px var(--clr);
       transition: 0.5s;
     }
 
     &::after {
-      content: '';
+      content: "";
       position: absolute;
       inset: 0;
       background: var(--bg);
@@ -84,10 +80,8 @@ ul {
 
       > a {
         font-size: 3em;
-        filter:
-          drop-shadow(0 0 20px var(--clr))
-          drop-shadow(0 0 40px var(--clr))
-          drop-shadow(0 0 60px var(--clr));
+        filter: drop-shadow(0 0 20px var(--clr))
+          drop-shadow(0 0 40px var(--clr)) drop-shadow(0 0 60px var(--clr));
       }
     }
 

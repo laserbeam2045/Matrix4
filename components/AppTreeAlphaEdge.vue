@@ -34,31 +34,34 @@ import { VueDraggableNext } from 'vue-draggable-next'
 
 import type { TreeData } from '@/composables/useTree'
 import type { DragMode, CustomDragEvent } from '@/types/Draggable'
-import type { DragEventListener, DragState } from '@/composables/useDraggableNext'
+import type {
+  DragEventListener,
+  DragState,
+} from '@/composables/useDraggableNext'
 
 defineProps<{
-  treeData: TreeData
-  itemComponent: object
-  dragNodeOptions: object
-  dragEdgeOptions: object
-  dragEventListener: DragEventListener
-  isParentOpen: boolean
-  isDragging: boolean
-  dragState: DragState
-  dragMode: DragMode
+  treeData: TreeData;
+  itemComponent: object;
+  dragNodeOptions: object;
+  dragEdgeOptions: object;
+  dragEventListener: DragEventListener;
+  isParentOpen: boolean;
+  isDragging: boolean;
+  dragState: DragState;
+  dragMode: DragMode;
 }>()
 
 type MoveProps = {
-  cID: string
-  pID: string
-  idx: number
-}
+  cID: string;
+  pID: string;
+  idx: number;
+};
 
 const emit = defineEmits<{
-  'move': [e: Event]
-  'moveItem': [payload: MoveProps]
-  'touchItem': [treeData: TreeData]
-  'changeOpen': [payload: TreeData]
+  move: [e: Event];
+  moveItem: [payload: MoveProps];
+  touchItem: [treeData: TreeData];
+  changeOpen: [payload: TreeData];
 }>()
 
 // ノードの移動イベントハンドラ
@@ -101,7 +104,7 @@ const handleDragEnd = (e: CustomDragEvent) => {
 
 .v-enter-active,
 .v-leave-active {
-  transition: all .3s ease-out !important;
+  transition: all 0.3s ease-out !important;
 }
 
 .v-leave-to,

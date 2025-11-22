@@ -2,12 +2,12 @@
 import { useScroll } from '@vueuse/core'
 
 const props = defineProps<{
-  tabs: string[]
-  tabIndex: number
+  tabs: string[];
+  tabIndex: number;
 }>()
 
 const emit = defineEmits<{
-  'update:tabIndex': [newValue: number]
+  'update:tabIndex': [newValue: number];
 }>()
 
 const { AUDIOS, playAudio } = useAudio()
@@ -15,8 +15,8 @@ const { AUDIOS, playAudio } = useAudio()
 const count = computed(() => props.tabs.length)
 
 const sliderStyle = computed(() => ({
-  width: `${(100 / count.value)}%`,
-  left: `${100 / count.value * props.tabIndex}%`,
+  width: `${100 / count.value}%`,
+  left: `${(100 / count.value) * props.tabIndex}%`,
 }))
 
 const size = reactive({
@@ -39,10 +39,10 @@ useScroll(section, {
   idle: 30,
   onStop: (e: Event) => {
     const { scrollLeft } = e.target as HTMLElement
-    if (scrollLeft > (size.maxWidth * (props.tabIndex + 0.5))) {
+    if (scrollLeft > size.maxWidth * (props.tabIndex + 0.5)) {
       return emit('update:tabIndex', props.tabIndex + 1)
     }
-    if (scrollLeft < (size.maxWidth * (props.tabIndex - 0.5))) {
+    if (scrollLeft < size.maxWidth * (props.tabIndex - 0.5)) {
       return emit('update:tabIndex', props.tabIndex - 1)
     }
     updateStyle()
@@ -67,10 +67,13 @@ const updateStyle = () => {
   // })
 }
 
-watch(() => props.tabIndex, () => {
-  playAudio(AUDIOS.ETC.DECISION_46)
-  updateStyle()
-})
+watch(
+  () => props.tabIndex,
+  () => {
+    playAudio(AUDIOS.ETC.DECISION_46)
+    updateStyle()
+  }
+)
 
 const mounted = ref(false)
 
@@ -129,8 +132,8 @@ onMounted(() => {
       // color: $act-wrap-c2;
       color: #fff;
       @include unSelectable;
-        // color: transparent;
-        // -webkit-text-stroke: 1px #fff;
+      // color: transparent;
+      // -webkit-text-stroke: 1px #fff;
 
       .slider {
         position: absolute;
@@ -170,16 +173,12 @@ onMounted(() => {
 
   > section {
     opacity: 0;
-    transition:
-      opacity 0.2s 0s ease-out,
-      transform 0s 0s ease-out;
+    transition: opacity 0.2s 0s ease-out, transform 0s 0s ease-out;
   }
 
   &.mounted > section {
     opacity: 1;
-    transition:
-      opacity 0.2s 0.0s ease-out,
-      transform 0.3s 0s ease-out;
+    transition: opacity 0.2s 0s ease-out, transform 0.3s 0s ease-out;
   }
 }
 </style>

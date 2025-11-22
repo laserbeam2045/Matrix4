@@ -1,23 +1,26 @@
 <script setup lang="ts">
-withDefaults(defineProps<{
-  size?: number | string
-  text1?: string
-  text2?: string
-  text3?: string
-  text4?: string
-  zIndex?: number | string
-  animation?: boolean
-  large?: boolean
-}>(), {
-  size: 100,
-  text1: '',
-  text2: '',
-  text3: '',
-  text4: '',
-  zIndex: 1,
-  animation: true,
-  large: false,
-})
+withDefaults(
+  defineProps<{
+    size?: number | string;
+    text1?: string;
+    text2?: string;
+    text3?: string;
+    text4?: string;
+    zIndex?: number | string;
+    animation?: boolean;
+    large?: boolean;
+  }>(),
+  {
+    size: 100,
+    text1: '',
+    text2: '',
+    text3: '',
+    text4: '',
+    zIndex: 1,
+    animation: true,
+    large: false,
+  }
+)
 </script>
 
 <template>
@@ -27,19 +30,19 @@ withDefaults(defineProps<{
     :style="`--size: ${size}px; --zIndex: ${zIndex};`"
   >
     <div>
-      <div class="men" style="--i: 0;">
+      <div class="men" style="--i: 0">
         <h2>{{ text1 }}</h2>
         <h2>{{ text1 }}</h2>
       </div>
-      <div class="men" style="--i: 1;">
+      <div class="men" style="--i: 1">
         <h2>{{ text2 }}</h2>
         <h2>{{ text2 }}</h2>
       </div>
-      <div class="men" style="--i: 2;">
+      <div class="men" style="--i: 2">
         <h2>{{ text3 }}</h2>
         <h2>{{ text3 }}</h2>
       </div>
-      <div class="men" style="--i: 3;">
+      <div class="men" style="--i: 3">
         <h2>{{ text4 }}</h2>
         <h2>{{ text4 }}</h2>
       </div>
@@ -80,7 +83,8 @@ $color4: #444;
       width: 100%;
       height: 100%;
       // background: linear-gradient(#151515, #00ec00);
-      transform: rotateY(calc(90deg * var(--i))) translateZ(calc(var(--size) / 2));
+      transform: rotateY(calc(90deg * var(--i)))
+        translateZ(calc(var(--size) / 2));
       transform-style: preserve-3d;
       display: flex;
       align-items: center;
@@ -111,7 +115,7 @@ $color4: #444;
 
         &:nth-child(1) {
           transform: translateZ(0) translateY(0px);
-          color: rgba(0,0,0,0.2);
+          color: rgba(0, 0, 0, 0.2);
           filter: blur(2px);
         }
       }
@@ -148,14 +152,11 @@ $color4: #444;
   }
 }
 
-@keyframes animate
-{
-  0%
-  {
+@keyframes animate {
+  0% {
     transform: rotateX(-30deg) rotateY(45deg);
   }
-  100%
-  {
+  100% {
     transform: rotateX(-30deg) rotateY(-315deg);
   }
 }

@@ -9,11 +9,14 @@
 </template>
 
 <script lang="ts" setup>
-const props = withDefaults(defineProps<{
-  width?: number
-}>(), {
-  width: 55,
-})
+const props = withDefaults(
+  defineProps<{
+    width?: number;
+  }>(),
+  {
+    width: 55,
+  }
+)
 
 const RATIO = 0.5806451612903226
 const BORDER_WIDTH = 2
@@ -50,7 +53,7 @@ const styleSpan = computed(() => ({
 </script>
 
 <style lang="scss" scoped>
-$borderColor: rgba( 255, 255, 255, 1 );
+$borderColor: rgba(255, 255, 255, 1);
 // $borderColor: #42edf8;
 
 $backgroundColorA: $borderColor;
@@ -63,13 +66,13 @@ $backgroundColorB: #3188fa;
 // }
 
 .app-hexagon {
-	margin: 0 auto;
-	position: relative;
+  margin: 0 auto;
+  position: relative;
   // color: #fff;
-  color: #FFFFFF;
+  color: #ffffff;
   // color: #42edf8;
   // color: #3188fa;
-  font-size: 2.0rem !important;
+  font-size: 2rem !important;
   cursor: pointer;
 
   .hexagonA,
@@ -82,7 +85,7 @@ $backgroundColorB: #3188fa;
 
     &:before,
     &:after {
-      content: '';
+      content: "";
       position: absolute;
       top: 0;
       left: 0;
@@ -103,8 +106,8 @@ $backgroundColorB: #3188fa;
   .hexagonA {
     opacity: 0.666;
     background: $backgroundColorA;
-    backdrop-filter: blur( 6.5px );
-    -webkit-backdrop-filter: blur( 6.5px );
+    backdrop-filter: blur(6.5px);
+    -webkit-backdrop-filter: blur(6.5px);
 
     &:before,
     &:after {

@@ -12,15 +12,18 @@
 <script lang="ts" setup>
 import useEvent from '@/composables/useEvent'
 
-const props = withDefaults(defineProps<{
-  name: string
-  active?: boolean
-}>(), {
-  active: false,
-})
+const props = withDefaults(
+  defineProps<{
+    name: string;
+    active?: boolean;
+  }>(),
+  {
+    active: false,
+  }
+)
 
 const emit = defineEmits<{
-  click: [e: Event]
+  click: [e: Event];
 }>()
 
 const { mouseTouchEvent } = useEvent()
@@ -43,10 +46,12 @@ const events = computed(() => ({
   line-height: $windowHeaderItemSize;
   text-align: center;
   pointer-events: auto;
-  transition: all .2s;
+  transition: all 0.2s;
   color: $textColor1;
   font-size: 1.5rem;
-  @if $test { background: yellow; }
+  @if $test {
+    background: yellow;
+  }
 
   &:hover,
   &:focus {

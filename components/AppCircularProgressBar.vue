@@ -1,9 +1,9 @@
 <script setup lang="ts">
 const props = defineProps<{
-  percentage: number
-  split: number
-  r: number
-  blockWidth: number
+  percentage: number;
+  split: number;
+  r: number;
+  blockWidth: number;
 }>()
 
 const circleStyle = computed(() => ({
@@ -26,13 +26,16 @@ const textStyle = computed(() => ({
 
 const number = ref(0)
 
-watch(() => props.percentage, () => {
-  nextTick(() => {
-    setTimeout(() => {
-      number.value = props.percentage
-    }, 950)
-  })
-})
+watch(
+  () => props.percentage,
+  () => {
+    nextTick(() => {
+      setTimeout(() => {
+        number.value = props.percentage
+      }, 950)
+    })
+  }
+)
 
 onMounted(() => {
   nextTick(() => {
@@ -44,21 +47,22 @@ onMounted(() => {
 </script>
 
 <template>
-  <div
-    class="circle"
-    :style="[`--split: ${split}`, circleStyle]"
-  >
+  <div class="circle" :style="[`--split: ${split}`, circleStyle]">
     <div
       v-for="i of split"
       :key="i"
       class="blocks"
-      :class="{ light: (i === 1 && i === percentage) || i <= Math.floor((percentage / 100) * split) }"
+      :class="{
+        light:
+          (i === 1 && i === percentage) ||
+          i <= Math.floor((percentage / 100) * split),
+      }"
       :style="[
         `
           animation-delay: ${(1 / split) * i}s;
           transform: rotate(${(360 / split) * i}deg);
         `,
-        blockStyle
+        blockStyle,
       ]"
     />
     <h3
@@ -66,10 +70,7 @@ onMounted(() => {
       :class="{ light: percentage }"
       :style="textStyle"
     >
-      <AppTweenNumber
-        :value="number"
-        :duration="0.01 * props.percentage"
-      />％
+      <AppTweenNumber :value="number" :duration="0.01 * props.percentage" />％
     </h3>
   </div>
 </template>
@@ -102,34 +103,25 @@ $darkColor: rgb(31, 78, 102);
     color: $lightColor;
 
     &.light {
-      text-shadow:
-        0 0 5px $lightColor,
-        0 0 15px $lightColor;
+      text-shadow: 0 0 5px $lightColor, 0 0 15px $lightColor;
     }
   }
 }
 
 @keyframes animate {
-  0%, 50%
-  {
+  0%,
+  50% {
     background: $darkColor;
     box-shadow: none;
   }
-  50.1%, 99.9%
-  {
+  50.1%,
+  99.9% {
     background: $lightColor;
-    box-shadow:
-      0 0 5px $lightColor,
-      0 0 15px $lightColor,
-      0 0 30px $lightColor;
+    box-shadow: 0 0 5px $lightColor, 0 0 15px $lightColor, 0 0 30px $lightColor;
   }
-  100%
-  {
+  100% {
     background: $lightColor;
-    box-shadow:
-      0 0 5px $lightColor,
-      0 0 15px $lightColor,
-      0 0 30px $lightColor;
+    box-shadow: 0 0 5px $lightColor, 0 0 15px $lightColor, 0 0 30px $lightColor;
     filter: hue-rotate(90deg);
   }
 }

@@ -8,15 +8,13 @@
 import type { TreeData } from '@/composables/useTree'
 
 const props = defineProps<{
-  treeData: TreeData
+  treeData: TreeData;
 }>()
 
 const isNew = computed(() => {
   const now = new Date()
   const updated = new Date(props.treeData.updatedAt)
-  return (
-    (now.getTime() - updated.getTime()) < 86400000
-  )
+  return now.getTime() - updated.getTime() < 86400000
 })
 
 const isContent = computed(() => {
@@ -57,24 +55,22 @@ const isContent = computed(() => {
     //   +8px -4px 10px rgba(0,90,255,0.66);
     // box-shadow: 0 2px 16px -4px $ca;
     // border-color: rgba(255,255,255,0.4);
-    -webkit-box-reflect: below 1px -webkit-gradient(linear, left bottom, left top, from(rgba(0,0,255,0.1)), to(transparent));
+    -webkit-box-reflect: below 1px -webkit-gradient(linear, left bottom, left
+          top, from(rgba(0, 0, 255, 0.1)), to(transparent));
 
     // &:hover {
     //   transform: translateY(-5px);
     // }
   }
 
-@keyframes animate
-{
-  0%
-  {
-    filter: hue-rotate(0deg);
+  @keyframes animate {
+    0% {
+      filter: hue-rotate(0deg);
+    }
+    100% {
+      filter: hue-rotate(360deg);
+    }
   }
-  100%
-  {
-    filter: hue-rotate(360deg);
-  }
-}
 
   &:hover {
     cursor: pointer;
@@ -94,12 +90,11 @@ const isContent = computed(() => {
     backdrop-filter: blur(3px);
     background-color: rgba(7, 73, 120, 5.15);
     // box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 8px;
-    border: 1px rgba(255,255,255,0.4) solid;
+    border: 1px rgba(255, 255, 255, 0.4) solid;
   }
 
   &.link {
-    text-shadow:
-      0 0 16px $ca;
+    text-shadow: 0 0 16px $ca;
     overflow: hidden;
     // color: white;
     border-color: #42cbf8;

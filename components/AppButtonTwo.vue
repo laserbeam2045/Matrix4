@@ -4,9 +4,9 @@ import { useElementHover } from '@vueuse/core'
 import useEvent from '@/composables/useEvent'
 
 const emit = defineEmits<{
-  end: [e: Event]
-  start: [e: Event]
-  clicked: [e: Event]
+  end: [e: Event];
+  start: [e: Event];
+  clicked: [e: Event];
 }>()
 
 const myHoverElement = ref(null)
@@ -63,20 +63,18 @@ const events = computed(() => ({
   text-shadow: none;
   box-shadow: none;
   color: #fff;
-  transition: all .25s ease-out;
+  transition: all 0.25s ease-out;
   white-space: nowrap;
   @include unSelectable;
 
-    border-radius: 12px;
-    backdrop-filter: blur(2px);
-    // box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 8px;
-    border: 1px rgba(255,255,255,0.4) solid;
+  border-radius: 12px;
+  backdrop-filter: blur(2px);
+  // box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 8px;
+  border: 1px rgba(255, 255, 255, 0.4) solid;
 
   &.hover {
     // color: #2dfc52;
-    filter:
-      drop-shadow(0px 0px 2px #2dfc52)
-      drop-shadow(0px 0px 4px #2dfc52)
+    filter: drop-shadow(0px 0px 2px #2dfc52) drop-shadow(0px 0px 4px #2dfc52)
       drop-shadow(0px 0px 8px #2dfc52);
     // border-color: $blueLikeColor6;
     // @include textStyleC;
