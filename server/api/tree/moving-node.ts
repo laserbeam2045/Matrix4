@@ -1,4 +1,4 @@
-import { createClient } from '@supabase/supabase-js'
+import { serverSupabase } from '../../utils/supabase'
 
 /**
  * リクエストに必要なパラメータ
@@ -18,13 +18,9 @@ export type MovingNodeResponse = {
 
 export default defineEventHandler(async (event) => {
   try {
-    const config = useRuntimeConfig()
     console.log('=== MOVE NODE DEBUG ===')
     
-    const supabase = createClient(
-      config.public.supabaseUrl,
-      config.public.supabaseAnonKey
-    )
+    const supabase = serverSupabase()
 
     const cID = getQuery(event).cID as string
     const pID = getQuery(event).pID as string

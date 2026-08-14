@@ -1,4 +1,4 @@
-import { createClient } from '@supabase/supabase-js'
+import { serverSupabase } from '../../utils/supabase'
 
 /**
  * リクエストに必要なパラメータ
@@ -19,15 +19,9 @@ export type InsertNodeResponse = {
 
 export default defineEventHandler(async (event) => {
   try {
-    const config = useRuntimeConfig()
     console.log('=== INSERT NODE DEBUG ===')
-    console.log('Supabase URL:', config.public.supabaseUrl ? 'Set' : 'Missing')
-    console.log('Supabase Key:', config.public.supabaseAnonKey ? 'Set' : 'Missing')
     
-    const supabase = createClient(
-      config.public.supabaseUrl,
-      config.public.supabaseAnonKey
-    )
+    const supabase = serverSupabase()
 
     const pID = getQuery(event).pID as string
     const txt = getQuery(event).txt as string

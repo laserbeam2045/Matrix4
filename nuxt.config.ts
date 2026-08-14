@@ -372,6 +372,9 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     apiSecret: '123',
+    // サーバー専用（クライアントへは露出しない）。service_roleキーは絶対にpublicへ移動しないこと
+    supabaseUrl: process.env.SUPABASE_URL,
+    supabaseServiceKey: process.env.SUPABASE_SERVICE_ROLE_KEY,
     public: {
       // firebaseConfig: process.env.NODE_ENV === 'production'
       //   ? {}
@@ -380,8 +383,6 @@ export default defineNuxtConfig({
       API_PATH: process.env.API_PATH,
       API_PATH_2: process.env.API_PATH_2,
       ASSETS_PATH: process.env.ASSETS_PATH,
-      supabaseUrl: process.env.SUPABASE_URL,
-      supabaseAnonKey: process.env.SUPABASE_ANON_KEY,
     },
   },
 

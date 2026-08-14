@@ -1,4 +1,4 @@
-import { createClient } from '@supabase/supabase-js'
+import { serverSupabase } from '../../utils/supabase'
 import type { SetResponse } from '@/composables/useTree'
 
 /**
@@ -17,11 +17,7 @@ export type SelectNodeResponse = {
 
 export default defineEventHandler(async (event) => {
   try {
-    const config = useRuntimeConfig()
-    const supabase = createClient(
-      config.public.supabaseUrl,
-      config.public.supabaseAnonKey
-    )
+    const supabase = serverSupabase()
 
     const id = getQuery(event).id as string
     
