@@ -25,6 +25,7 @@ logs
 .claude
 .specstory
 server/*
+!server/utils/
 etc
 docs
 sql
